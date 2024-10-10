@@ -61,9 +61,11 @@ CREATE TABLE follows (
 
 CREATE TABLE comments (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    description VARCHAR(255) NOT NULL,
+    content VARCHAR(255) NOT NULL,
     post_id INT NOT NULL,
     user_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
