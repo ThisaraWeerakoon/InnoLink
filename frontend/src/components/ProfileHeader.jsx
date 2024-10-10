@@ -192,7 +192,9 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
                             Edit Profile
                         </button>
                     )
-                ) : null}
+                ) : (
+                    <div className='flex justify-center'>{renderConnectionButton()}</div>
+                )}
             </div>
         </div>
     );
