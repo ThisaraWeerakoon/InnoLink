@@ -21,10 +21,14 @@ CREATE TABLE user_images (
 
 CREATE TABLE posts (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    description VARCHAR(255) NOT NULL,
+    img_url VARCHAR(255),
+    video_url VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    caption VARCHAR(1000) NOT NULL,
     user_id INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
 
 CREATE TABLE post_images (
     id INT AUTO_INCREMENT PRIMARY KEY,
