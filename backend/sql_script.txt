@@ -36,8 +36,8 @@ CREATE TABLE likes (
 
 CREATE TABLE follows (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    user_following_id INT NOT NULL,
+    follower_id INT NOT NULL,
+    followee_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (user_following_id) REFERENCES users(id) ON DELETE CASCADE
