@@ -10,14 +10,6 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE user_images (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255),
-    type VARCHAR(50),
-    data BLOB,
-    user_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-);
 
 CREATE TABLE posts (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -30,14 +22,6 @@ CREATE TABLE posts (
 );
 
 
-CREATE TABLE post_images (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255),
-    type VARCHAR(50),
-    data BLOB,
-    post_id INT NOT NULL,
-    FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
-);
 
 CREATE TABLE likes (
     id INT AUTO_INCREMENT PRIMARY KEY,
