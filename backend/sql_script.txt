@@ -29,7 +29,7 @@ CREATE TABLE `posts` (
 	`created_at` TIMESTAMP NOT NULL,
 	`caption` VARCHAR(191) NOT NULL,
 	`userId` INT NOT NULL,
-	FOREIGN KEY(`userId`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+	FOREIGN KEY(`userId`) REFERENCES `users`(`id`),
 	PRIMARY KEY(`id`)
 );
 
@@ -40,7 +40,7 @@ CREATE TABLE `likes` (
 	`userId` INT NOT NULL,
 	FOREIGN KEY(`userId`) REFERENCES `users`(`id`),
 	`postId` INT NOT NULL,
-	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`) ON DELETE CASCADE,
+	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`),
 	PRIMARY KEY(`id`)
 );
 
@@ -50,7 +50,7 @@ CREATE TABLE `follows` (
 	`followerId` INT NOT NULL,
 	FOREIGN KEY(`followerId`) REFERENCES `users`(`id`),
 	`followingId` INT NOT NULL,
-	FOREIGN KEY(`followingId`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+	FOREIGN KEY(`followingId`) REFERENCES `users`(`id`),
 	PRIMARY KEY(`id`)
 );
 
@@ -59,8 +59,8 @@ CREATE TABLE `comments` (
 	`content` VARCHAR(191) NOT NULL,
 	`created_at` TIMESTAMP NOT NULL,
 	`userId` INT NOT NULL,
-	FOREIGN KEY(`userId`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+	FOREIGN KEY(`userId`) REFERENCES `users`(`id`),
 	`postId` INT NOT NULL,
-	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`) ON DELETE CASCADE,
+	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`),
 	PRIMARY KEY(`id`)
 );
