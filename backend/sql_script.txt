@@ -10,57 +10,57 @@ DROP TABLE IF EXISTS `posts`;
 DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
-	`id` INT NOT NULL,
-	`name` VARCHAR(191) NOT NULL,
-	`email` VARCHAR(191) NOT NULL,
-	`first_name` VARCHAR(191) NOT NULL,
-	`last_name` VARCHAR(191) NOT NULL,
-	`dob` DATE NOT NULL,
-	`created_at` TIMESTAMP NOT NULL,
-	`profile_pic_url` VARCHAR(191) NOT NULL,
-	`password` VARCHAR(191) NOT NULL,
-	PRIMARY KEY(`id`)
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(191) NOT NULL,
+    `email` VARCHAR(191) NOT NULL,
+    `first_name` VARCHAR(191) NOT NULL,
+    `last_name` VARCHAR(191) NOT NULL,
+    `dob` DATE NOT NULL,
+    `created_at` TIMESTAMP NOT NULL,
+    `profile_pic_url` VARCHAR(191) NOT NULL,
+    `password` VARCHAR(191) NOT NULL,
+    PRIMARY KEY(`id`)
 );
 
 CREATE TABLE `posts` (
-	`id` INT NOT NULL,
-	`img_url` VARCHAR(191),
-	`video_url` VARCHAR(191),
-	`created_at` TIMESTAMP NOT NULL,
-	`caption` VARCHAR(191) NOT NULL,
-	`userId` INT NOT NULL,
-	FOREIGN KEY(`userId`) REFERENCES `users`(`id`),
-	PRIMARY KEY(`id`)
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `img_url` VARCHAR(191),
+    `video_url` VARCHAR(191),
+    `created_at` TIMESTAMP NOT NULL,
+    `caption` VARCHAR(191) NOT NULL,
+    `userId` INT NOT NULL,
+    FOREIGN KEY(`userId`) REFERENCES `users`(`id`) ON DELETE CASCADE,  -- Apply cascading deletion
+    PRIMARY KEY(`id`)
 );
 
 CREATE TABLE `likes` (
-	`id` INT NOT NULL,
-	`created_at` TIMESTAMP NOT NULL,
-	`active` BOOLEAN NOT NULL,
-	`userId` INT NOT NULL,
-	FOREIGN KEY(`userId`) REFERENCES `users`(`id`),
-	`postId` INT NOT NULL,
-	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`),
-	PRIMARY KEY(`id`)
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `created_at` TIMESTAMP NOT NULL,
+    `active` BOOLEAN NOT NULL,
+    `userId` INT NOT NULL,
+    FOREIGN KEY(`userId`) REFERENCES `users`(`id`) ON DELETE CASCADE,  -- Apply cascading deletion
+    `postId` INT NOT NULL,
+    FOREIGN KEY(`postId`) REFERENCES `posts`(`id`) ON DELETE CASCADE,  -- Apply cascading deletion
+    PRIMARY KEY(`id`)
 );
 
 CREATE TABLE `follows` (
-	`id` INT NOT NULL,
-	`created_at` TIMESTAMP NOT NULL,
-	`followerId` INT NOT NULL,
-	FOREIGN KEY(`followerId`) REFERENCES `users`(`id`),
-	`followingId` INT NOT NULL,
-	FOREIGN KEY(`followingId`) REFERENCES `users`(`id`),
-	PRIMARY KEY(`id`)
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `created_at` TIMESTAMP NOT NULL,
+    `followerId` INT NOT NULL,
+    FOREIGN KEY(`followerId`) REFERENCES `users`(`id`) ON DELETE CASCADE,  -- Apply cascading deletion
+    `followingId` INT NOT NULL,
+    FOREIGN KEY(`followingId`) REFERENCES `users`(`id`) ON DELETE CASCADE,  -- Apply cascading deletion
+    PRIMARY KEY(`id`)
 );
 
 CREATE TABLE `comments` (
-	`id` INT NOT NULL,
-	`content` VARCHAR(191) NOT NULL,
-	`created_at` TIMESTAMP NOT NULL,
-	`userId` INT NOT NULL,
-	FOREIGN KEY(`userId`) REFERENCES `users`(`id`),
-	`postId` INT NOT NULL,
-	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`),
-	PRIMARY KEY(`id`)
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `content` VARCHAR(191) NOT NULL,
+    `created_at` TIMESTAMP NOT NULL,
+    `userId` INT NOT NULL,
+    FOREIGN KEY(`userId`) REFERENCES `users`(`id`) ON DELETE CASCADE,  -- Apply cascading deletion
+    `postId` INT NOT NULL,
+    FOREIGN KEY(`postId`) REFERENCES `posts`(`id`) ON DELETE CASCADE,  -- Apply cascading deletion
+    PRIMARY KEY(`id`)
 );
