@@ -11,13 +11,13 @@ DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
 	`id` VARCHAR(191) NOT NULL,
-	`name` VARCHAR(191) NOT NULL,
+	`name` VARCHAR(191),
 	`email` VARCHAR(191) NOT NULL,
 	`first_name` VARCHAR(191) NOT NULL,
 	`last_name` VARCHAR(191) NOT NULL,
 	`dob` DATE NOT NULL,
 	`created_at` TIMESTAMP NOT NULL,
-	`profile_pic_url` VARCHAR(191) NOT NULL,
+	`profile_pic_url` VARCHAR(191),
 	`password` VARCHAR(191) NOT NULL,
 	PRIMARY KEY(`id`)
 );
