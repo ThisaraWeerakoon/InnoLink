@@ -1,3 +1,7 @@
+drop schema innolink_db;
+create schema innolink_db;
+use innolink_db;
+
 -- AUTO-GENERATED FILE.
 
 -- This file is an auto-generated file by Ballerina persistence layer for model.
@@ -64,4 +68,3 @@ CREATE TABLE `comments` (
 	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`) ON DELETE CASCADE,
 	PRIMARY KEY(`id`)
 );
-
