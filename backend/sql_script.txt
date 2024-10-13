@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS `posts`;
 DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
-	`id` VARCHAR(191) NOT NULL,
+	`id` INT AUTO_INCREMENT,
 	`name` VARCHAR(191),
 	`email` VARCHAR(191) NOT NULL,
 	`first_name` VARCHAR(191) NOT NULL,
@@ -27,44 +27,44 @@ CREATE TABLE `users` (
 );
 
 CREATE TABLE `posts` (
-	`id` VARCHAR(191) NOT NULL,
+	`id` INT AUTO_INCREMENT,
 	`img_url` VARCHAR(191),
 	`video_url` VARCHAR(191),
 	`created_at` TIMESTAMP NOT NULL,
 	`caption` VARCHAR(191) NOT NULL,
-	`userId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`userId`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+	`userId` INT NOT NULL,
+	FOREIGN KEY(`userId`) REFERENCES `users`(`id`),
 	PRIMARY KEY(`id`)
 );
 
 CREATE TABLE `likes` (
-	`id` VARCHAR(191) NOT NULL,
+	`id` INT AUTO_INCREMENT,
 	`created_at` TIMESTAMP NOT NULL,
 	`active` BOOLEAN NOT NULL,
-	`userId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`userId`) REFERENCES `users`(`id`) ON DELETE CASCADE,
-	`postId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`) ON DELETE CASCADE,
+	`userId` INT NOT NULL,
+	FOREIGN KEY(`userId`) REFERENCES `users`(`id`),
+	`postId` INT NOT NULL,
+	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`),
 	PRIMARY KEY(`id`)
 );
 
 CREATE TABLE `follows` (
-	`id` VARCHAR(191) NOT NULL,
+	`id` INT AUTO_INCREMENT,
 	`created_at` TIMESTAMP NOT NULL,
-	`followerId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`followerId`) REFERENCES `users`(`id`) ON DELETE CASCADE,
-	`followingId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`followingId`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+	`followerId` INT NOT NULL,
+	FOREIGN KEY(`followerId`) REFERENCES `users`(`id`),
+	`followingId` INT NOT NULL,
+	FOREIGN KEY(`followingId`) REFERENCES `users`(`id`),
 	PRIMARY KEY(`id`)
 );
 
 CREATE TABLE `comments` (
-	`id` VARCHAR(191) NOT NULL,
+	`id` INT AUTO_INCREMENT,
 	`content` VARCHAR(191) NOT NULL,
 	`created_at` TIMESTAMP NOT NULL,
-	`userId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`userId`) REFERENCES `users`(`id`) ON DELETE CASCADE,
-	`postId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`) ON DELETE CASCADE,
+	`userId` INT NOT NULL,
+	FOREIGN KEY(`userId`) REFERENCES `users`(`id`),
+	`postId` INT NOT NULL,
+	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`),
 	PRIMARY KEY(`id`)
 );
