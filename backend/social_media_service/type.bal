@@ -9,3 +9,14 @@ public type newusers record {|
     string profile_pic_url;
     string password;
 |};
+
+public type registerusers record{|
+
+    string email;
+    string first_name;
+    string last_name;
+    time:Date dob;
+    string password;s
+
+
+|}

@@ -1,4 +1,5 @@
 import ballerina/jwt;
+import ballerina/persist;
 service /api/auth on socialMediaListener {
 
     // JWT issuer configurations
@@ -7,7 +8,7 @@ service /api/auth on socialMediaListener {
     # A resource for generating greetings
     # + name - name as a string or nil
     # + return - string name with hello message or error
-    resource function get greeting(string? name) returns string|error {
+    resource function post login(string? name) returns string|error {
 
         jwt:IssuerConfig issuerConfig = {
             issuer: "socialMediaApp",
@@ -27,5 +28,10 @@ service /api/auth on socialMediaListener {
         // Generate JWT token
         string jwtToken = check jwt:issue(issuerConfig);
         return jwtToken;
+    }
+
+    resource function post register() returns string|http:Ok|http:BadRequest {
+        users|persist:NotFoundError user = innolinkdb->/users;
+        
     }
 }
