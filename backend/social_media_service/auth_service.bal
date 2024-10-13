@@ -15,7 +15,7 @@ service /api/auth on socialMediaListener {
             expTime: 3600,
             signatureConfig: {
                 config: {
-                    keyFile: "./resources/private.key"
+                    keyFile: "./resources/private.key" // No need for a private key file
                 }
             }
         };
