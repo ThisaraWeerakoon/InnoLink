@@ -1,15 +1,18 @@
 import ballerina/persist as _;
 import ballerina/time;
+// import ballerinax/persist.sql;
 
 public type users record {|
+    // @sql:Generated
+    // readonly int id;
     readonly string id;
-    string name;
+    string? name;
     string email;
     string first_name;
     string last_name;
     time:Date dob;
     time:Utc created_at;
-    string profile_pic_url;
+    string? profile_pic_url;
     string password;
 
      // Relations
@@ -21,6 +24,8 @@ public type users record {|
 |};
 
 public type posts record {|
+    // @sql:Generated
+    // readonly int id;
     readonly string id;
     string? img_url;
     string? video_url;
@@ -34,6 +39,8 @@ public type posts record {|
 |};
 
 public type comments record {|
+    // @sql:Generated
+    // readonly int id;
     readonly string id;
     string content;
     time:Utc created_at;
@@ -42,6 +49,8 @@ public type comments record {|
 |};
 
 public type likes record {|
+    // @sql:Generated
+    // readonly int id;
     readonly string id;
     users user;
     posts post;
@@ -50,6 +59,8 @@ public type likes record {|
 |};
 
 public type follows record {|
+    //  @sql:Generated
+    // readonly int id;
     readonly string id;
     users follower;
     users following;

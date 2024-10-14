@@ -16,7 +16,7 @@ public type registerusers record{|
     string first_name;
     string last_name;
     time:Date dob;
-    string password;s
+    string password;
 
 
-|}
+|};
