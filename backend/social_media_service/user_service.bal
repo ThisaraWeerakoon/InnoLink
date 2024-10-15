@@ -194,7 +194,7 @@ service /api/users on socialMediaListener {
     # + return - boolean following or not
     resource function get isfollowing(string userId,string followingId,string jwt) returns boolean|http:BadRequest|error {
 
-                // Validate the JWT token
+        // Validate the JWT token
         jwt:Payload|error validationResult = jwt:validate(jwt, validatorConfig);
     
         if (validationResult is jwt:Payload) {
