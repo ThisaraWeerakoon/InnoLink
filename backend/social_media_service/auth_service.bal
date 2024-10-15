@@ -26,7 +26,8 @@ service /api/auth on socialMediaListener {
     # + email - email as a string
     # + password - password as a string
     # + return - jwt token as a string, htttp:BadRequest, error
-    resource function post login(string email, string password) returns string|http:BadRequest|error {
+    resource function get login(string email, string password) returns string|http:BadRequest|error {
+
         
         sql:ParameterizedQuery selectQuery = `SELECT * FROM users WHERE email = ${email}`;
         stream<users, persist:Error?> userStream = innolinkdb->queryNativeSQL(selectQuery);
@@ -37,12 +38,13 @@ service /api/auth on socialMediaListener {
             return <http:BadRequest>{body: {message: string `Failed to retrieve user details:`}};
         }
 
-        // Check if the user already exists
+        // Check if the user exists
         if result.length() > 0 {
             users user = result[0];
-            string hash = hashPassword(password);
-            if comparePassword(user.password,hash) is false {
-                return <http:BadRequest>{body: {message: string `Invalid password:`}};
+
+            //compare the provided password against the password stored in the database
+            if comparePassword(password,user.password) is false {
+                return <http:BadRequest>{body: {message: string ` wrong password:`}};
             }
             // Issue JWT token
             string jwtToken = check jwt:issue(issuerConfig);
@@ -110,9 +112,9 @@ isolated function hashPassword(string password) returns string {
 }
 
 // Compare password with hashed password
-isolated function comparePassword(string password, string hash) returns boolean {
-    string hashedInputPassword = hashPassword(password);
-    return hashedInputPassword == hash;
+isolated function comparePassword(string inputPassword, string storedHashedPassword) returns boolean {
+    string hashedInputPassword = hashPassword(inputPassword);
+    return hashedInputPassword == storedHashedPassword;
 }
 
 

@@ -48,8 +48,8 @@ service /api/posts on socialMediaListener{
     # A resource for getting all posts by an user's followers
     # + userId - user id
     # + return - http reponse or posts
-    
-    remote function get getAllByUserFollowing(string userId) returns posts[]|http:BadRequest {
+    remote function get getAllByUserFollowing(string userId) returns posts[]|http:BadRequest{
+        
         sql:ParameterizedQuery selectQuery = `SELECT p.* FROM posts p JOIN followers f ON p.userId = f.followingId WHERE f.followerId = ${userId}}`;
         
     }
