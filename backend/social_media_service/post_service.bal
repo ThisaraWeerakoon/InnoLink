@@ -1,4 +1,6 @@
 import ballerina/persist;
+import ballerina/http;
+import ballerina/sql;
 service /api/posts on socialMediaListener{
 
     # /api/posts/getall
@@ -24,6 +26,35 @@ service /api/posts on socialMediaListener{
             return <http:NotFound>{body: {message: "post not found"}};
         }
     };
+
+    #/api/posts/getallbyuser/{userId}
+    # A resource for getting all posts by user id
+    # + userId - user id
+    # + return - http response or posts
+    resource function get getallbyuser(string userId) returns posts[]|http:BadRequest {
+
+        sql:ParameterizedQuery selectQuery = `SELECT * FROM posts WHERE userId = ${userId}}`;
+
+        stream<posts, persist:Error?> postStream = innolinkdb->queryNativeSQL(selectQuery);
+
+        posts[]|error result = from var post in postStream select post;
+        if result is error {
+            return <http:BadRequest>{body: {message: string `Failed to retrieve posts:`}};
+        }
+        return result;
+    };
+
+    #/api/posts/getAllByUserFollowing
+    # A resource for getting all posts by an user's followers
+    # + userId - user id
+    # + return - http reponse or posts
+    
+    remote function get getAllByUserFollowing(string userId) returns posts[]|http:BadRequest {
+        sql:ParameterizedQuery selectQuery = `SELECT p.* FROM posts p JOIN followers f ON p.userId = f.followingId WHERE f.followerId = ${userId}}`;
+        
+    }
+
+
 
 
 }

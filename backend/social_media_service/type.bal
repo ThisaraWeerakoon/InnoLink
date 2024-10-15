@@ -20,3 +20,13 @@ public type registerusers record{|
 
 
 |};
+
+public type newposts record{|
+
+    string? img_url;
+    string? video_url;
+    time:Utc created_at;
+    users user;
+    string caption;
+
+|};
