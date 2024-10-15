@@ -1,18 +1,15 @@
-drop schema innolink_db;
-create schema innolink_db;
-use innolink_db;
+DROP SCHEMA IF EXISTS innolink_db;
+CREATE SCHEMA innolink_db;
+USE innolink_db;
 
--- AUTO-GENERATED FILE.
-
--- This file is an auto-generated file by Ballerina persistence layer for model.
--- Please verify the generated scripts and execute them against the target DB server.
-
+-- DROP existing tables
 DROP TABLE IF EXISTS `comments`;
 DROP TABLE IF EXISTS `follows`;
 DROP TABLE IF EXISTS `likes`;
 DROP TABLE IF EXISTS `posts`;
 DROP TABLE IF EXISTS `users`;
 
+-- CREATE users table
 CREATE TABLE `users` (
 	`id` VARCHAR(191) NOT NULL,
 	`name` VARCHAR(191),
@@ -26,6 +23,7 @@ CREATE TABLE `users` (
 	PRIMARY KEY(`id`)
 );
 
+-- CREATE posts table
 CREATE TABLE `posts` (
 	`id` VARCHAR(191) NOT NULL,
 	`img_url` VARCHAR(191),
@@ -33,40 +31,55 @@ CREATE TABLE `posts` (
 	`created_at` TIMESTAMP NOT NULL,
 	`caption` VARCHAR(191) NOT NULL,
 	`userId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`userId`) REFERENCES `users`(`id`),
-	PRIMARY KEY(`id`)
+	PRIMARY KEY(`id`),
+	FOREIGN KEY(`userId`) REFERENCES `users`(`id`)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
 );
 
+-- CREATE likes table
 CREATE TABLE `likes` (
 	`id` VARCHAR(191) NOT NULL,
 	`created_at` TIMESTAMP NOT NULL,
 	`active` BOOLEAN NOT NULL,
 	`userId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`userId`) REFERENCES `users`(`id`),
 	`postId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`),
-	PRIMARY KEY(`id`)
+	PRIMARY KEY(`id`),
+	FOREIGN KEY(`userId`) REFERENCES `users`(`id`)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
 );
 
+-- CREATE follows table
 CREATE TABLE `follows` (
 	`id` VARCHAR(191) NOT NULL,
 	`created_at` TIMESTAMP NOT NULL,
 	`followerId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`followerId`) REFERENCES `users`(`id`),
 	`followingId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`followingId`) REFERENCES `users`(`id`),
-	PRIMARY KEY(`id`)
+	PRIMARY KEY(`id`),
+	FOREIGN KEY(`followerId`) REFERENCES `users`(`id`)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	FOREIGN KEY(`followingId`) REFERENCES `users`(`id`)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
 );
 
+-- CREATE comments table
 CREATE TABLE `comments` (
 	`id` VARCHAR(191) NOT NULL,
 	`content` VARCHAR(191) NOT NULL,
 	`created_at` TIMESTAMP NOT NULL,
 	`userId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`userId`) REFERENCES `users`(`id`),
 	`postId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`),
-	PRIMARY KEY(`id`)
+	PRIMARY KEY(`id`),
+	FOREIGN KEY(`userId`) REFERENCES `users`(`id`)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE,
+	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
 );
-
-
