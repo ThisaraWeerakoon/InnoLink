@@ -7,7 +7,8 @@ import ballerina/uuid;
 
 @http:ServiceConfig{
     cors: {
-        allowOrigins: ["*"]
+        allowOrigins: ["*"],
+        allowCredentials: true
     }
 }
 service /api/follows on socialMediaListener{

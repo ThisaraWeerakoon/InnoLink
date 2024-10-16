@@ -21,7 +21,8 @@ jwt:IssuerConfig issuerConfig = {
 
 @http:ServiceConfig{
     cors: {
-        allowOrigins: ["*"]
+        allowOrigins: ["*"],
+        allowCredentials: true
     }
 }
 

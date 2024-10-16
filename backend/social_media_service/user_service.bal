@@ -20,12 +20,10 @@ final jwt:ValidatorConfig validatorConfig = {
 
 @http:ServiceConfig{
     cors: {
-        allowOrigins: ["*"]
+        allowOrigins: ["*"],
+        allowCredentials: true
     }
 }
-
-
-
 
 service /api/users on socialMediaListener {
 
