@@ -4,7 +4,12 @@ import ballerina/sql;
 import ballerina/jwt;
 import ballerina/time;
 import ballerina/uuid;
-import ballerina/io;
+
+@http:ServiceConfig{
+    cors: {
+        allowOrigins: ["*"]
+    }
+}
 service /api/posts on socialMediaListener{
 
     # /api/posts/getall
@@ -145,7 +150,6 @@ service /api/posts on socialMediaListener{
                 created_at: time:utcNow()
             };
             string[]|persist:Error result = innolinkdb->/posts.post([post]);
-            io:println(result);
             if result is string[] {
                 return result[0];
             }

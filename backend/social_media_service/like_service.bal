@@ -5,6 +5,13 @@ import ballerina/jwt;
 import ballerina/time;
 import ballerina/uuid;
 import ballerina/io;
+
+@http:ServiceConfig{
+    cors: {
+        allowOrigins: ["*"]
+    }
+}
+
 service /api/likes on socialMediaListener{
 
     # /api/likes/getallbypost
@@ -34,23 +41,23 @@ service /api/likes on socialMediaListener{
 
     }
 
-    # /api/posts/getbyid/{id}
-    # A resource for getting posts by id
+    # /api/likes/getbyid/{id}
+    # A resource for getting like by like_id
     # + 
     # + return - post or error
-    resource function get getbyid/[string id](string jwt) returns posts|http:NotFound|error {
+    resource function get getbyid/[string id](string jwt) returns likes|http:NotFound|error {
         
         // Validate the JWT token
         jwt:Payload|error validationResult = jwt:validate(jwt, validatorConfig);
     
         if (validationResult is jwt:Payload) {
             // JWT validation succeeded
-            posts|persist:Error post = innolinkdb->/posts/[id];
-            if post is posts {
-                return post;
+            likes|persist:Error like = innolinkdb->/likes/[id];
+            if like is likes {
+                return like;
             }
             else{
-                return <http:NotFound>{body: {message: "post not found"}};
+                return <http:NotFound>{body: {message: "like not found"}};
             }
         } else {
             // JWT validation failed, return the error
@@ -154,21 +161,21 @@ service /api/likes on socialMediaListener{
 
     #api/likes/delete/{id}
     # A resource for deleting a like by id
-    # + id - post id
+    # + id - like id
     # + return - http response or error
-    resource function delete delete/[string postId](string jwt) returns posts|http:NotFound|error{
+    resource function delete delete/[string id](string jwt) returns likes|http:NotFound|error{
         
         // Validate the JWT token
         jwt:Payload|error validationResult = jwt:validate(jwt, validatorConfig);
     
         if (validationResult is jwt:Payload) {
             // JWT validation succeeded
-            posts|persist:Error post = innolinkdb->/posts/[postId].delete;
-            if post is posts {
-                return post;
+            likes|persist:Error like = innolinkdb->/likes/[id].delete;
+            if like is likes {
+                return like;
             }
             else{
-                return <http:NotFound>{body: {message: "post not found"}};
+                return <http:NotFound>{body: {message: "like not found"}};
             }
 
 

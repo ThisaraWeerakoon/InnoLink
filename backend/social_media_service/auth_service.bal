@@ -19,6 +19,12 @@ jwt:IssuerConfig issuerConfig = {
     }
 };
 
+@http:ServiceConfig{
+    cors: {
+        allowOrigins: ["*"]
+    }
+}
+
 service /api/auth on socialMediaListener {
     
     # /api/auth/login

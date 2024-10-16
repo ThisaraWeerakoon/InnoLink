@@ -9,23 +9,7 @@ final Client innolinkdb = check new;
 
 listener http:Listener socialMediaListener = new (9090);
 
-// @http:ServiceConfig{
-//     cors: {
-//         allowOrigins: ["*"]
-//     }
-//     // auth: [
-//     //     {
-//     //         jwtValidatorConfig: {
-//     //             issuer: "socialMediaApp",
-//     //             audience: "users",
-//     //             signatureConfig: {
-//     //                 certFile: "./resources/public.crt"
-//     //             }
-//     //         }
-//     //     }
-//     // ]
-// }
-jwt:ValidatorConfig validatorConfig = {
+final jwt:ValidatorConfig validatorConfig = {
     issuer: "socialMediaApp",
     audience: "users",
     clockSkew: 60,
@@ -34,9 +18,17 @@ jwt:ValidatorConfig validatorConfig = {
     }
 };
 
+@http:ServiceConfig{
+    cors: {
+        allowOrigins: ["*"]
+    }
+}
+
+
 
 
 service /api/users on socialMediaListener {
+
 
     # /api/users/getall
     # A resource for getting all users
@@ -217,11 +209,6 @@ service /api/users on socialMediaListener {
             // JWT validation failed, return the error
             return validationResult;
         }
-
-
-
-
-
     }
 }
 
