@@ -33,7 +33,7 @@ service /api/auth on socialMediaListener {
     # + email - email as a string
     # + password - password as a string
     # + return - jwt token as a string, htttp:BadRequest, error
-    resource function get login(string email, string password) returns string|http:BadRequest|error {
+    resource function get login(string email, string password) returns json|http:BadRequest|error {
 
         
         sql:ParameterizedQuery selectQuery = `SELECT * FROM users WHERE email = ${email}`;
@@ -55,7 +55,19 @@ service /api/auth on socialMediaListener {
             }
             // Issue JWT token
             string jwtToken = check jwt:issue(issuerConfig);
-            return jwtToken;
+            
+            // Return the user details along with the JWT token
+            json responseBody = {
+                "userData": {
+                    "id": user.id,
+                    "name": user.name,
+                    "email": user.email,
+                    "profilePicture": user.profile_pic_url
+                },
+                "token": jwtToken
+            };
+        
+            return responseBody;
         }
         else{
             return <http:BadRequest>{body: {message: string `User does not exists:`}};
