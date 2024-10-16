@@ -3,6 +3,7 @@ import { useState } from "react";
 import { axiosInstance } from "../../lib/axios";
 import toast from "react-hot-toast";
 import { Loader } from "lucide-react";
+import { useNavigate } from "react-router-dom"; 
 
 const LoginForm = ({onLogin}) => {
 	const [username, setUsername] = useState("");
@@ -15,6 +16,8 @@ const LoginForm = ({onLogin}) => {
 			const { user, token } = data.data; // Assuming response contains user data and token
 			onLogin(user, token); // Pass user and token to onLogin
 			queryClient.invalidateQueries({ queryKey: ["authUser"] });
+			console.log(user,token);
+			navigate("/");
 		},
 		onError: (err) => {
 			toast.error(err.response.data.message || "Something went wrong");

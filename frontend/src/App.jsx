@@ -11,6 +11,7 @@ import PostPage from "./pages/PostPage";
 import ProfilePage from "./pages/ProfilePage";
 
 function App() {
+	//set to null
     const [authUser, setAuthUser] = useState(null);
 
     // Assuming a user logs in, you set `authUser` and store the JWT:

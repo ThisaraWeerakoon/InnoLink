@@ -13,7 +13,7 @@ const PostCreation = ({ user }) => {
 
 	const { mutate: createPostMutation, isPending } = useMutation({
 		mutationFn: async (postData) => {
-			const res = await axiosInstance.post("/posts/create", postData, {
+			const res = await axiosInstance.post("/posts/add", postData, {
 				headers: { "Content-Type": "application/json" },
 			});
 			return res.data;
