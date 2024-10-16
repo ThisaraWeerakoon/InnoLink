@@ -184,7 +184,34 @@ service /api/likes on socialMediaListener{
         }
     }
 
+    # api/likes/inactive/{id}
+    # A resource for make active like into an inactive
+    # + 
+    # + return - http response or error
+    
+    resource function put inactive/[string id](string jwt) returns likes|http:BadRequest|http:InternalServerError|error{
+
+                // Validate the JWT token
+        jwt:Payload|error validationResult = jwt:validate(jwt, validatorConfig);
+    
+        if (validationResult is jwt:Payload) {
+            // JWT validation succeeded
+            likesUpdate update = {"active":false};
+            likes|persist:Error updatedLike = innolinkdb->/likes/[id].put(update);
+            if updatedLike is likes {
+                return updatedLike;
+            }
+            if updatedLike is persist:ConstraintViolationError {
+                string violationMessage = updatedLike.message();// Get the violation message
+                return <http:BadRequest>{body: {message: string `Constraint violation: ${violationMessage}`}};
+
+            }
+            return http:INTERNAL_SERVER_ERROR;
 
 
-
+        } else {
+            // JWT validation failed, return the error
+            return validationResult;
+        }
+    }
 }
