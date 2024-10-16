@@ -4,14 +4,16 @@ import { axiosInstance } from "../../lib/axios";
 import toast from "react-hot-toast";
 import { Loader } from "lucide-react";
 
-const LoginForm = () => {
+const LoginForm = ({onLogin}) => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const queryClient = useQueryClient();
 
 	const { mutate: loginMutation, isLoading } = useMutation({
-		mutationFn: (userData) => axiosInstance.post("/auth/login", userData),
+		mutationFn: () => axiosInstance.get(`/auth/login?email=${username}&password=${password}`),
 		onSuccess: () => {
+			const { user, token } = data.data; // Assuming response contains user data and token
+			onLogin(user, token); // Pass user and token to onLogin
 			queryClient.invalidateQueries({ queryKey: ["authUser"] });
 		},
 		onError: (err) => {
