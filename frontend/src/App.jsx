@@ -12,18 +12,15 @@ import ProfilePage from "./pages/ProfilePage";
 
 function App() {
 	//set to null
-    const [authUser, setAuthUser] = useState({
-		id: "12345",
-		name: "John Doe",
-		profilePicture: "/avatar.png",
-		email: "johndoe@example.com"
-	});
+    const [authUser, setAuthUser] = useState(null);
+
     // Assuming a user logs in, you set `authUser` and store the JWT:
     const handleLogin = (userData, token) => {
-        //setAuthUser(userData);
+		console.log("handleLogin");
+        setAuthUser(userData);
         localStorage.setItem("jwt", token);
     };
-	console.log(token);
+	
     const handleLogout = () => {
         setAuthUser(null);
         localStorage.removeItem("jwt");
@@ -32,7 +29,7 @@ function App() {
     return (
         <Layout>
             <Routes>
-                <Route path='/home' element={authUser ? <HomePage authUser={authUser}/> : <Navigate to="/login" />} />
+                <Route path='/' element={authUser ? <HomePage /> : <Navigate to="/login" />} />
                 <Route path='/signup' element={!authUser ? <SignUpPage /> : <Navigate to="/" />} />
                 <Route path='/login' element={!authUser ? <LoginPage onLogin={handleLogin} /> : <Navigate to="/" />} />
                 <Route path='/notifications' element={authUser ? <NotificationsPage /> : <Navigate to="/login" />} />

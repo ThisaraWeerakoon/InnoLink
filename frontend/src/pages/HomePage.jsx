@@ -8,7 +8,7 @@ import RecommendedUser from "../components/RecommendedUser";
 
 const HomePage = ({authUser}) => {
 	const token = localStorage.getItem("jwt");
-	
+	console.log("token", token);
 	const { data: posts } = useQuery({
 		queryKey: ["posts"],
 		queryFn: async () => {

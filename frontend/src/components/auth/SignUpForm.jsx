@@ -3,6 +3,7 @@ import { useState } from "react";
 import { axiosInstance } from "../../lib/axios";
 import toast from "react-hot-toast";
 import { Loader } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const SignUpForm = () => {
   const [email, setEmail] = useState("");
@@ -10,12 +11,13 @@ const SignUpForm = () => {
   const [lastName, setLastName] = useState("");
   const [dob, setDob] = useState({ year: "", month: "", day: "" });
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const { mutate: signUpMutation, isLoading } = useMutation({
     mutationFn: (userData) => axiosInstance.post("/auth/register", userData),
     onSuccess: () => {
       toast.success("Account created successfully!");
-	  navigate("/login");
+	    navigate("/login");
 	    },
     onError: (err) => {
       toast.error(err.response?.data?.message || "Something went wrong");
@@ -29,14 +31,15 @@ const SignUpForm = () => {
       first_name: firstName,
       last_name: lastName,
       dob: {
-        year: dob.year,
-        month: dob.month,
-        day: dob.day,
+        year: parseInt(dob.year, 10),
+        month: parseInt(dob.month, 10),
+        day: parseInt(dob.day, 10),
       },
       password,
     };
     signUpMutation(requestData);
   };
+  
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 w-full max-w-md">

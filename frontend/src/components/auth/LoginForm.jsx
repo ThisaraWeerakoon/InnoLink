@@ -9,15 +9,18 @@ const LoginForm = ({onLogin}) => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const queryClient = useQueryClient();
+	const navigate = useNavigate();
 
 	const { mutate: loginMutation, isLoading } = useMutation({
 		mutationFn: () => axiosInstance.get(`/auth/login?email=${username}&password=${password}`),
-		onSuccess: () => {
-			const { user, token } = data.data; // Assuming response contains user data and token
-			onLogin(user, token); // Pass user and token to onLogin
+		
+		onSuccess: (response) => {
+			const { userData , token } = response.data; // Assuming response contains user data and token
+			onLogin(userData, token); // Pass user and token to onLogin
 			queryClient.invalidateQueries({ queryKey: ["authUser"] });
-			console.log(user,token);
-			navigate("/home");
+			console.log('userData :',userData);
+			console.log('token :',token);
+			navigate("/");
 		},
 		onError: (err) => {
 			toast.error(err.response.data.message || "Something went wrong");
