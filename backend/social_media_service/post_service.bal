@@ -4,7 +4,12 @@ import ballerina/sql;
 import ballerina/jwt;
 import ballerina/time;
 import ballerina/uuid;
-import ballerina/io;
+
+@http:ServiceConfig{
+    cors: {
+        allowOrigins: ["*"]
+    }
+}
 service /api/posts on socialMediaListener{
 
     # /api/posts/getall
@@ -54,7 +59,7 @@ service /api/posts on socialMediaListener{
 
     };
 
-    #/api/posts/getallbyuser/{userId}
+    #/api/posts/getallbyuser
     # A resource for getting all posts by user id
     # + userId - user id
     # + return - http response or posts
@@ -65,7 +70,7 @@ service /api/posts on socialMediaListener{
     
         if (validationResult is jwt:Payload) {
             // JWT validation succeeded
-            sql:ParameterizedQuery selectQuery = `SELECT * FROM posts WHERE userId = ${userId}}`;
+            sql:ParameterizedQuery selectQuery = `SELECT * FROM posts WHERE userId = ${userId}`;
 
             stream<posts, persist:Error?> postStream = innolinkdb->queryNativeSQL(selectQuery);
 
@@ -145,7 +150,6 @@ service /api/posts on socialMediaListener{
                 created_at: time:utcNow()
             };
             string[]|persist:Error result = innolinkdb->/posts.post([post]);
-            io:println(result);
             if result is string[] {
                 return result[0];
             }
@@ -164,14 +168,14 @@ service /api/posts on socialMediaListener{
     # A resource for deleting a post by id
     # + id - post id
     # + return - http response or error
-    resource function delete delete/[string postId](string jwt) returns posts|http:NotFound|error{
+    resource function delete delete/[string id](string jwt) returns posts|http:NotFound|error{
         
         // Validate the JWT token
         jwt:Payload|error validationResult = jwt:validate(jwt, validatorConfig);
     
         if (validationResult is jwt:Payload) {
             // JWT validation succeeded
-            posts|persist:Error post = innolinkdb->/posts/[postId].delete;
+            posts|persist:Error post = innolinkdb->/posts/[id].delete;
             if post is posts {
                 return post;
             }
@@ -185,8 +189,4 @@ service /api/posts on socialMediaListener{
             return validationResult;
         }
     }
-
-
-
-
 }
