@@ -17,7 +17,7 @@ const LoginForm = ({onLogin}) => {
 			onLogin(user, token); // Pass user and token to onLogin
 			queryClient.invalidateQueries({ queryKey: ["authUser"] });
 			console.log(user,token);
-			navigate("/");
+			navigate("/home");
 		},
 		onError: (err) => {
 			toast.error(err.response.data.message || "Something went wrong");
