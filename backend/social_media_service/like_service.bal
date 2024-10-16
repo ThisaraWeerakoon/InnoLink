@@ -8,7 +8,8 @@ import ballerina/uuid;
 
 @http:ServiceConfig{
     cors: {
-        allowOrigins: ["*"]
+        allowOrigins: ["*"],
+        allowCredentials: true
     }
 }
 
