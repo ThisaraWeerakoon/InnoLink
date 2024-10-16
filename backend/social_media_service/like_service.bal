@@ -4,7 +4,7 @@ import ballerina/sql;
 import ballerina/jwt;
 import ballerina/time;
 import ballerina/uuid;
-import ballerina/io;
+
 
 @http:ServiceConfig{
     cors: {
@@ -29,7 +29,6 @@ service /api/likes on socialMediaListener{
             stream<likes, persist:Error?> likeStream = innolinkdb->queryNativeSQL(selectQuery);
 
             likes[]|error result = from var like in likeStream select like;
-            io:println(result);
             if result is error {
                 return <http:BadRequest>{body: {message: string `Failed to retrieve likes:`}};
             }
@@ -106,11 +105,11 @@ service /api/likes on socialMediaListener{
         if (validationResult is jwt:Payload) {
             // JWT validation succeeded
             sql:ParameterizedQuery selectQuery = `SELECT * FROM likes WHERE userId = ${userId} AND postId = ${postId} AND active = 1`;
-            io:println(selectQuery);
+
             stream<likes, persist:Error?> likesStream = innolinkdb->queryNativeSQL(selectQuery);
-            io:println(likesStream);
+
             likes[]|error result = from var like in likesStream select like;
-            io:println(result);
+
             if result is error {
                 return <http:BadRequest>{body: {message: string `Failed to retrieve likes`}};
             }
