@@ -88,8 +88,8 @@ service /api/posts on socialMediaListener{
 
     };
 
-    #/api/posts/getAllByUserFollowing
-    # A resource for getting all posts by an user's followers
+    #/api/posts/getAllByHandshakers
+    # A resource for getting all posts by an user's handshakers
     # + userId - user id
     # + return - http reponse or posts[]
     resource function get getAllByUserFollowing(string userId,string jwt) returns posts[]|http:BadRequest|error{
@@ -99,7 +99,7 @@ service /api/posts on socialMediaListener{
     
         if (validationResult is jwt:Payload) {
             // JWT validation succeeded
-            sql:ParameterizedQuery selectFollowsQuery = `SELECT * FROM follows WHERE followerId = ${userId}`;
+            sql:ParameterizedQuery selectFollowsQuery = `SELECT * FROM handshakes WHERE handshakerId = ${userId} AND accepted = TRUE`;
 
             stream<follows, persist:Error?> followStream = innolinkdb->queryNativeSQL(selectFollowsQuery);
 

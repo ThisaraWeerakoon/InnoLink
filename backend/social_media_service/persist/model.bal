@@ -18,11 +18,11 @@ public enum Domain {
     TECHNOLOGY
 };
 
-public enum NotificationType{
-    LIKES_TYPE,
-    COMMENTS_TYPE,
-    HANDSHAKE_REQUEST_TYPE
+public enum Handshake_Notify_Type{
+    REQUEST,
+    ACCEPTED
 }
+
 
 public type stories record {|
     // @sql:Generated
@@ -77,10 +77,11 @@ public type users record {|
     likes[] userLikes;      // A user can have multiple likes.
     handshakes[] handshakers;    // A user can have multiple followers.
     handshakes[] handshakees;
-	notifications[] receipents;
-	notifications[] related_users;   // A user can follow multiple others.
     stories[] userStories;   // A user can follow multiple stories.
-    education[] userEducation;  // A user can follow multiple education.
+    education[] userEducation;
+	likes_notifier[] likes_notifier;
+	comments_notifier[] comments_notifier;
+	handshake_notifier[] handshake_notifier;  // A user can follow multiple education.
 |};
 
 public type posts record {|
@@ -96,17 +97,20 @@ public type posts record {|
     // Relations
     comments[] postComments; // A post can have multiple comments.
     likes[] postLikes;
-	notifications[] notifications;       // A post can have multiple likes.
+	
 |};
+
 
 public type comments record {|
     // @sql:Generated
     // readonly int id;
     readonly string id;
     string content;
+    string? media;
     time:Utc created_at;
     users user;
     posts post;
+	comments_notifier[] comments_notifier;
 |};
 
 public type likes record {|
@@ -116,7 +120,8 @@ public type likes record {|
     users user;
     posts post;
     time:Utc created_at;
-    boolean active;   
+    boolean active;
+	likes_notifier[] likes_notifier;   
 |};
 
 public type handshakes record {|
@@ -127,18 +132,44 @@ public type handshakes record {|
     users handshakee;
     time:Utc created_at; 
     boolean accepted;
+	handshake_notifier[] handshake_notifier;
 |};
 
-public type notifications record {|
+public type likes_notifier record {|
     readonly string id;
-    users receipent;
-    NotificationType notification_type;
-    users related_user;
-    posts related_post;
+    users recepient;
+    likes like;
     boolean read;
     time:Utc created_at;
 
 |};
+
+public type comments_notifier record {|
+    // @sql:Generated
+    // readonly int id;
+    readonly string id;
+    users recepient;
+    comments comment;
+    boolean read;
+    time:Utc created_at;
+
+|};
+
+public type handshake_notifier record {|
+    // @sql:Generated
+    // readonly int id;
+    readonly string id;
+    users recepient;
+    handshakes handshake;
+    boolean read;
+    time:Utc created_at;
+    Handshake_Notify_Type notify_type;
+
+|};
+
+
+
+
 
 
 
