@@ -69,7 +69,7 @@ CREATE TABLE `handshakes` (
 
 CREATE TABLE `handshake_notifier` (
 	`id` VARCHAR(191) NOT NULL,
-	`read` BOOLEAN NOT NULL,
+	`read` BOOLEAN DEFAULT FALSE NOT NULL,
 	`created_at` TIMESTAMP NOT NULL,
 	`notify_type` ENUM('REQUEST', 'ACCEPTED') NOT NULL,
 	`recepientId` VARCHAR(191) NOT NULL,
