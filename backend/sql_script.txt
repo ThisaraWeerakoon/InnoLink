@@ -1,15 +1,25 @@
-DROP SCHEMA IF EXISTS innolink_db;
-CREATE SCHEMA innolink_db;
-USE innolink_db;
 
--- DROP existing tables
+drop schema innolink_db;
+create schema innolink_db;
+use innolink_db;
+
+
+-- AUTO-GENERATED FILE.
+
+-- This file is an auto-generated file by Ballerina persistence layer for model.
+-- Please verify the generated scripts and execute them against the target DB server.
+
+DROP TABLE IF EXISTS `likes_notifier`;
+DROP TABLE IF EXISTS `stories`;
+DROP TABLE IF EXISTS `education`;
+DROP TABLE IF EXISTS `comments_notifier`;
 DROP TABLE IF EXISTS `comments`;
-DROP TABLE IF EXISTS `follows`;
+DROP TABLE IF EXISTS `handshake_notifier`;
+DROP TABLE IF EXISTS `handshakes`;
 DROP TABLE IF EXISTS `likes`;
 DROP TABLE IF EXISTS `posts`;
 DROP TABLE IF EXISTS `users`;
 
--- CREATE users table
 CREATE TABLE `users` (
 	`id` VARCHAR(191) NOT NULL,
 	`name` VARCHAR(191),
@@ -19,11 +29,12 @@ CREATE TABLE `users` (
 	`dob` DATE NOT NULL,
 	`created_at` TIMESTAMP NOT NULL,
 	`profile_pic_url` VARCHAR(191),
+	`banner_url` VARCHAR(191),
 	`password` VARCHAR(191) NOT NULL,
+	`about_me` VARCHAR(191),
 	PRIMARY KEY(`id`)
 );
 
--- CREATE posts table
 CREATE TABLE `posts` (
 	`id` VARCHAR(191) NOT NULL,
 	`img_url` VARCHAR(191),
@@ -31,55 +42,102 @@ CREATE TABLE `posts` (
 	`created_at` TIMESTAMP NOT NULL,
 	`caption` VARCHAR(191) NOT NULL,
 	`userId` VARCHAR(191) NOT NULL,
-	PRIMARY KEY(`id`),
-	FOREIGN KEY(`userId`) REFERENCES `users`(`id`)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE
+	FOREIGN KEY(`userId`) REFERENCES `users`(`id`),
+	PRIMARY KEY(`id`)
 );
 
--- CREATE likes table
 CREATE TABLE `likes` (
 	`id` VARCHAR(191) NOT NULL,
 	`created_at` TIMESTAMP NOT NULL,
 	`active` BOOLEAN NOT NULL,
 	`userId` VARCHAR(191) NOT NULL,
+	FOREIGN KEY(`userId`) REFERENCES `users`(`id`),
 	`postId` VARCHAR(191) NOT NULL,
-	PRIMARY KEY(`id`),
-	FOREIGN KEY(`userId`) REFERENCES `users`(`id`)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE,
-	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE
+	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`),
+	PRIMARY KEY(`id`)
 );
 
--- CREATE follows table
-CREATE TABLE `follows` (
+CREATE TABLE `handshakes` (
 	`id` VARCHAR(191) NOT NULL,
 	`created_at` TIMESTAMP NOT NULL,
-	`followerId` VARCHAR(191) NOT NULL,
-	`followingId` VARCHAR(191) NOT NULL,
-	PRIMARY KEY(`id`),
-	FOREIGN KEY(`followerId`) REFERENCES `users`(`id`)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE,
-	FOREIGN KEY(`followingId`) REFERENCES `users`(`id`)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE
+	`accepted` BOOLEAN NOT NULL,
+	`handshakerId` VARCHAR(191) NOT NULL,
+	FOREIGN KEY(`handshakerId`) REFERENCES `users`(`id`),
+	`handshakeeId` VARCHAR(191) NOT NULL,
+	FOREIGN KEY(`handshakeeId`) REFERENCES `users`(`id`),
+	PRIMARY KEY(`id`)
 );
 
--- CREATE comments table
+CREATE TABLE `handshake_notifier` (
+	`id` VARCHAR(191) NOT NULL,
+	`read` BOOLEAN NOT NULL,
+	`created_at` TIMESTAMP NOT NULL,
+	`notify_type` ENUM('REQUEST', 'ACCEPTED') NOT NULL,
+	`recepientId` VARCHAR(191) NOT NULL,
+	FOREIGN KEY(`recepientId`) REFERENCES `users`(`id`),
+	`handshakeId` VARCHAR(191) NOT NULL,
+	FOREIGN KEY(`handshakeId`) REFERENCES `handshakes`(`id`),
+	PRIMARY KEY(`id`)
+);
+
 CREATE TABLE `comments` (
 	`id` VARCHAR(191) NOT NULL,
 	`content` VARCHAR(191) NOT NULL,
+	`media` VARCHAR(191) ,
 	`created_at` TIMESTAMP NOT NULL,
 	`userId` VARCHAR(191) NOT NULL,
+	FOREIGN KEY(`userId`) REFERENCES `users`(`id`),
 	`postId` VARCHAR(191) NOT NULL,
-	PRIMARY KEY(`id`),
-	FOREIGN KEY(`userId`) REFERENCES `users`(`id`)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE,
-	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`)
-		ON DELETE CASCADE
-		ON UPDATE CASCADE
+	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`),
+	PRIMARY KEY(`id`)
 );
+
+CREATE TABLE `comments_notifier` (
+	`id` VARCHAR(191) NOT NULL,
+	`read` BOOLEAN NOT NULL,
+	`created_at` TIMESTAMP NOT NULL,
+	`recepientId` VARCHAR(191) NOT NULL,
+	FOREIGN KEY(`recepientId`) REFERENCES `users`(`id`),
+	`commentId` VARCHAR(191) NOT NULL,
+	FOREIGN KEY(`commentId`) REFERENCES `comments`(`id`),
+	PRIMARY KEY(`id`)
+);
+
+CREATE TABLE `education` (
+	`id` VARCHAR(191) NOT NULL,
+	`school` VARCHAR(191) NOT NULL,
+	`start_date` DATE NOT NULL,
+	`end_date` DATE,
+	`degree` VARCHAR(191),
+	`usersId` VARCHAR(191) NOT NULL,
+	FOREIGN KEY(`usersId`) REFERENCES `users`(`id`),
+	PRIMARY KEY(`id`)
+);
+
+CREATE TABLE `stories` (
+	`id` VARCHAR(191) NOT NULL,
+	`name` VARCHAR(191) NOT NULL,
+	`logo_url` VARCHAR(191),
+	`start_date` DATE NOT NULL,
+	`end_date` DATE,
+	`description` VARCHAR(191),
+	`domain` ENUM('FINANCE', 'HEALTHCARE', 'EDUCATION', 'ECOMMERCE', 'LOGISTICS', 'ENTERTAINMENT', 'REAL_ESTATE', 'RETAIL', 'MANUFACTURING', 'TELECOMMUNICATIONS', 'HOSPITALITY', 'AUTOMOTIVE', 'TECHNOLOGY'),
+	`learning` VARCHAR(191),
+	`success` BOOLEAN NOT NULL,
+	`usersId` VARCHAR(191) NOT NULL,
+	FOREIGN KEY(`usersId`) REFERENCES `users`(`id`),
+	PRIMARY KEY(`id`)
+);
+
+CREATE TABLE `likes_notifier` (
+	`id` VARCHAR(191) NOT NULL,
+	`read` BOOLEAN NOT NULL,
+	`created_at` TIMESTAMP NOT NULL,
+	`recepientId` VARCHAR(191) NOT NULL,
+	FOREIGN KEY(`recepientId`) REFERENCES `users`(`id`),
+	`likeId` VARCHAR(191) NOT NULL,
+	FOREIGN KEY(`likeId`) REFERENCES `likes`(`id`),
+	PRIMARY KEY(`id`)
+);
+
+
