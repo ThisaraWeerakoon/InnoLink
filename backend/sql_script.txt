@@ -59,7 +59,7 @@ CREATE TABLE `handshakes` (
 	`id` VARCHAR(191) NOT NULL,
 	`created_at` TIMESTAMP NOT NULL,
 	`accepted` BOOLEAN NOT NULL,
-	`status` ENUM('PENDING', 'ACCEPTED', 'REJECTED') DEFAULT 'pending' NOT NULL,
+	`status` ENUM('PENDING', 'ACCEPTED', 'REJECTED') NOT NULL,
 	`handshakerId` VARCHAR(191) NOT NULL,
 	FOREIGN KEY(`handshakerId`) REFERENCES `users`(`id`),
 	`handshakeeId` VARCHAR(191) NOT NULL,
@@ -69,11 +69,13 @@ CREATE TABLE `handshakes` (
 
 CREATE TABLE `handshake_notifier` (
 	`id` VARCHAR(191) NOT NULL,
-	`read` BOOLEAN DEFAULT FALSE NOT NULL,
+	`read` BOOLEAN NOT NULL,
 	`created_at` TIMESTAMP NOT NULL,
 	`notify_type` ENUM('REQUEST', 'ACCEPTED') NOT NULL,
 	`recepientId` VARCHAR(191) NOT NULL,
 	FOREIGN KEY(`recepientId`) REFERENCES `users`(`id`),
+	`senderId` VARCHAR(191) NOT NULL,
+	FOREIGN KEY(`senderId`) REFERENCES `users`(`id`),
 	`handshakeId` VARCHAR(191) NOT NULL,
 	FOREIGN KEY(`handshakeId`) REFERENCES `handshakes`(`id`),
 	PRIMARY KEY(`id`)
