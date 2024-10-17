@@ -104,6 +104,8 @@ service /api/auth on socialMediaListener {
             dob: registerUser.dob,
             created_at: time:utcNow(),
             profile_pic_url: (),
+            banner_url: (),
+            about_me: (),
             password: hashPassword(registerUser.password)
         };
 
