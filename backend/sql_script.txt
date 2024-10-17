@@ -1,8 +1,6 @@
-
 drop schema innolink_db;
 create schema innolink_db;
 use innolink_db;
-
 
 -- AUTO-GENERATED FILE.
 
@@ -61,6 +59,7 @@ CREATE TABLE `handshakes` (
 	`id` VARCHAR(191) NOT NULL,
 	`created_at` TIMESTAMP NOT NULL,
 	`accepted` BOOLEAN NOT NULL,
+	`status` ENUM('PENDING', 'ACCEPTED', 'REJECTED') DEFAULT 'pending' NOT NULL,
 	`handshakerId` VARCHAR(191) NOT NULL,
 	FOREIGN KEY(`handshakerId`) REFERENCES `users`(`id`),
 	`handshakeeId` VARCHAR(191) NOT NULL,
@@ -83,7 +82,7 @@ CREATE TABLE `handshake_notifier` (
 CREATE TABLE `comments` (
 	`id` VARCHAR(191) NOT NULL,
 	`content` VARCHAR(191) NOT NULL,
-	`media` VARCHAR(191) ,
+	`media` VARCHAR(191),
 	`created_at` TIMESTAMP NOT NULL,
 	`userId` VARCHAR(191) NOT NULL,
 	FOREIGN KEY(`userId`) REFERENCES `users`(`id`),
