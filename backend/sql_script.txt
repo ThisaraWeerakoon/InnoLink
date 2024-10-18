@@ -23,7 +23,7 @@ CREATE TABLE `users` (
 	`first_name` VARCHAR(191) NOT NULL,
 	`last_name` VARCHAR(191) NOT NULL,
 	`dob` DATE NOT NULL,
-	`created_at` TIMESTAMP NOT NULL,
+	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`profile_pic_url` VARCHAR(191),
 	`banner_url` VARCHAR(191),
 	`password` VARCHAR(191) NOT NULL,
@@ -34,9 +34,9 @@ CREATE TABLE `users` (
 CREATE TABLE `notifications` (
 	`id` VARCHAR(191) NOT NULL,
 	`referenceId` VARCHAR(191) NOT NULL,
-	`created_at` TIMESTAMP NOT NULL,
+	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`read` BOOLEAN NOT NULL,
-	`notify_type` ENUM('LIKE', 'COMMENT', 'HANDSHAKE_REQUEST', 'HANDSHAKE_ACCEPTED') NOT NULL,
+	`notify_type` ENUM('LIKE', 'COMMENT', 'HANDSHAKE_REQUEST', 'HANDSHAKE_ACCEPTED', 'INVEST_REQUEST', 'INVEST_ACCEPTED') NOT NULL,
 	`recepientId` VARCHAR(191) NOT NULL,
 	FOREIGN KEY(`recepientId`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	`senderId` VARCHAR(191) NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE `posts` (
 	`id` VARCHAR(191) NOT NULL,
 	`img_url` VARCHAR(191),
 	`video_url` VARCHAR(191),
-	`created_at` TIMESTAMP NOT NULL,
+	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`caption` VARCHAR(191) NOT NULL,
 	`userId` VARCHAR(191) NOT NULL,
 	FOREIGN KEY(`userId`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -57,7 +57,7 @@ CREATE TABLE `posts` (
 
 CREATE TABLE `likes` (
 	`id` VARCHAR(191) NOT NULL,
-	`created_at` TIMESTAMP NOT NULL,
+	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`active` BOOLEAN NOT NULL,
 	`userId` VARCHAR(191) NOT NULL,
 	FOREIGN KEY(`userId`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -68,7 +68,7 @@ CREATE TABLE `likes` (
 
 CREATE TABLE `handshakes` (
 	`id` VARCHAR(191) NOT NULL,
-	`created_at` TIMESTAMP NOT NULL,
+	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`status` ENUM('PENDING', 'ACCEPTED', 'REJECTED') NOT NULL,
 	`handshakerId` VARCHAR(191) NOT NULL,
 	FOREIGN KEY(`handshakerId`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -81,7 +81,7 @@ CREATE TABLE `comments` (
 	`id` VARCHAR(191) NOT NULL,
 	`content` VARCHAR(191) NOT NULL,
 	`media` VARCHAR(191),
-	`created_at` TIMESTAMP NOT NULL,
+	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`userId` VARCHAR(191) NOT NULL,
 	FOREIGN KEY(`userId`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	`postId` VARCHAR(191) NOT NULL,
@@ -117,9 +117,308 @@ CREATE TABLE `stories` (
 );
 
 
+CREATE TABLE `invests` (
+	`id` VARCHAR(191) NOT NULL,
+	`status` ENUM('PENDING', 'ACCEPTED', 'REJECTED') DEFAULT 'PENDING' NOT NULL,
+	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`postId` VARCHAR(191) NOT NULL,
+	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`),
+	`investorId` VARCHAR(191) NOT NULL,
+	FOREIGN KEY(`investorId`) REFERENCES `users`(`id`),
+	PRIMARY KEY(`id`)
+);
 
 
 use innolink_db;
+
+-- function returning the count of accepted handshakes for a given user
+DELIMITER $$
+
+CREATE FUNCTION `get_accepted_handshakes_count` (`userId` VARCHAR(191))
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE handshake_count INT;
+
+    -- Count the number of accepted handshakes where the user is either the handshaker or handshakee
+    SELECT COUNT(*)
+    INTO handshake_count
+    FROM handshakes
+    WHERE (handshakerId = userId OR handshakeeId = userId)
+      AND status = 'ACCEPTED';
+
+    RETURN handshake_count;
+END $$
+
+DELIMITER ;
+
+-- function that returns the count of active likes for a given post
+DELIMITER $$
+
+CREATE FUNCTION `get_like_count` (`postId` VARCHAR(191))
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE like_count INT;
+
+    -- Count the number of active likes for the given post
+    SELECT COUNT(*)
+    INTO like_count
+    FROM likes
+    WHERE postId = postId
+      AND active = TRUE;
+
+    RETURN like_count;
+END $$
+
+DELIMITER ;
+
+-- function that returns the count of comments for a given post
+DELIMITER $$
+
+CREATE FUNCTION `get_comment_count` (`postId` VARCHAR(191))
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE comment_count INT;
+
+    -- Count the number of comments for the given post
+    SELECT COUNT(*)
+    INTO comment_count
+    FROM comments
+    WHERE postId = postId;
+
+    RETURN comment_count;
+END $$
+
+DELIMITER ;
+
+
+
+-- Trigger for Inserting Comment Notification 
+DELIMITER $$
+
+CREATE TRIGGER `after_comment_insert` 
+AFTER INSERT ON `comments`
+FOR EACH ROW
+BEGIN
+    -- Insert a notification for the post owner when a comment is added
+    INSERT INTO notifications (id, recepientId, senderId, notify_type, referenceId, created_at, `read`) 
+    VALUES (UUID(), 
+            (SELECT posts.userId FROM posts WHERE posts.id = NEW.postId),  -- The post owner
+            NEW.userId,  -- The commenter
+            'COMMENT',   -- Notification type
+            NEW.id,      -- Comment ID as reference
+            NOW(), 
+            FALSE);
+END $$
+
+DELIMITER ;
+
+-- Trigger for Deleting Comment Notification
+DELIMITER $$
+
+CREATE TRIGGER `after_comment_delete` 
+AFTER DELETE ON `comments`
+FOR EACH ROW
+BEGIN
+    -- Delete the notification when the comment is deleted
+    DELETE FROM notifications 
+    WHERE notify_type = 'COMMENT' AND referenceId = OLD.id;
+END $$
+
+DELIMITER ;
+
+
+-- Trigger for Inserting Like Notification
+DELIMITER $$
+
+CREATE TRIGGER `after_like_insert` 
+AFTER INSERT ON `likes`
+FOR EACH ROW
+BEGIN
+    IF NEW.active THEN
+        -- Insert a notification for the post owner when a like is added
+        INSERT INTO notifications (id, recepientId, senderId, notify_type, referenceId, created_at, `read`) 
+        VALUES (UUID(), 
+                (SELECT posts.userId FROM posts WHERE posts.id = NEW.postId),  -- The post owner
+                NEW.userId,   -- The user who liked
+                'LIKE',       -- Notification type
+                NEW.id,       -- Like ID as reference
+                NOW(),
+                FALSE);
+    END IF;
+END $$
+
+DELIMITER ;
+
+-- Trigger for Updating Like Notification
+DELIMITER $$
+
+CREATE TRIGGER `after_like_update` 
+AFTER UPDATE ON `likes`
+FOR EACH ROW
+BEGIN
+    IF OLD.active AND NOT NEW.active THEN
+        -- If the like becomes inactive, delete the notification
+        DELETE FROM notifications 
+        WHERE notify_type = 'LIKE' AND referenceId = OLD.id;
+    END IF;
+END $$
+
+DELIMITER ;
+
+-- Trigger for Deleting Like Notification
+DELIMITER $$
+
+CREATE TRIGGER `after_like_delete` 
+AFTER DELETE ON `likes`
+FOR EACH ROW
+BEGIN
+    -- Delete the notification when the like is deleted
+    DELETE FROM notifications 
+    WHERE notify_type = 'LIKE' AND referenceId = OLD.id;
+END $$
+
+DELIMITER ;
+
+-- Trigger for Inserting Handshake (Friend Request) Notification
+DELIMITER $$
+
+CREATE TRIGGER `after_handshake_insert` 
+AFTER INSERT ON `handshakes`
+FOR EACH ROW
+BEGIN
+    -- Insert a notification for the handshake request
+    INSERT INTO notifications (id, recepientId, senderId, notify_type, referenceId, created_at, `read`) 
+    VALUES (UUID(), 
+            NEW.handshakeeId,  -- The recipient of the friend request
+            NEW.handshakerId,  -- The sender of the friend request
+            'HANDSHAKE_REQUEST',  -- Notification type
+            NEW.id,  -- Handshake ID as reference
+            NOW(),
+            FALSE);
+END $$
+
+DELIMITER ;
+
+-- Trigger for Deleting Handshake Notification
+DELIMITER $$
+
+CREATE TRIGGER `after_handshake_delete` 
+AFTER DELETE ON `handshakes`
+FOR EACH ROW
+BEGIN
+    -- Delete the notification when the handshake request is deleted
+    DELETE FROM notifications 
+    WHERE notify_type = 'HANDSHAKE_REQUEST' AND referenceId = OLD.id;
+END $$
+
+DELIMITER ;
+
+-- Trigger for Updating Handshake Status to "Accepted"
+DELIMITER $$
+
+CREATE TRIGGER `after_handshake_update` 
+AFTER UPDATE ON `handshakes`
+FOR EACH ROW
+BEGIN
+    IF NEW.status = 'ACCEPTED' THEN
+        -- Insert a notification for the handshake acceptance
+        INSERT INTO notifications (id, recepientId, senderId, notify_type, referenceId, created_at, `read`) 
+        VALUES (UUID(),
+                NEW.handshakerId,  -- The sender of the request (who will receive the notification)
+                NEW.handshakeeId,  -- The recipient of the request (who accepted)
+                'HANDSHAKE_ACCEPTED',  -- Notification type
+                NEW.id,  -- Handshake ID as reference
+                NOW(),
+                FALSE);
+    ELSEIF NEW.status = 'REJECTED' THEN
+        -- If the request is rejected, delete the handshake and notification
+        DELETE FROM notifications 
+        WHERE notify_type = 'HANDSHAKE_REQUEST' AND referenceId = NEW.id;
+        DELETE FROM handshakes WHERE id = NEW.id;
+    END IF;
+END $$
+
+DELIMITER ;
+
+-- Trigger for Inserting Invest Notification
+DELIMITER $$
+
+CREATE TRIGGER `after_invest_insert` 
+AFTER INSERT ON `invests`
+FOR EACH ROW
+BEGIN
+    -- Insert a notification for the invest request
+    INSERT INTO notifications (id, recepientId, senderId, notify_type, referenceId, created_at, `read`) 
+    VALUES (UUID(), 
+            (SELECT posts.userId FROM posts WHERE posts.id = NEW.postId),  -- The recipient of the invest request
+            NEW.investorId,  -- The sender of the investor request
+            'INVEST_REQUEST',  -- Notification type
+            NEW.id,  -- Handshake ID as reference
+            NOW(),
+            FALSE);
+END $$
+
+DELIMITER ;
+
+-- Trigger for Deleting Invest Notification
+DELIMITER $$
+
+CREATE TRIGGER `after_invest_delete` 
+AFTER DELETE ON `invests`
+FOR EACH ROW
+BEGIN
+    -- Delete the notification when the invest request is deleted
+    DELETE FROM notifications 
+    WHERE notify_type = 'INVEST_REQUEST' AND referenceId = OLD.id;
+END $$
+
+DELIMITER ;
+
+-- Trigger for Updating Invest Status to "Accepted"
+DELIMITER $$
+
+CREATE TRIGGER `after_invest_update` 
+AFTER UPDATE ON `invests`
+FOR EACH ROW
+BEGIN
+    IF NEW.status = 'ACCEPTED' THEN
+        -- Insert a notification for the handshake acceptance
+        INSERT INTO notifications (id, recepientId, senderId, notify_type, referenceId, created_at, `read`) 
+        VALUES (UUID(),
+                NEW.investorId,  -- The sender of the request (who will receive the notification that accepted your request)
+                (SELECT posts.userId FROM posts WHERE posts.id = NEW.postId),  -- The recipient of the request (who accepted)
+                'REQUEST_ACCEPTED',  -- Notification type
+                NEW.id,  -- Invest ID as reference
+                NOW(),
+                FALSE);
+    ELSEIF NEW.status = 'REJECTED' THEN
+        -- If the request is rejected, delete the invest and notification
+        DELETE FROM notifications 
+        WHERE notify_type = 'INVEST_REQUEST' AND referenceId = NEW.id;
+        DELETE FROM invests WHERE id = NEW.id;
+    END IF;
+END $$
+
+DELIMITER ;
+
+-- Trigger to Delete Notification When read is Updated to TRUE
+DELIMITER $$
+
+CREATE TRIGGER `after_read_update`
+AFTER UPDATE ON `notifications`
+FOR EACH ROW
+BEGIN
+    -- Check if the `read` status has changed to TRUE
+    IF NEW.read = TRUE THEN
+        DELETE FROM notifications WHERE id = NEW.id;
+    END IF;
+END $$
+
+DELIMITER ;
+
 
 -- Example Raw Passwords
 -- u1: u1
