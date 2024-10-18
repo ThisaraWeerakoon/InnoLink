@@ -9,13 +9,19 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 	const [isEditing, setIsEditing] = useState(false);
 	const [editedData, setEditedData] = useState({});
 	const queryClient = useQueryClient();
+	const token = localStorage.getItem('jwt');
 
 	const { data: authUser } = useQuery({ queryKey: ["authUser"] });
 
 	const { data: connectionStatus, refetch: refetchConnectionStatus } = useQuery({
-		queryKey: ["connectionStatus", userData._id],
-		queryFn: () => axiosInstance.get(`/connections/status/${userData._id}`),
-		enabled: !isOwnProfile,
+		queryKey: ["connectionStatus", userData.id],
+		queryFn: () => axiosInstance.get(`/users/isfollowing`, {
+		        params: {
+		            userId: authUser?.id,        // Replace with the current user's ID
+		            followingId: userData.id,   // Replace with the profile user's ID
+		            jwt: token,                  // Pass the JWT token in the query params
+		        },
+    }),		enabled: !isOwnProfile,
 	});
 
 	const isConnected = userData.connections.some((connection) => connection === authUser._id);

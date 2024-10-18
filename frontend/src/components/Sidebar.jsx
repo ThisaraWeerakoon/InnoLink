@@ -53,7 +53,7 @@ export default function Sidebar({ user }) {
 				</nav>
 			</div>
 			<div className='border-t border-base-100 p-4'>
-				<Link to={`/profile/${user.first_name}`} className='text-sm font-semibold'>
+				<Link to={`/profile/${user.id}`} className='text-sm font-semibold'>
 					Visit your profile
 				</Link>
 			</div>

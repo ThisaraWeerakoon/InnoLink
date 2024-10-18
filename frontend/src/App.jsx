@@ -33,11 +33,12 @@ function App() {
     const handleLogout = () => {
         setAuthUser(null);
         localStorage.removeItem("jwt");
+        navigate("/");
     };
     
 
     return (
-        <Layout authUser={authUser}>
+        <Layout onLogout={handleLogout}>
             <Routes>
                 <Route path='/' element={authUser.current ? <HomePage authUser={authUser} /> : <Navigate to="/login" />} />
                 <Route path='/signup' element={!authUser.current ? <SignUpPage /> : <Navigate to="/" />} />

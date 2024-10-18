@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Bell, Home, LogOut, User, Users } from "lucide-react";
 import { useEffect } from "react";
 
-const Navbar = () => {
+const Navbar = ({onLogout}) => {
 	const { data: authUser } = useQuery({ queryKey: ["authUser"] });
 	useEffect(()=>{
 		const userData = localStorage.getItem("userdata");
@@ -25,12 +25,12 @@ const Navbar = () => {
 	// 	enabled: !!authUser,
 	// });
 
-	const { mutate: logout } = useMutation({
-		mutationFn: () => axiosInstance.post("/auth/logout"),
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ["authUser"] });
-		},
-	});
+	// const { mutate: logout } = useMutation({
+	// 	mutationFn: () => axiosInstance.post("/auth/logout"),
+	// 	onSuccess: () => {
+	// 		queryClient.invalidateQueries({ queryKey: ["authUser"] });
+	// 	},
+	// });
 
 	// const unreadNotificationCount = notifications?.data.filter((notif) => !notif.read).length;
 	// const unreadConnectionRequestsCount = connectionRequests?.data?.length;
@@ -82,7 +82,7 @@ const Navbar = () => {
 								</Link>
 								<button
 									className='flex items-center space-x-1 text-sm text-gray-600 hover:text-gray-800'
-									onClick={() => logout()}
+									onClick={() => onLogout()}
 								>
 									<LogOut size={20} />
 									<span className='hidden md:inline'>Logout</span>

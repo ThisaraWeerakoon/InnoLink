@@ -9,36 +9,34 @@ import EducationSection from "../components/EducationSection";
 import SkillsSection from "../components/SkillsSection";
 import toast from "react-hot-toast";
 
+//implement connection api and about section/ education etc. 
 const ProfilePage = () => {
+	const { username } = useParams();
 	const queryClient = useQueryClient();
 
 	const { data: authUser, isLoading } = useQuery({
 		queryKey: ["authUser"],
 	});
-	const token = localStorage.getItem("jwt");  // No need to pass token in getItem()
-
-	// Use the token in the query parameter and make the request to the given URL
+	const token= localStorage.getItem('jwt');
 	const { data: userProfile, isLoading: isUserProfileLoading } = useQuery({
-	    queryKey: ["userProfile", authUser?.id],
-	    queryFn: () => axiosInstance.get(`/users/getbyid/${authUser.id}?jwt=${token}`),
-		enabled: !!authUser?.id,
+		queryKey: ["userProfile", username],
+		queryFn: () => axiosInstance.get(`/users/getbyid/${username}?jwt=${token}`),
 	});
 
-	//connect to users/update
 	const { mutate: updateProfile } = useMutation({
 		mutationFn: async (updatedData) => {
 			await axiosInstance.put("/users/profile", updatedData);
 		},
 		onSuccess: () => {
 			toast.success("Profile updated successfully");
-			queryClient.invalidateQueries(["userProfile", authUser.id]);
+			queryClient.invalidateQueries(["userProfile", username]);
 		},
 	});
 
 	if (isLoading || isUserProfileLoading) return null;
 
-	const isOwnProfile = authUser?.id === userProfile?.data?.id;
-	const userData = isOwnProfile ? authUser : userProfile?.data;
+	const isOwnProfile = authUser.username === userProfile.data.username;
+	const userData = isOwnProfile ? authUser : userProfile.data;
 
 	const handleSave = (updatedData) => {
 		updateProfile(updatedData);

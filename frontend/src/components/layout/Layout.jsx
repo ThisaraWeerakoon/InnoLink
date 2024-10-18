@@ -1,9 +1,9 @@
 import Navbar from "./Navbar";
 
-const Layout = ({ children , authUser}) => {
+const Layout = ({ children, onLogout}) => {
 	return (
 		<div className='min-h-screen bg-base-100'>
-			<Navbar authUser/>
+			<Navbar onLogout={onLogout}/>
 			<main className='max-w-7xl mx-auto px-4 py-6'>{children}</main>
 		</div>
 	);
