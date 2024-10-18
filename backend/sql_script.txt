@@ -7,15 +7,13 @@ use innolink_db;
 -- This file is an auto-generated file by Ballerina persistence layer for model.
 -- Please verify the generated scripts and execute them against the target DB server.
 
-DROP TABLE IF EXISTS `likes_notifier`;
 DROP TABLE IF EXISTS `stories`;
 DROP TABLE IF EXISTS `education`;
-DROP TABLE IF EXISTS `comments_notifier`;
 DROP TABLE IF EXISTS `comments`;
-DROP TABLE IF EXISTS `handshake_notifier`;
 DROP TABLE IF EXISTS `handshakes`;
 DROP TABLE IF EXISTS `likes`;
 DROP TABLE IF EXISTS `posts`;
+DROP TABLE IF EXISTS `notifications`;
 DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
@@ -33,6 +31,19 @@ CREATE TABLE `users` (
 	PRIMARY KEY(`id`)
 );
 
+CREATE TABLE `notifications` (
+	`id` VARCHAR(191) NOT NULL,
+	`referenceId` VARCHAR(191) NOT NULL,
+	`created_at` TIMESTAMP NOT NULL,
+	`read` BOOLEAN NOT NULL,
+	`notify_type` ENUM('LIKE', 'COMMENT', 'HANDSHAKE_REQUEST', 'HANDSHAKE_ACCEPTED') NOT NULL,
+	`recepientId` VARCHAR(191) NOT NULL,
+	FOREIGN KEY(`recepientId`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	`senderId` VARCHAR(191) NOT NULL,
+	FOREIGN KEY(`senderId`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	PRIMARY KEY(`id`)
+);
+
 CREATE TABLE `posts` (
 	`id` VARCHAR(191) NOT NULL,
 	`img_url` VARCHAR(191),
@@ -40,7 +51,7 @@ CREATE TABLE `posts` (
 	`created_at` TIMESTAMP NOT NULL,
 	`caption` VARCHAR(191) NOT NULL,
 	`userId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`userId`) REFERENCES `users`(`id`),
+	FOREIGN KEY(`userId`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	PRIMARY KEY(`id`)
 );
 
@@ -49,35 +60,20 @@ CREATE TABLE `likes` (
 	`created_at` TIMESTAMP NOT NULL,
 	`active` BOOLEAN NOT NULL,
 	`userId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`userId`) REFERENCES `users`(`id`),
+	FOREIGN KEY(`userId`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	`postId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`),
+	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	PRIMARY KEY(`id`)
 );
 
 CREATE TABLE `handshakes` (
 	`id` VARCHAR(191) NOT NULL,
 	`created_at` TIMESTAMP NOT NULL,
-	`accepted` BOOLEAN NOT NULL,
 	`status` ENUM('PENDING', 'ACCEPTED', 'REJECTED') NOT NULL,
 	`handshakerId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`handshakerId`) REFERENCES `users`(`id`),
+	FOREIGN KEY(`handshakerId`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	`handshakeeId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`handshakeeId`) REFERENCES `users`(`id`),
-	PRIMARY KEY(`id`)
-);
-
-CREATE TABLE `handshake_notifier` (
-	`id` VARCHAR(191) NOT NULL,
-	`read` BOOLEAN NOT NULL,
-	`created_at` TIMESTAMP NOT NULL,
-	`notify_type` ENUM('REQUEST', 'ACCEPTED') NOT NULL,
-	`recepientId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`recepientId`) REFERENCES `users`(`id`),
-	`senderId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`senderId`) REFERENCES `users`(`id`),
-	`handshakeId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`handshakeId`) REFERENCES `handshakes`(`id`),
+	FOREIGN KEY(`handshakeeId`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	PRIMARY KEY(`id`)
 );
 
@@ -87,31 +83,21 @@ CREATE TABLE `comments` (
 	`media` VARCHAR(191),
 	`created_at` TIMESTAMP NOT NULL,
 	`userId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`userId`) REFERENCES `users`(`id`),
+	FOREIGN KEY(`userId`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	`postId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`),
-	PRIMARY KEY(`id`)
-);
-
-CREATE TABLE `comments_notifier` (
-	`id` VARCHAR(191) NOT NULL,
-	`read` BOOLEAN NOT NULL,
-	`created_at` TIMESTAMP NOT NULL,
-	`recepientId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`recepientId`) REFERENCES `users`(`id`),
-	`commentId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`commentId`) REFERENCES `comments`(`id`),
+	FOREIGN KEY(`postId`) REFERENCES `posts`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	PRIMARY KEY(`id`)
 );
 
 CREATE TABLE `education` (
 	`id` VARCHAR(191) NOT NULL,
-	`school` VARCHAR(191) NOT NULL,
-	`start_date` DATE NOT NULL,
-	`end_date` DATE,
+	`institution` VARCHAR(191) NOT NULL,
+	`start_year` INT NOT NULL,
+	`end_year` INT,
 	`degree` VARCHAR(191),
-	`usersId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`usersId`) REFERENCES `users`(`id`),
+	`field_of_study` VARCHAR(191),
+	`userId` VARCHAR(191) NOT NULL,
+	FOREIGN KEY(`userId`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	PRIMARY KEY(`id`)
 );
 
@@ -126,20 +112,12 @@ CREATE TABLE `stories` (
 	`learning` VARCHAR(191),
 	`success` BOOLEAN NOT NULL,
 	`usersId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`usersId`) REFERENCES `users`(`id`),
+	FOREIGN KEY(`usersId`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	PRIMARY KEY(`id`)
 );
 
-CREATE TABLE `likes_notifier` (
-	`id` VARCHAR(191) NOT NULL,
-	`read` BOOLEAN NOT NULL,
-	`created_at` TIMESTAMP NOT NULL,
-	`recepientId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`recepientId`) REFERENCES `users`(`id`),
-	`likeId` VARCHAR(191) NOT NULL,
-	FOREIGN KEY(`likeId`) REFERENCES `likes`(`id`),
-	PRIMARY KEY(`id`)
-);
+
+
 
 use innolink_db;
 
@@ -241,7 +219,7 @@ VALUES
 ('l30', NOW(), TRUE, 'u10', 'p3');
 
 -- Populate handshakes table with 15 handshake requests (some pending, some accepted)
-INSERT INTO `handshakes` (`id`, `created_at`, `status`, `senderId`, `receiverId`)
+INSERT INTO `handshakes` (`id`, `created_at`, `status`, `handshakerId`, `handshakeeId`)
 VALUES 
 ('h1', NOW(), 'pending', 'u1', 'u2'),    -- John sent a request to Jane
 ('h2', NOW(), 'accepted', 'u1', 'u3'),   -- John and Alex are now friends
@@ -350,4 +328,3 @@ INSERT INTO `stories` (`id`, `name`, `logo_url`, `start_date`, `end_date`, `desc
 ('s28', 'Fitness Challenges', 'https://example.com/logo28.png', '2023-04-10', '2023-04-20', 'Participating in fitness challenges.', 'HEALTHCARE', 'Improving fitness levels', TRUE, 'u10'),
 ('s29', 'Personal Training Tips', 'https://example.com/logo29.png', '2023-05-10', '2023-05-20', 'Sharing personal training tips.', 'HEALTHCARE', 'Gaining training knowledge', TRUE, 'u10'),
 ('s30', 'Fitness App Gone Wrong', 'https://example.com/logo30.png', '2023-06-10', '2023-06-20', 'A fitness app that failed due to lack of features.', 'HEALTHCARE', 'Understanding app development', FALSE, 'u10');
-
