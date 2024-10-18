@@ -8,7 +8,7 @@ import RecommendedUser from "../components/RecommendedUser";
 
 const HomePage = ({authUser}) => {
 	const token = localStorage.getItem("jwt");
-	console.log("token", token);
+	console.log("HomePage", authUser);
 	const { data: posts } = useQuery({
 		queryKey: ["posts"],
 		queryFn: async () => {
@@ -22,8 +22,7 @@ const HomePage = ({authUser}) => {
 
 	return (
 		<div className='grid grid-cols-1 lg:grid-cols-4 gap-6'>
-		   Hello
-			<div className='hidden lg:block lg:col-span-1'>
+			<div className='lg:block lg:col-span-1'>
 				<Sidebar user={authUser} />
 			</div>
 
@@ -31,7 +30,7 @@ const HomePage = ({authUser}) => {
 				<PostCreation user={authUser} />
 
 				{posts?.map((post) => (
-					<Post key={post._id} post={post} />
+					<Post key={post.id} post={post} />
 				))}
 
 				{posts?.length === 0 && (

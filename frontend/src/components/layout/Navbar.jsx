@@ -2,22 +2,28 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "../../lib/axios";
 import { Link } from "react-router-dom";
 import { Bell, Home, LogOut, User, Users } from "lucide-react";
+import { useEffect } from "react";
 
 const Navbar = () => {
 	const { data: authUser } = useQuery({ queryKey: ["authUser"] });
+	useEffect(()=>{
+		const userData = localStorage.getItem("userdata");
+		console.log("Navbar :",authUser);
+	},[authUser])
+	
 	const queryClient = useQueryClient();
 
-	const { data: notifications } = useQuery({
-		queryKey: ["notifications"],
-		queryFn: async () => axiosInstance.get("/notifications"),
-		enabled: !!authUser,
-	});
+	// const { data: notifications } = useQuery({
+	// 	queryKey: ["notifications"],
+	// 	queryFn: async () => axiosInstance.get("/notifications"),
+	// 	enabled: !!authUser,
+	// });
 
-	const { data: connectionRequests } = useQuery({
-		queryKey: ["connectionRequests"],
-		queryFn: async () => axiosInstance.get("/connections/requests"),
-		enabled: !!authUser,
-	});
+	// const { data: connectionRequests } = useQuery({
+	// 	queryKey: ["connectionRequests"],
+	// 	queryFn: async () => axiosInstance.get("/connections/requests"),
+	// 	enabled: !!authUser,
+	// });
 
 	const { mutate: logout } = useMutation({
 		mutationFn: () => axiosInstance.post("/auth/logout"),
@@ -26,8 +32,8 @@ const Navbar = () => {
 		},
 	});
 
-	const unreadNotificationCount = notifications?.data.filter((notif) => !notif.read).length;
-	const unreadConnectionRequestsCount = connectionRequests?.data?.length;
+	// const unreadNotificationCount = notifications?.data.filter((notif) => !notif.read).length;
+	// const unreadConnectionRequestsCount = connectionRequests?.data?.length;
 
 	return (
 		<nav className='bg-secondary shadow-md sticky top-0 z-10'>
@@ -43,7 +49,7 @@ const Navbar = () => {
 									<Home size={20} />
 									<span className='text-xs hidden md:block'>Home</span>
 								</Link>
-								<Link to='/network' className='text-neutral flex flex-col items-center relative'>
+								{/* <Link to='/network' className='text-neutral flex flex-col items-center relative'>
 									<Users size={20} />
 									<span className='text-xs hidden md:block'>My Network</span>
 									{unreadConnectionRequestsCount > 0 && (
@@ -54,8 +60,8 @@ const Navbar = () => {
 											{unreadConnectionRequestsCount}
 										</span>
 									)}
-								</Link>
-								<Link to='/notifications' className='text-neutral flex flex-col items-center relative'>
+								</Link> */}
+								{/* <Link to='/notifications' className='text-neutral flex flex-col items-center relative'>
 									<Bell size={20} />
 									<span className='text-xs hidden md:block'>Notifications</span>
 									{unreadNotificationCount > 0 && (
@@ -66,9 +72,9 @@ const Navbar = () => {
 											{unreadNotificationCount}
 										</span>
 									)}
-								</Link>
+								</Link> */}
 								<Link
-									to={`/profile/${authUser.username}`}
+									to={`/profile/${authUser.id}`}
 									className='text-neutral flex flex-col items-center'
 								>
 									<User size={20} />
