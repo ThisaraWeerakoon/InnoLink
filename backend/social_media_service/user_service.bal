@@ -2,7 +2,7 @@ import ballerina/http;
 import ballerina/persist;
 import ballerina/time;
 import ballerina/uuid;
-import ballerina/sql;
+// import ballerina/sql;
 import ballerina/jwt;
 
 final Client innolinkdb = check new;
@@ -101,7 +101,9 @@ service /api/users on socialMediaListener {
                 dob: newuser.dob,
                 created_at: time:utcNow(),
                 profile_pic_url: newuser.profile_pic_url,
-                password: newuser.password
+                password: newuser.password,
+                about_me: (),
+                banner_url: ()
 
             };
 
@@ -177,36 +179,36 @@ service /api/users on socialMediaListener {
         }
     };
 
-    # /api/users/isfollowing
-    # A resource for checking whether a user is following someone
-    # + userId - user id
-    # + followingId - following user. Want to check whether userId follows followingId
-    # + return - boolean following or not
-    resource function get isfollowing(string userId,string followingId,string jwt) returns boolean|http:BadRequest|error {
+    // # /api/users/isfollowing
+    // # A resource for checking whether a user is following someone
+    // # + userId - user id
+    // # + followingId - following user. Want to check whether userId follows followingId
+    // # + return - boolean following or not
+    // resource function get isfollowing(string userId,string followingId,string jwt) returns boolean|http:BadRequest|error {
 
-        // Validate the JWT token
-        jwt:Payload|error validationResult = jwt:validate(jwt, validatorConfig);
+    //     // Validate the JWT token
+    //     jwt:Payload|error validationResult = jwt:validate(jwt, validatorConfig);
     
-        if (validationResult is jwt:Payload) {
-            // JWT validation succeeded
-            sql:ParameterizedQuery selectQuery = `SELECT * FROM follows WHERE followerId = ${userId} AND followingId = ${followingId}`;
+    //     if (validationResult is jwt:Payload) {
+    //         // JWT validation succeeded
+    //         sql:ParameterizedQuery selectQuery = `SELECT * FROM follows WHERE followerId = ${userId} AND followingId = ${followingId}`;
 
-            stream<follows, persist:Error?> followStream = innolinkdb->queryNativeSQL(selectQuery);
+    //         stream<follows, persist:Error?> followStream = innolinkdb->queryNativeSQL(selectQuery);
 
-            follows[]|error result = from var follower in followStream select follower;
-            if result is follows[] {
-                if result.length()>0 {
-                    return true;
-                }
-                return false;
-            }
-            return <http:BadRequest>{body: {message:"data cannot be retrieved"}};
+    //         follows[]|error result = from var follower in followStream select follower;
+    //         if result is follows[] {
+    //             if result.length()>0 {
+    //                 return true;
+    //             }
+    //             return false;
+    //         }
+    //         return <http:BadRequest>{body: {message:"data cannot be retrieved"}};
 
 
-        } else {
-            // JWT validation failed, return the error
-            return validationResult;
-        }
-    }
+    //     } else {
+    //         // JWT validation failed, return the error
+    //         return validationResult;
+    //     }
+    // }
 }
 

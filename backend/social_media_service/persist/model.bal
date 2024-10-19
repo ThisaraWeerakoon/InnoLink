@@ -5,7 +5,7 @@ import ballerina/time;
 public enum Domain {
     FINANCE,
     HEALTHCARE,
-    EDUCATION,
+    EDUCATION_LEARNING,
     ECOMMERCE,
     LOGISTICS,
     ENTERTAINMENT,
@@ -18,10 +18,22 @@ public enum Domain {
     TECHNOLOGY
 };
 
-public enum Handshake_Notify_Type{
-    REQUEST,
-    ACCEPTED
-}
+
+public enum status {
+    PENDING,
+    ACCEPTED,
+    REJECTED
+};
+
+public enum notification_type {
+    LIKE, 
+    COMMENT, 
+    HANDSHAKE_REQUEST, 
+    HANDSHAKE_ACCEPTED,
+    INVEST_REQUEST,
+    INVEST_ACCEPTED
+};
+
 
 
 public type stories record {|
@@ -46,11 +58,12 @@ public type education record {|
     // @sql:Generated
     // readonly int id;
     readonly string id;
-    string school;
-    time:Date start_date;
-    time:Date? end_date;
+    string institution;
+    int start_year;
+    int? end_year;
     string? degree;
-	users users;
+    string? field_of_study;
+	users user;
 
 |};
 
@@ -79,9 +92,13 @@ public type users record {|
     handshakes[] handshakees;
     stories[] userStories;   // A user can follow multiple stories.
     education[] userEducation;
-	likes_notifier[] likes_notifier;
-	comments_notifier[] comments_notifier;
-	handshake_notifier[] handshake_notifier;  // A user can follow multiple education.
+	// likes_notifier[] likes_notifier;
+	// comments_notifier[] comments_notifier;
+	// handshake_notifier[] handshake_notifier;
+	// handshake_notifier[] handshake_notifier1;
+	notifications[] notifications;
+	notifications[] notifications1;
+	invests[] invests;  // A user can follow multiple education.
 |};
 
 public type posts record {|
@@ -97,6 +114,7 @@ public type posts record {|
     // Relations
     comments[] postComments; // A post can have multiple comments.
     likes[] postLikes;
+	invests[] invests;
 	
 |};
 
@@ -110,7 +128,7 @@ public type comments record {|
     time:Utc created_at;
     users user;
     posts post;
-	comments_notifier[] comments_notifier;
+	// comments_notifier[] comments_notifier;
 |};
 
 public type likes record {|
@@ -121,7 +139,7 @@ public type likes record {|
     posts post;
     time:Utc created_at;
     boolean active;
-	likes_notifier[] likes_notifier;   
+	// likes_notifier[] likes_notifier;   
 |};
 
 public type handshakes record {|
@@ -131,39 +149,60 @@ public type handshakes record {|
     users handshaker;
     users handshakee;
     time:Utc created_at; 
-    boolean accepted;
-	handshake_notifier[] handshake_notifier;
+    status status;
+	// handshake_notifier[] handshake_notifier;
 |};
 
-public type likes_notifier record {|
-    readonly string id;
-    users recepient;
-    likes like;
-    boolean read;
-    time:Utc created_at;
+// public type likes_notifier record {|
+//     readonly string id;
+//     users recepient;
+//     likes like;
+//     boolean read;
+//     time:Utc created_at;
 
+// |};
+
+// public type comments_notifier record {|
+//     // @sql:Generated
+//     // readonly int id;
+//     readonly string id;
+//     users recepient;
+//     comments comment;
+//     boolean read;
+//     time:Utc created_at;
+
+// |};
+
+// public type handshake_notifier record {|
+//     // @sql:Generated
+//     // readonly int id;
+//     readonly string id;
+//     users recepient;
+//     users sender;
+//     handshakes handshake;
+//     boolean read;
+//     time:Utc created_at;
+//     Handshake_Notify_Type notify_type;
+
+// |};
+
+public type notifications record {|
+    readonly string id;
+    users recepient; // The user who receives the notification
+    users sender; // The user who sends the notification
+    string referenceId; // like_id , comment_id, handshake_id
+    time:Utc created_at;
+    boolean read;
+    notification_type notify_type;
 |};
 
-public type comments_notifier record {|
-    // @sql:Generated
-    // readonly int id;
+public type invests record{|
     readonly string id;
-    users recepient;
-    comments comment;
-    boolean read;
+    posts post; // Post that the investment is related to
+    users investor; // User (u1) who is making the investment request
+    status status;
     time:Utc created_at;
-
-|};
-
-public type handshake_notifier record {|
-    // @sql:Generated
-    // readonly int id;
-    readonly string id;
-    users recepient;
-    handshakes handshake;
-    boolean read;
-    time:Utc created_at;
-    Handshake_Notify_Type notify_type;
+    
 
 |};
 
