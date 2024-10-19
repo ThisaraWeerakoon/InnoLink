@@ -174,6 +174,77 @@ service /api/handshakes on socialMediaListener{
             return validationResult;
         }
     };
+
+    #api/handshakes/delete
+    # A resource for deleting a handshake
+    # + handshakeId - ID of the handshake
+    # + return - json object containing the deleted handshake object
+    resource function delete delete/[string handshakeId](string jwt) returns json|http:NotFound|error {
+        
+        // Validate the JWT token
+        jwt:Payload|error validationResult = jwt:validate(jwt, validatorConfig);
+
+        if (validationResult is jwt:Payload) {
+            // Delete the handshake from the database
+            handshakes|persist:Error deletedHandshake=innolinkdb->/handshakes/[handshakeId].delete();
+            if deletedHandshake is handshakes {
+                json reponseBody = {"deleted_handshake_object": deletedHandshake};
+                return reponseBody;
+            }
+            else{
+                return <http:NotFound>{body: {message: "post not found"}};
+            }
+        }else {
+            // JWT validation failed, return the error
+            return validationResult;
+        }
+    };
+
+    #api/handshakes/isHandShaked
+    # A resource for checking whether two users are handshaked
+    # + user1Id 
+    # + user2Id - two users want to be checked
+    # + return - json object containing the status and the handshaked object
+    resource function get isHandShaked(string user1Id,string user2Id,string jwt) returns json|http:BadRequest|error {
+        
+        // Validate the JWT token
+        jwt:Payload|error validationResult = jwt:validate(jwt, validatorConfig);
+
+        if (validationResult is jwt:Payload) {
+            // Prepare the SQL query to check for an accepted handshake
+            sql:ParameterizedQuery checkQuery = `SELECT * FROM handshakes
+                                         WHERE ((handshakerId = ${user1Id} AND handshakeeId = ${user2Id}) 
+                                         OR (handshakerId = ${user2Id} AND handshakeeId = ${user1Id}))
+                                         AND status = 'ACCEPTED';`;
+            // Execute the query and retrieve the result
+            stream<handshakes, persist:Error?> handshakeStream = innolinkdb->queryNativeSQL(checkQuery);
+    
+            // Get the result as an array
+            handshakes[]|error result = from var handshake in handshakeStream select handshake;
+            
+            // Check if any handshake records were found
+            if (result is handshakes[]) {
+                boolean found = false;
+                if result.length() > 0 {
+                    found = true; // An accepted handshake exists between the two users
+                } else {
+                    found = false; // No accepted handshake found
+                }
+                // Return the status of the handshake
+                json reponseBody = {"is_handshaked": found, "handshake_object":result[0]};
+                return reponseBody;
+            } else {
+                return <http:BadRequest>{body: {message: "Error while checking existing handshake relationship"}};
+            }
+
+
+
+        }else {
+            // JWT validation failed, return the error
+            return validationResult;
+        }
+    };
+
 }
     
 
