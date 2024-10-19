@@ -531,7 +531,7 @@ VALUES
 ('h5', NOW(), 'accepted', 'u3', 'u6'),   -- Alex and Sarah are friends
 ('h6', NOW(), 'pending', 'u4', 'u1'),    -- Emily sent a request to John
 ('h7', NOW(), 'accepted', 'u4', 'u7'),   -- Emily and David are friends
-('h8', NOW(), 'pending', 'u5', 'u2'),    -- Michael sent a request to Jane
+('h8', NOW(), 'pending', 'u1', 'u10'),    -- Michael sent a request to Sophia
 ('h9', NOW(), 'accepted', 'u6', 'u8'),   -- Sarah and Olivia are friends
 ('h10', NOW(), 'pending', 'u7', 'u3'),   -- David sent a request to Alex
 ('h11', NOW(), 'accepted', 'u8', 'u9'),  -- Olivia and James are friends
@@ -631,10 +631,3 @@ INSERT INTO `stories` (`id`, `name`, `logo_url`, `start_date`, `end_date`, `desc
 ('s28', 'Fitness Challenges', 'https://example.com/logo28.png', '2023-04-10', '2023-04-20', 'Participating in fitness challenges.', 'HEALTHCARE', 'Improving fitness levels', TRUE, 'u10'),
 ('s29', 'Personal Training Tips', 'https://example.com/logo29.png', '2023-05-10', '2023-05-20', 'Sharing personal training tips.', 'HEALTHCARE', 'Gaining training knowledge', TRUE, 'u10'),
 ('s30', 'Fitness App Gone Wrong', 'https://example.com/logo30.png', '2023-06-10', '2023-06-20', 'A fitness app that failed due to lack of features.', 'HEALTHCARE', 'Understanding app development', FALSE, 'u10');
-
-
-
-
-
-
-
