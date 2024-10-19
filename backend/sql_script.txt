@@ -131,26 +131,7 @@ CREATE TABLE `invests` (
 
 use innolink_db;
 
--- function returning the count of accepted handshakes for a given user
-DELIMITER $$
 
-CREATE FUNCTION `get_accepted_handshakes_count` (`userId` VARCHAR(191))
-RETURNS INT
-DETERMINISTIC
-BEGIN
-    DECLARE handshake_count INT;
-
-    -- Count the number of accepted handshakes where the user is either the handshaker or handshakee
-    SELECT COUNT(*)
-    INTO handshake_count
-    FROM handshakes
-    WHERE (handshakerId = userId OR handshakeeId = userId)
-      AND status = 'ACCEPTED';
-
-    RETURN handshake_count;
-END $$
-
-DELIMITER ;
 
 -- function that returns the count of active likes for a given post
 DELIMITER $$
@@ -193,6 +174,29 @@ END $$
 
 DELIMITER ;
 
+
+
+-- SQL Stored Procedure to Get All Handshaked Users' Details for a Given User
+DELIMITER $$
+
+CREATE PROCEDURE get_handshaked_users_details(IN given_user_id VARCHAR(191))
+BEGIN
+    SELECT 
+        u.*  -- Select all columns from the users table
+    FROM 
+        handshakes h
+    JOIN 
+        users u
+        ON (CASE 
+            WHEN h.handshakerId = given_user_id THEN h.handshakeeId 
+            ELSE h.handshakerId 
+            END) = u.id
+    WHERE 
+        (h.handshakerId = given_user_id OR h.handshakeeId = given_user_id)
+        AND h.status = 'ACCEPTED';
+END $$
+
+DELIMITER ;
 
 
 -- Trigger for Inserting Comment Notification 
@@ -316,7 +320,7 @@ END $$
 
 DELIMITER ;
 
--- Trigger for Updating Handshake Status to "Accepted"
+-- Trigger for Updating Handshake Status to "Accepted" or "Rejected"
 DELIMITER $$
 
 CREATE TRIGGER `after_handshake_update` 
@@ -377,7 +381,7 @@ END $$
 
 DELIMITER ;
 
--- Trigger for Updating Invest Status to "Accepted"
+-- Trigger for Updating Invest Status to "Accepted" or "Rejected"
 DELIMITER $$
 
 CREATE TRIGGER `after_invest_update` 
@@ -627,3 +631,10 @@ INSERT INTO `stories` (`id`, `name`, `logo_url`, `start_date`, `end_date`, `desc
 ('s28', 'Fitness Challenges', 'https://example.com/logo28.png', '2023-04-10', '2023-04-20', 'Participating in fitness challenges.', 'HEALTHCARE', 'Improving fitness levels', TRUE, 'u10'),
 ('s29', 'Personal Training Tips', 'https://example.com/logo29.png', '2023-05-10', '2023-05-20', 'Sharing personal training tips.', 'HEALTHCARE', 'Gaining training knowledge', TRUE, 'u10'),
 ('s30', 'Fitness App Gone Wrong', 'https://example.com/logo30.png', '2023-06-10', '2023-06-20', 'A fitness app that failed due to lack of features.', 'HEALTHCARE', 'Understanding app development', FALSE, 'u10');
+
+
+
+
+
+
+
