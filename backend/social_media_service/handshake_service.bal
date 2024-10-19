@@ -15,7 +15,7 @@ service /api/handshakes on socialMediaListener{
 
 
     # /api/handshakes/getbyid/{id}
-    # A resource for getting handshake by id
+    # A resource for getting handshake by handshake_id
     # + 
     # + return - handshake or error
     resource function get getbyid/[string id](string jwt) returns json|http:NotFound|error {
