@@ -243,7 +243,9 @@ service /api/handshakes on socialMediaListener{
             // JWT validation failed, return the error
             return validationResult;
         }
-    };}
+    };
+
+}
     
 
 
