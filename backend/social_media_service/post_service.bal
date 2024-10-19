@@ -17,13 +17,16 @@ service /api/posts on socialMediaListener{
     # A resource for getting all posts
     # +
     # + return - posts[] with all posts or error
+
     resource function get getall(string jwt) returns json|http:BadRequest|error {
+
         // Validate the JWT token
         jwt:Payload|error validationResult = jwt:validate(jwt, validatorConfig);
     
         if (validationResult is jwt:Payload) {
             // JWT validation succeeded
             stream<posts, persist:Error?> postStream = innolinkdb->/posts(posts);
+
             posts[]|error result = from posts post in postStream select post;
             if result is error {
                 return <http:BadRequest>{body: {message: "Failed to retrieve posts"}};
@@ -41,6 +44,7 @@ service /api/posts on socialMediaListener{
                 "post_objects": allPosts
             };
             return responseBody;
+
         } else {
             // JWT validation failed, return the error
             return validationResult;
@@ -102,6 +106,7 @@ service /api/posts on socialMediaListener{
 
 
     };
+
 
     #/api/posts/getPostsByHandshakedUsers
     # A resource for getting all posts by an user's handshakers
