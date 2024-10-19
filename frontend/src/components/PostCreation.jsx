@@ -13,7 +13,7 @@ const PostCreation = ({ user }) => {
 
 	const { mutate: createPostMutation, isPending } = useMutation({
 		mutationFn: async (postData) => {
-			const res = await axiosInstance.post("/posts/add", postData, {
+			const res = await axiosInstance.post(`/posts/add?userId=${user.id}&jwt=${user.jwt}`, postData, {
 				headers: { "Content-Type": "application/json" },
 			});
 			return res.data;
@@ -30,13 +30,16 @@ const PostCreation = ({ user }) => {
 
 	const handlePostCreation = async () => {
 		try {
-			const postData = { content };
-			if (image) postData.image = await readFileAsDataURL(image);
-
+			const postData = {
+			  img_url: image ? await readFileAsDataURL(image) : null,
+			  caption: content,
+			  video_url: null, // Assuming no video URL here, adjust as needed
+			};
+		
 			createPostMutation(postData);
-		} catch (error) {
+		  } catch (error) {
 			console.error("Error in handlePostCreation:", error);
-		}
+		  }
 	};
 
 	const resetForm = () => {
@@ -67,7 +70,7 @@ const PostCreation = ({ user }) => {
 	return (
 		<div className='bg-secondary rounded-lg shadow mb-4 p-4'>
 			<div className='flex space-x-3'>
-				{/* <img src={user.profilePicture || "../../public/avatar.png"} alt={user.name} className='size-12 rounded-full' /> */}
+				{ <img src={user.profilePicture || "/avatar.png"} alt={user.name} className='size-12 rounded-full' />}
 				<textarea
 					placeholder="What's on your mind?"
 					className='w-full p-3 rounded-lg bg-base-100 hover:bg-base-200 focus:bg-base-200 focus:outline-none resize-none transition-colors duration-200 min-h-[100px]'

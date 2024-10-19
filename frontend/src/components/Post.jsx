@@ -22,7 +22,7 @@ const Post = ({ post }) => {
 
 	const { mutate: deletePost, isPending: isDeletingPost } = useMutation({
 		mutationFn: async () => {
-			await axiosInstance.delete(`/posts/delete/${post.id}`);
+			await axiosInstance.delete(`/posts/delete?postId=${post._id}&jwt=${authUser.jwt}`);
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["posts"] });
@@ -35,7 +35,7 @@ const Post = ({ post }) => {
 
 	const { mutate: createComment, isPending: isAddingComment } = useMutation({
 		mutationFn: async (newComment) => {
-			await axiosInstance.post(`/posts/${post.id}/comment`, { content: newComment });
+			await axiosInstance.post(`/posts/comment?postId=${post._id}&jwt=${authUser.jwt}`, { content: newComment });
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["posts"] });
@@ -48,7 +48,7 @@ const Post = ({ post }) => {
 
 	const { mutate: likePost, isPending: isLikingPost } = useMutation({
 		mutationFn: async () => {
-			await axiosInstance.post(`/posts/${post._id}/like`);
+			await axiosInstance.post(`/posts/like?postId=${post._id}&jwt=${authUser.jwt}`);
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["posts"] });
