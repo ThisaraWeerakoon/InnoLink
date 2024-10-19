@@ -184,30 +184,3 @@ service /api/handshakes on socialMediaListener{
 
 
  
-
-//     #api/follows/delete/{id}
-//     # A resource for deleting a follow connection by id
-//     # + id - follow id
-//     # + return - http response or error
-//     resource function delete delete/[string id](string jwt) returns follows|http:NotFound|error{
-        
-//         // Validate the JWT token
-//         jwt:Payload|error validationResult = jwt:validate(jwt, validatorConfig);
-    
-//         if (validationResult is jwt:Payload) {
-//             // JWT validation succeeded
-//             follows|persist:Error follow = innolinkdb->/follows/[id].delete;
-//             if follow is follows {
-//                 return follow;
-//             }
-//             else{
-//                 return <http:NotFound>{body: {message: "follow not found"}};
-//             }
-
-
-//         } else {
-//             // JWT validation failed, return the error
-//             return validationResult;
-//         }
-//     }
-// }
