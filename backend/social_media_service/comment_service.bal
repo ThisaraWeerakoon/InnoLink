@@ -109,7 +109,8 @@ service /api/comments on socialMediaListener{
                 userId: userId,
                 postId: postId,
                 content:content,
-                created_at: time:utcNow()
+                created_at: time:utcNow(),
+                media:()
             };
             string[]|persist:Error result = innolinkdb->/comments.post([comment]);
             if result is string[] {
