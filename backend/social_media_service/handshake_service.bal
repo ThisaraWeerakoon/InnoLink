@@ -142,6 +142,7 @@ service /api/handshakes on socialMediaListener{
     # A resource for updating the status of a handshake
     # + handshakeId - ID of the handshake
     # + newStatus - 'ACCEPTED' or 'REJECTED'
+    # + return - updated handshake_object with updated status
     resource function put updateStatus/[string handshakeId]( string newStatus, string jwt) returns json|http:BadRequest|http:InternalServerError|error {
         
         // Validate the JWT token
