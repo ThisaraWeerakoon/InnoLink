@@ -103,48 +103,48 @@ service /api/posts on socialMediaListener{
 
     };
 
-    // #/api/posts/getAllByHandshakers
-    // # A resource for getting all posts by an user's handshakers
-    // # + userId - user id
-    // # + return - http reponse or posts[]
-    // resource function get getAllByUserFollowing(string userId,string jwt) returns posts[]|http:BadRequest|error{
+    #/api/posts/getPostsByHandshakedUsers
+    # A resource for getting all posts by an user's handshakers
+    # + userId - user id
+    # + return - http reponse or posts[]
+    resource function get getPostsByHandshakedUsers(string userId,string jwt) returns json|http:BadRequest|error{
 
-    //     // Validate the JWT token
-    //     jwt:Payload|error validationResult = jwt:validate(jwt, validatorConfig);
+        // Validate the JWT token
+        jwt:Payload|error validationResult = jwt:validate(jwt, validatorConfig);
     
-    //     if (validationResult is jwt:Payload) {
-    //         // JWT validation succeeded
-    //         sql:ParameterizedQuery selectFollowsQuery = `SELECT * FROM handshakes WHERE handshakerId = ${userId} AND accepted = TRUE`;
-
-    //         stream<follows, persist:Error?> followStream = innolinkdb->queryNativeSQL(selectFollowsQuery);
-
-    //         follows[]|error result = from var follow in followStream select follow;
-
-    //         if result is error {
-    //             return <http:BadRequest>{body: {message: string `Failed to retrieve followers:`}};
-    //         }
-
-    //         posts[] allPostsFromFollowers = [];
-
-    //         foreach follows follow in result {
-    //             string followerId = follow.followingId;
-    //             sql:ParameterizedQuery selectPostsQuery = `SELECT * FROM posts WHERE userId = ${followerId}`;
-    //             stream<posts, persist:Error?> postStream = innolinkdb->queryNativeSQL(selectPostsQuery);
-    //             posts[]|error postsResult = from var post in postStream select post;
-    //             if postsResult is error {
-    //                 return <http:BadRequest>{body: {message: string `Failed to retrieve posts for followers:`}};
-    //             }
-    //             foreach posts post in postsResult {
-    //                 allPostsFromFollowers.push(post);
-    //             }
-    //         }
+        if (validationResult is jwt:Payload) {
+            // JWT validation succeeded
+            sql:ParameterizedQuery query = `SELECT posts.* 
+                                            FROM posts
+                                            JOIN handshakes 
+                                            ON (
+                                                (handshakes.handshakerId = posts.userId AND handshakes.handshakeeId = ${userId})
+                                                OR (handshakes.handshakerId = ${userId} AND handshakes.handshakeeId = posts.userId)
+                                            )
+                                            WHERE handshakes.status = 'ACCEPTED';`;
             
-    //         return allPostsFromFollowers;
-    //     } else {
-    //         // JWT validation failed, return the error
-    //         return validationResult;
-    //     }   
-    // };
+            // Execute the query and fetch the posts
+            stream<posts, persist:Error?> postStream = innolinkdb->queryNativeSQL(query);
+
+            // Collect the posts into an array
+            posts[]|error postResult = from var post in postStream select post;
+
+            if postResult is posts[] {
+                if postResult.length() is 0 {
+                    return <http:BadRequest>{body: {message: string `No posts found`}};
+                }
+                json responseBody = {"post_count": postResult.length(),"post_objects": postResult};
+                return responseBody;
+            } else {
+                return <http:BadRequest>{body: {message: string `Error while retreiving posts`}}; // Return the error in case of failure
+            }
+
+ 
+        } else {
+            // JWT validation failed, return the error
+            return validationResult;
+        }   
+    };
 
     #api/posts/add
     # A reource for adding a new post
