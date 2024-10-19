@@ -1,8 +1,9 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 import { Image, Loader } from "lucide-react";
+;
 
 const PostCreation = ({ user }) => {
 	const [content, setContent] = useState("");
@@ -10,10 +11,18 @@ const PostCreation = ({ user }) => {
 	const [imagePreview, setImagePreview] = useState(null);
 
 	const queryClient = useQueryClient();
+	
+	const token= localStorage.getItem('jwt');
+
+	
+
+	const { data: authUser, isLoading } = useQuery({
+		queryKey: ["authUser"],
+	});
 
 	const { mutate: createPostMutation, isPending } = useMutation({
 		mutationFn: async (postData) => {
-			const res = await axiosInstance.post(`/posts/add?userId=${user.id}&jwt=${user.jwt}`, postData, {
+			const res = await axiosInstance.post(`/posts/add?userId=${authUser.id}&jwt=${token}`, postData, {
 				headers: { "Content-Type": "application/json" },
 			});
 			return res.data;
@@ -30,6 +39,8 @@ const PostCreation = ({ user }) => {
 
 	const handlePostCreation = async () => {
 		try {
+
+			
 			const postData = {
 			  img_url: image ? await readFileAsDataURL(image) : null,
 			  caption: content,
