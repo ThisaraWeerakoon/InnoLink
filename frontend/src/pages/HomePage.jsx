@@ -39,7 +39,7 @@ const HomePage = ({authUser}) => {
 							<Users size={64} className='mx-auto text-blue-500' />
 						</div>
 						<h2 className='text-2xl font-bold mb-4 text-gray-800'>No Posts Yet</h2>
-						<p className='text-gray-600 mb-6'>Connect with others to start seeing posts in your feed!</p>
+						<p className='text-gray-600 mb-6'>HandShake with others to start seeing posts in your feed!</p>
 					</div>
 				)}
 			</div>

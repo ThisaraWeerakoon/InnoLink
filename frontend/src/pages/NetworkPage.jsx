@@ -25,7 +25,7 @@ const NetworkPage = () => {
 			</div>
 			<div className='col-span-1 lg:col-span-3'>
 				<div className='bg-secondary rounded-lg shadow p-6 mb-6'>
-					<h1 className='text-2xl font-bold mb-6'>My Network</h1>
+					<h1 className='text-2xl font-bold mb-6'>My HandShakes</h1>
 
 					{/* {connectionRequests?.data?.length > 0 ? (
 						<div className='mb-8'>
@@ -50,7 +50,7 @@ const NetworkPage = () => {
 					)} */}
 					{connections?.data?.handshake_count > 0 && (
 						<div className='mb-8'>
-							<h2 className='text-xl font-semibold mb-4'>My Connections</h2>
+							<h2 className='text-xl font-semibold mb-4'>My HandShakes</h2>
 							<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
 								{connections.data.handshaked_user_objects.map((connection) => (
 									<UserCard key={connection.id} user={connection} isConnection={true} />
