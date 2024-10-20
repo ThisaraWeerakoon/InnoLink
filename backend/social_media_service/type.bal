@@ -38,5 +38,18 @@ public type neweducation record {|
     
 |};
 
+public type newstories record{|
+
+    string name;
+    string? logo_url;
+    time:Date start_date;
+    time:Date? end_date;
+    string? description;
+    Domain? domain;
+    string? learning;
+    boolean success;
+
+|};
+
 
 
