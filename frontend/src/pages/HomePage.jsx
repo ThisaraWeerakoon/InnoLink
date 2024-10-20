@@ -29,7 +29,7 @@ const HomePage = ({authUser}) => {
 			<div className='col-span-1 lg:col-span-2 order-first lg:order-none'>
 				<PostCreation user={authUser} />
 
-				{posts.post_objects?.map((post) => (
+				{posts?.post_objects?.map((post) => (
 					<Post key={post.id} post={post} />
 				))}
 
