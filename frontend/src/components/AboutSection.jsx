@@ -1,17 +1,19 @@
-import { useState } from "react";
+import { useState,useEffect} from "react";
 
 const AboutSection = ({ userData, isOwnProfile, onSave }) => {
 	const [isEditing, setIsEditing] = useState(false);
-	const [about, setAbout] = useState(userData.about || "");
+	const [about, setAbout] = useState(userData.about_me || "");
+	console.log("About Section", userData);
 
 	const handleSave = () => {
 		setIsEditing(false);
-		onSave({ about });
+		const updatedData = { about_me: about };
+		onSave(updatedData);
 	};
 	return (
 		<div className='bg-white shadow rounded-lg p-6 mb-6'>
 			<h2 className='text-xl font-semibold mb-4'>About</h2>
-			{isOwnProfile && (
+			{isOwnProfile!=null && (
 				<>
 					{isEditing ? (
 						<>
@@ -31,7 +33,7 @@ const AboutSection = ({ userData, isOwnProfile, onSave }) => {
 						</>
 					) : (
 						<>
-							<p>{userData.about}</p>
+							<p>{userData.about_me}</p>
 							<button
 								onClick={() => setIsEditing(true)}
 								className='mt-2 text-primary hover:text-primary-dark transition duration-300'

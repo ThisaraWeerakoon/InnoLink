@@ -7,15 +7,15 @@ import UserCard from "../components/UserCard";
 
 const NetworkPage = () => {
 	const { data: user } = useQuery({ queryKey: ["authUser"] });
-
-	const { data: connectionRequests } = useQuery({
-		queryKey: ["connectionRequests"],
-		queryFn: () => axiosInstance.get("/connections/requests"),
-	});
+	const token = localStorage.getItem("jwt");
+	// const { data: connectionRequests } = useQuery({
+	// 	queryKey: ["connectionRequests"],
+	// 	queryFn: () => axiosInstance.get("/connections/requests"),
+	// });
 
 	const { data: connections } = useQuery({
-		queryKey: ["connections"],
-		queryFn: () => axiosInstance.get("/connections"),
+		queryKey: ["connections",user.id],
+		queryFn: () => axiosInstance.get(`/handshakes/getAcceptedHandshakeUsersById/?userId=${user.id}&jwt=${token}`),
 	});
 
 	return (
@@ -27,7 +27,7 @@ const NetworkPage = () => {
 				<div className='bg-secondary rounded-lg shadow p-6 mb-6'>
 					<h1 className='text-2xl font-bold mb-6'>My Network</h1>
 
-					{connectionRequests?.data?.length > 0 ? (
+					{/* {connectionRequests?.data?.length > 0 ? (
 						<div className='mb-8'>
 							<h2 className='text-xl font-semibold mb-2'>Connection Request</h2>
 							<div className='space-y-4'>
@@ -47,13 +47,13 @@ const NetworkPage = () => {
 								Explore suggested connections below to expand your network!
 							</p>
 						</div>
-					)}
-					{connections?.data?.length > 0 && (
+					)} */}
+					{connections?.data?.handshake_count > 0 && (
 						<div className='mb-8'>
 							<h2 className='text-xl font-semibold mb-4'>My Connections</h2>
 							<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-								{connections.data.map((connection) => (
-									<UserCard key={connection._id} user={connection} isConnection={true} />
+								{connections.data.handshaked_user_objects.map((connection) => (
+									<UserCard key={connection.id} user={connection} isConnection={true} />
 								))}
 							</div>
 						</div>

@@ -49,18 +49,18 @@ const Navbar = ({onLogout}) => {
 									<Home size={20} />
 									<span className='text-xs hidden md:block'>Home</span>
 								</Link>
-								{/* <Link to='/network' className='text-neutral flex flex-col items-center relative'>
+								<Link to='/network' className='text-neutral flex flex-col items-center relative'>
 									<Users size={20} />
 									<span className='text-xs hidden md:block'>My Network</span>
-									{unreadConnectionRequestsCount > 0 && (
+									{/* {unreadConnectionRequestsCount > 0 && (
 										<span
 											className='absolute -top-1 -right-1 md:right-4 bg-blue-500 text-white text-xs 
 										rounded-full size-3 md:size-4 flex items-center justify-center'
 										>
 											{unreadConnectionRequestsCount}
 										</span>
-									)}
-								</Link> */}
+									)} */}
+								</Link>
 								{/* <Link to='/notifications' className='text-neutral flex flex-col items-center relative'>
 									<Bell size={20} />
 									<span className='text-xs hidden md:block'>Notifications</span>
@@ -74,7 +74,7 @@ const Navbar = ({onLogout}) => {
 									)}
 								</Link> */}
 								<Link
-									to={`/profile/${authUser.id}`}
+									to={`/profile/${authUser?.id}`}
 									className='text-neutral flex flex-col items-center'
 								>
 									<User size={20} />

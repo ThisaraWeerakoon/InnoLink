@@ -23,8 +23,7 @@ const LoginForm = ({onLogin}) => {
 					onLogin(fullUserData, token); // Pass full user data and token to onLogin
 					queryClient.setQueryData(["authUser"], fullUserData);
 					queryClient.invalidateQueries({ queryKey: ["authUser"] }); // Optionally invalidate any related queries
-					console.log('fullUserData:', fullUserData);
-					console.log('token:', token);
+					
 				})
 				.catch((error) => {
 					toast.error(error.response?.data?.message || "Failed to fetch full user data");

@@ -13,45 +13,94 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 
 	const { data: authUser } = useQuery({ queryKey: ["authUser"] });
 
+	// const { data: connectionStatus, refetch: refetchConnectionStatus } = useQuery({
+	// 	queryKey: ["connectionStatus", userData.id],
+	// 	queryFn: () => axiosInstance.get(`/handshakes/getAcceptedHandshakeUsersById`, {
+	// 	  params: {
+	// 		user1Id: authUser?.id,      // Current user's ID
+	// 		jwt: token,                 // JWT token in the query params
+	// 	  },
+	// 	}),
+	// 	enabled: !isOwnProfile,
+	//   });
+	  
+
+	//   const handshakeUsers = connectionStatus?.handshaked_user_objects || [];
+
+	//   // Check if the user is connected based on their ID being in the handshaked users
+	//   const isConnected = handshakeUsers.some((user) => user.id === userData.id);
+	  
+	//   // Get the handshake object for the profile user if connected
+	//   const handshakeUserObject = handshakeUsers.find((user) => user.id === userData.id);
+	  
+	//   // Extract the handshake ID if available
+	//   const handshakeId = handshakeUserObject?.id;
+
 	const { data: connectionStatus, refetch: refetchConnectionStatus } = useQuery({
 		queryKey: ["connectionStatus", userData.id],
-		queryFn: () => axiosInstance.get(`/users/isfollowing`, {
-		        params: {
-		            userId: authUser?.id,        // Replace with the current user's ID
-		            followingId: userData.id,   // Replace with the profile user's ID
-		            jwt: token,                  // Pass the JWT token in the query params
-		        },
-    }),		enabled: !isOwnProfile,
-	});
+		queryFn: () => axiosInstance.get(`/handshakes/isHandShaked`, {
+		  params: {
+			user1Id: authUser?.id,      // Current user's ID
+			user2Id: userData.id,       // Profile user's ID
+			jwt: token,                 // JWT token in the query params
+		  },
+		}),
+		enabled: !isOwnProfile,
+	  });
+	  
 
-	const isConnected = userData.connections.some((connection) => connection === authUser._id);
+	const isConnected = connectionStatus?.data.is_handshaked;
+	
+	const handshakeId = connectionStatus?.data.handshake_object?.id;
 
 	const { mutate: sendConnectionRequest } = useMutation({
-		mutationFn: (userId) => axiosInstance.post(`/connections/request/${userId}`),
+		mutationFn: () =>
+		  axiosInstance.post(
+			`/handshakes/add`, // Use the new API endpoint for adding a handshake
+			null, // No request body required
+			{
+			  params: {
+				handshakerId: authUser?.id, // ID of the current authenticated user (handshaker)
+				handshakeeId: userData.id,  // ID of the user to send the handshake request to
+				jwt: token,                 // JWT token for authentication
+			  },
+			}
+		  ),
 		onSuccess: () => {
-			toast.success("Connection request sent");
-			refetchConnectionStatus();
-			queryClient.invalidateQueries(["connectionRequests"]);
+		  toast.success("Connection request sent");
+		  refetchConnectionStatus(); // Refetch connection status to reflect the new request
+		  queryClient.invalidateQueries(["connectionRequests"]); // Invalidate queries to refresh data
 		},
 		onError: (error) => {
-			toast.error(error.response?.data?.message || "An error occurred");
+		  toast.error(error.response?.data?.message || "An error occurred");
 		},
-	});
+	  });
+	  
 
 	const { mutate: acceptRequest } = useMutation({
-		mutationFn: (requestId) => axiosInstance.put(`/connections/accept/${requestId}`),
+		mutationFn: () =>
+		  axiosInstance.put(
+			`/handshakes/updateStatus/${handshakeId}`,  // Use the handshake ID dynamically
+			null,  // No request body required, only query parameters
+			{
+			  params: {
+				newStatus: "ACCEPTED", // Set the new status to "ACCEPTED"
+				jwt: token,            // Pass the JWT token
+			  },
+			}
+		  ),
 		onSuccess: () => {
-			toast.success("Connection request accepted");
-			refetchConnectionStatus();
-			queryClient.invalidateQueries(["connectionRequests"]);
+		  toast.success("Connection request accepted");
+		  refetchConnectionStatus(); // Refetch the connection status after mutation
+		  queryClient.invalidateQueries(["connectionRequests"]); // Invalidate queries to refresh data
 		},
 		onError: (error) => {
-			toast.error(error.response?.data?.message || "An error occurred");
+		  toast.error(error.response?.data?.message || "An error occurred");
 		},
-	});
+	  });
 
 	const { mutate: rejectRequest } = useMutation({
-		mutationFn: (requestId) => axiosInstance.put(`/connections/reject/${requestId}`),
+		mutationFn: () => axiosInstance.delete(`/handshakes/delete/${handshakeId}?jwt=${token}`),
 		onSuccess: () => {
 			toast.success("Connection request rejected");
 			refetchConnectionStatus();
@@ -63,7 +112,7 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 	});
 
 	const { mutate: removeConnection } = useMutation({
-		mutationFn: (userId) => axiosInstance.delete(`/connections/${userId}`),
+		mutationFn: () => axiosInstance.delete(`/handshakes/delete/${handshakeId}?jwt=${token}`),
 		onSuccess: () => {
 			toast.success("Connection removed");
 			refetchConnectionStatus();
@@ -77,8 +126,10 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 	const getConnectionStatus = useMemo(() => {
 		if (isConnected) return "connected";
 		if (!isConnected) return "not_connected";
-		return connectionStatus?.data?.status;
+		return connectionStatus?.data.handshake_object?.status;
 	}, [isConnected, connectionStatus]);
+
+	console.log('status',connectionStatus?.data.handshake_object?.status);
 
 	const renderConnectionButton = () => {
 		const baseClass = "text-white py-2 px-4 rounded-full transition duration-300 flex items-center justify-center";
@@ -138,19 +189,58 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 		}
 	};
 
+	// const handleImageChange = (event) => {
+	// 	const file = event.target.files[0];
+	// 	if (file) {
+	// 		const reader = new FileReader();
+	// 		reader.onloadend = () => {
+	// 			setEditedData((prev) => ({ ...prev, [event.target.name]: reader.result }));
+	// 		};
+	// 		reader.readAsDataURL(file);
+	// 	}
+	// };
 	const handleImageChange = (event) => {
 		const file = event.target.files[0];
 		if (file) {
 			const reader = new FileReader();
 			reader.onloadend = () => {
-				setEditedData((prev) => ({ ...prev, [event.target.name]: reader.result }));
+				const img = new Image();
+				img.src = reader.result;
+				img.onload = () => {
+					const canvas = document.createElement("canvas");
+					const ctx = canvas.getContext("2d");
+					const MAX_SIZE = 800; // Resize max dimension
+					let { width, height } = img;
+	
+					// Resize while maintaining aspect ratio
+					if (width > height) { if (width > MAX_SIZE) { height *= MAX_SIZE / width; width = MAX_SIZE; } }
+					else { if (height > MAX_SIZE) { width *= MAX_SIZE / height; height = MAX_SIZE; } }
+	
+					canvas.width = width; canvas.height = height;
+					ctx.drawImage(img, 0, 0, width, height);
+					setEditedData((prev) => ({ ...prev, [event.target.name]: canvas.toDataURL(file.type, 0.7) }));
+				};
 			};
 			reader.readAsDataURL(file);
 		}
 	};
+	
 
 	const handleSave = () => {
-		onSave(editedData);
+		const fullName= editedData?.name?.split(" ");
+		
+		const updatedProfileData = {
+			profile_pic_url: editedData.profile_pic_url ?? userData.profile_pic_url,
+			banner_url: editedData.banner_url ?? userData.banner_url,
+			about_me: editedData.about_me ?? userData.about_me,
+			...(editedData?.name && {
+				first_name: fullName[0], // Assign first_name only if name is edited
+				last_name: fullName.length > 1 && fullName[1] ? fullName[1] : userData.last_name,  // Only assign last_name if it exists and is non-empty
+				name: editedData.name,
+			}),
+		};
+	
+		onSave(updatedProfileData);
 		setIsEditing(false);
 	};
 
@@ -159,7 +249,7 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 			<div
 				className='relative h-48 rounded-t-lg bg-cover bg-center'
 				style={{
-					backgroundImage: `url('${editedData.bannerImg || userData.bannerImg || "/banner.png"}')`,
+					backgroundImage: `url('${editedData.banner_url || userData.banner_url || "/banner.png"}')`,
 				}}
 			>
 				{isEditing && (
@@ -168,7 +258,7 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 						<input
 							type='file'
 							className='hidden'
-							name='bannerImg'
+							name='banner_url'
 							onChange={handleImageChange}
 							accept='image/*'
 						/>
@@ -180,7 +270,7 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 				<div className='relative -mt-20 mb-4'>
 					<img
 						className='w-32 h-32 rounded-full mx-auto object-cover'
-						src={editedData.profilePicture || userData.profilePicture || "/avatar.png"}
+						src={editedData.profile_pic_url || userData.profile_pic_url || "/avatar.png"}
 						alt={userData.name}
 					/>
 
@@ -190,7 +280,7 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 							<input
 								type='file'
 								className='hidden'
-								name='profilePicture'
+								name='profile_pic_url'
 								onChange={handleImageChange}
 								accept='image/*'
 							/>
@@ -213,15 +303,15 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 					{isEditing ? (
 						<input
 							type='text'
-							value={editedData.headline ?? userData.headline}
-							onChange={(e) => setEditedData({ ...editedData, headline: e.target.value })}
+							value={editedData.about_me ?? userData.about_me}
+							onChange={(e) => setEditedData({ ...editedData, about_me: e.target.value })}
 							className='text-gray-600 text-center w-full'
 						/>
 					) : (
-						<p className='text-gray-600'>{userData.headline}</p>
+						<p className='text-gray-600'>{userData.about_me}</p>
 					)}
 
-					<div className='flex justify-center items-center mt-2'>
+					{/* <div className='flex justify-center items-center mt-2'>
 						<MapPin size={16} className='text-gray-500 mr-1' />
 						{isEditing ? (
 							<input
@@ -233,7 +323,7 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 						) : (
 							<span className='text-gray-600'>{userData.location}</span>
 						)}
-					</div>
+					</div> */}
 				</div>
 
 				{isOwnProfile ? (

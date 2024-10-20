@@ -93,7 +93,7 @@ const EducationSection = ({ userData, isOwnProfile, onSave }) => {
 				</div>
 			)}
 
-			{isOwnProfile && (
+			{isOwnProfile!=null && (
 				<>
 					{isEditing ? (
 						<button
