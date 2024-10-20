@@ -205,7 +205,7 @@ service /api/handshakes on socialMediaListener{
     # + user1Id 
     # + user2Id - two users to be checked
     # + return - if there exist an handshake json object containing the status and handshake object,if not returning error message
-    resource function get isHandShaked(string user1Id, string user2Id, string jwt) returns json|http:BadRequest|error {
+    resource function get isHandShaked(string user1Id, string user2Id, string jwt) returns json|http:Ok|http:BadRequest|error {
 
         // Validate the JWT token
         jwt:Payload|error validationResult = jwt:validate(jwt, validatorConfig);
@@ -236,7 +236,7 @@ service /api/handshakes on socialMediaListener{
                 return responseBody;
             } else {
                 // No handshake found, return BadRequest with a message
-                return <http:BadRequest>{body: {message: "No handshake exists between the specified users"}};
+                return <http:Ok>{body: {message: "No handshake exists between the specified users"}};
             }
 
         } else {
