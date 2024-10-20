@@ -28,5 +28,15 @@ public type newposts record{|
     string caption;
 |};
 
+public type neweducation record {|
+    string institution;
+    int start_year;
+    int? end_year;
+    string? degree;
+    string? field_of_study;
+    
+    
+|};
+
 
 
