@@ -221,18 +221,24 @@ service /api/handshakes on socialMediaListener{
     
             // Get the result as an array
             handshakes[]|error result = from var handshake in handshakeStream select handshake;
-            
+            json responseBody = {};
             // Check if any handshake records were found
             if (result is handshakes[]) {
                 boolean found = false;
                 if result.length() > 0 {
                     found = true; // An accepted handshake exists between the two users
+                    responseBody = {"is_handshaked":found,"handshake_object":result[0]};
                 } else {
                     found = false; // No accepted handshake found
+                    responseBody = {"is_handshaked":false,"handshake_object":{}};
                 }
-                // Return the status of the handshake
-                json reponseBody = {"is_handshaked": found, "handshake_object":result[0]};
-                return reponseBody;
+
+
+
+
+                // // Return the status of the handshake
+                // json reponseBody = {"is_handshaked": found, "handshake_object":result[0]};
+                return responseBody;
             } else {
                 return <http:BadRequest>{body: {message: "Error while checking existing handshake relationship"}};
             }
