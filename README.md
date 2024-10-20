@@ -30,7 +30,7 @@ To run this project, you will need the following installed on your system:
    host = "localhost"
    port = 3306
    user = "root"
-   password = "thisara2001"
+   password = ""
    database = "innolink_db"
    ```
 
