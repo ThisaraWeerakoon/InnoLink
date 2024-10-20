@@ -2,7 +2,7 @@ import ballerina/http;
 import ballerina/persist;
 // import ballerina/time;
 import ballerina/uuid;
-// import ballerina/sql;
+import ballerina/sql;
 import ballerina/jwt;
 
 
@@ -145,6 +145,51 @@ service /api/education on socialMediaListener {
     //         return validationResult;
     //     }
     // };
+
+    #api/education/geteducationbyuserid
+    # A resource for getting education info about a give user
+    # + userId - user id
+    # + return - json obeject contating number of education and information or erro
+    resource function get geteducationbyuserid(string userId,string jwt) returns json|http:BadRequest|error{
+        // Validate the JWT token
+        jwt:Payload|error validationResult = jwt:validate(jwt, validatorConfig);
+    
+        if (validationResult is jwt:Payload) {
+            // JWT validation succeeded
+            
+            // Prepare the SQL query to fetch education records for the user
+            sql:ParameterizedQuery selectQuery = `SELECT * FROM education WHERE userId = ${userId};`;
+
+            // Execute the query and get the result as a stream
+            stream<education, persist:Error?> educationStream = innolinkdb->queryNativeSQL(selectQuery);
+
+            // Convert the result stream into an array
+            education[]|error result = from var educationEntry in educationStream select educationEntry;
+
+            // Handle errors in SQL execution
+            if result is error {
+                return <http:BadRequest>{body: {message: "Failed to retrieve education records"}};
+            }
+
+            // If no records found, return an empty response
+            if result.length() == 0 {
+                return <http:BadRequest>{body: {message: "No education records found for the specified user"}};
+            }
+
+            // Return the JSON response containing the education records
+            json responseBody = {
+                "education_count": result.length(),
+                "education_records": result
+            };
+            return responseBody;
+        }
+        else {
+            // JWT validation failed, return the error
+            return validationResult;
+        }
+
+        
+    }
 
 
 
