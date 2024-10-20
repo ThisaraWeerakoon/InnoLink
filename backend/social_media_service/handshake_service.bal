@@ -201,55 +201,50 @@ service /api/handshakes on socialMediaListener{
     };
 
     #api/handshakes/isHandShaked
-    # A resource for checking whether two users are handshaked
+    # A resource for checking the status of two users 
     # + user1Id 
-    # + user2Id - two users want to be checked
-    # + return - json object containing the status and the handshaked object
-    resource function get isHandShaked(string user1Id,string user2Id,string jwt) returns json|http:BadRequest|error {
-        
+    # + user2Id - two users to be checked
+    # + return - if there exist an handshake json object containing the status and handshake object,if not returning error message
+    resource function get isHandShaked(string user1Id, string user2Id, string jwt) returns json|http:BadRequest|error {
+
         // Validate the JWT token
         jwt:Payload|error validationResult = jwt:validate(jwt, validatorConfig);
 
         if (validationResult is jwt:Payload) {
-            // Prepare the SQL query to check for an accepted handshake
+            // Prepare the SQL query to check for a handshake regardless of status
             sql:ParameterizedQuery checkQuery = `SELECT * FROM handshakes
-                                         WHERE ((handshakerId = ${user1Id} AND handshakeeId = ${user2Id}) 
-                                         OR (handshakerId = ${user2Id} AND handshakeeId = ${user1Id}))
-                                         AND status = 'ACCEPTED';`;
+                                         WHERE (handshakerId = ${user1Id} AND handshakeeId = ${user2Id}) 
+                                         OR (handshakerId = ${user2Id} AND handshakeeId = ${user1Id});`;
             // Execute the query and retrieve the result
             stream<handshakes, persist:Error?> handshakeStream = innolinkdb->queryNativeSQL(checkQuery);
-    
+
             // Get the result as an array
             handshakes[]|error result = from var handshake in handshakeStream select handshake;
-            json responseBody = {};
-            // Check if any handshake records were found
-            if (result is handshakes[]) {
-                boolean found = false;
-                if result.length() > 0 {
-                    found = true; // An accepted handshake exists between the two users
-                    responseBody = {"is_handshaked":found,"handshake_object":result[0]};
-                } else {
-                    found = false; // No accepted handshake found
-                    responseBody = {"is_handshaked":false,"handshake_object":{}};
-                }
 
-
-
-
-                // // Return the status of the handshake
-                // json reponseBody = {"is_handshaked": found, "handshake_object":result[0]};
-                return responseBody;
-            } else {
+            // If an error occurs, return the BadRequest error
+            if result is error {
                 return <http:BadRequest>{body: {message: "Error while checking existing handshake relationship"}};
             }
 
+            // Check if any handshake records were found
+            if (result.length() > 0) {
+                // Handshake found, retrieve the status and return the handshake object
+                json responseBody = {
+                    "handshake_status": result[0].status, // Could be ACCEPTED, REJECTED, or PENDING
+                    "handshake_object": result[0]
+                };
+                return responseBody;
+            } else {
+                // No handshake found, return BadRequest with a message
+                return <http:BadRequest>{body: {message: "No handshake exists between the specified users"}};
+            }
 
-
-        }else {
+        } else {
             // JWT validation failed, return the error
             return validationResult;
         }
-    };
+    }
+
 
 }
     
