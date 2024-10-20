@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "../../lib/axios";
 import { Link } from "react-router-dom";
-import { Bell, Home, LogOut, User, Users } from "lucide-react";
+import { Bell, HandshakeIcon, Home, LogOut, User, Users } from "lucide-react";
 import { useEffect } from "react";
 
 const Navbar = ({onLogout}) => {
@@ -50,8 +50,8 @@ const Navbar = ({onLogout}) => {
 									<span className='text-xs hidden md:block'>Home</span>
 								</Link>
 								<Link to='/network' className='text-neutral flex flex-col items-center relative'>
-									<Users size={20} />
-									<span className='text-xs hidden md:block'>My Network</span>
+									<HandshakeIcon size={20} />
+									<span className='text-xs hidden md:block'>My HandShakers</span>
 									{/* {unreadConnectionRequestsCount > 0 && (
 										<span
 											className='absolute -top-1 -right-1 md:right-4 bg-blue-500 text-white text-xs 

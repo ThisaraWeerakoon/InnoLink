@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Home, UserPlus, Bell } from "lucide-react";
+import { Home, UserPlus, Bell, HandshakeIcon } from "lucide-react";
 
 export default function Sidebar({ user }) {
 	return (
@@ -38,7 +38,7 @@ export default function Sidebar({ user }) {
 								to='/network'
 								className='flex items-center py-2 px-4 rounded-md hover:bg-primary hover:text-white transition-colors'
 							>
-								<UserPlus className='mr-2' size={20} /> My Network
+								<HandshakeIcon className='mr-2' size={20} /> My HandShakers
 							</Link>
 						</li>
 						<li>

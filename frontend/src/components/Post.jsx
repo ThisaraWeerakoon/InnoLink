@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 import { Link, useParams } from "react-router-dom";
-import { Loader, MessageCircle, Send, Share2, ThumbsUp, Trash2 } from "lucide-react";
+import { DollarSign, Loader, MessageCircle, Send, Share2, ThumbsUp, Trash2 } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 
 import PostAction from "./PostAction";
@@ -167,7 +167,7 @@ const Post = ({ post }) => {
 						text={`Comment (${comments?.length})`}
 						onClick={() => setShowComments(!showComments)}
 					/>
-					<PostAction icon={<Share2 size={18} />} text='Share' />
+					<PostAction icon={<DollarSign size={18} />} text='Invest' />
 				</div>
 			</div>
 
