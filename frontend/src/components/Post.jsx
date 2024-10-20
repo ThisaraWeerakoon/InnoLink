@@ -27,18 +27,16 @@ const Post = ({ post }) => {
 
 	const token= localStorage.getItem('jwt');
 
-	// const fetchComments = async (postId, token) => {
-	// 	const response = await axiosInstance.get(`/comments/getallbypost?postId=${post.id}&jwt=${token}`);
-	// 	return response.data;
-	// };
 
-	
-	const { data: isLiked = false } = useQuery({
-		queryKey: ["isLiked", post._id, authUser?.id],
-		queryFn: () => fetchIsLiked(post._id, authUser?.id, token),
-		enabled: !!post._id && !!authUser?.id // Only run if postId and userId are available
-	});
-	
+	const { data: isLiked } = useQuery({
+		queryKey: ["isLiked", post.id, authUser?.id],
+		queryFn: async () => {
+		  const res = await axiosInstance.get(`/likes/isliked?userId=${authUser?.id}&postId=${post.id}&jwt=${token}`);
+		  return res.data === 1; // Convert 1 to true and 0 to false
+		},
+	    enabled: !!token,
+	  });
+	  
 
 
 	const { data: NewComments } = useQuery({
@@ -87,6 +85,8 @@ const Post = ({ post }) => {
 		},
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["posts"] });
+			queryClient.invalidateQueries({ queryKey: ["isLiked", post.id, authUser?.id] });
+
 			queryClient.invalidateQueries({ queryKey: ["post", postId] });
 			toast.success("Like added successfully");
 		},
@@ -123,7 +123,7 @@ const Post = ({ post }) => {
 			]);
 		}
 	};
-
+	
 	return (
 		<div className='bg-secondary rounded-lg shadow mb-4'>
 			<div className='p-4'>
