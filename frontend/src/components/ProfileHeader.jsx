@@ -49,9 +49,9 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 	  });
 	  
 
-	const isConnected = connectionStatus?.data.is_handshaked;
+	const isConnected = connectionStatus?.data?.handshake_status === "ACCEPTED" || false;
 	
-	const handshakeId = connectionStatus?.data.handshake_object?.id;
+	const handshakeId = connectionStatus?.data?.handshake_object?.id ;
 
 	const { mutate: sendConnectionRequest } = useMutation({
 		mutationFn: () =>
@@ -104,7 +104,7 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 		onSuccess: () => {
 			toast.success("Connection request rejected");
 			refetchConnectionStatus();
-			queryClient.invalidateQueries(["connectionRequests"]);
+			queryClient.invalidateQueries(["connectionStatus"]);
 		},
 		onError: (error) => {
 			toast.error(error.response?.data?.message || "An error occurred");
@@ -116,7 +116,7 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 		onSuccess: () => {
 			toast.success("Connection removed");
 			refetchConnectionStatus();
-			queryClient.invalidateQueries(["connectionRequests"]);
+			queryClient.invalidateQueries(["connectionStatus"]);
 		},
 		onError: (error) => {
 			toast.error(error.response?.data?.message || "An error occurred");
@@ -125,11 +125,13 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 
 	const getConnectionStatus = useMemo(() => {
 		if (isConnected) return "connected";
-		if (!isConnected) return "not_connected";
-		return connectionStatus?.data.handshake_object?.status;
+		if (connectionStatus?.data.handshake_object?.handshakeeId===authUser.id) return "received";
+		if (connectionStatus?.data.handshake_status==="PENDING") return "pending";
+
+		else return 'not_connected';
 	}, [isConnected, connectionStatus]);
 
-	console.log('status',connectionStatus?.data.handshake_object?.status);
+	console.log('status',getConnectionStatus);
 
 	const renderConnectionButton = () => {
 		const baseClass = "text-white py-2 px-4 rounded-full transition duration-300 flex items-center justify-center";
@@ -189,41 +191,42 @@ const ProfileHeader = ({ userData, onSave, isOwnProfile }) => {
 		}
 	};
 
-	// const handleImageChange = (event) => {
-	// 	const file = event.target.files[0];
-	// 	if (file) {
-	// 		const reader = new FileReader();
-	// 		reader.onloadend = () => {
-	// 			setEditedData((prev) => ({ ...prev, [event.target.name]: reader.result }));
-	// 		};
-	// 		reader.readAsDataURL(file);
-	// 	}
-	// };
 	const handleImageChange = (event) => {
 		const file = event.target.files[0];
 		if (file) {
 			const reader = new FileReader();
 			reader.onloadend = () => {
-				const img = new Image();
-				img.src = reader.result;
-				img.onload = () => {
-					const canvas = document.createElement("canvas");
-					const ctx = canvas.getContext("2d");
-					const MAX_SIZE = 800; // Resize max dimension
-					let { width, height } = img;
-	
-					// Resize while maintaining aspect ratio
-					if (width > height) { if (width > MAX_SIZE) { height *= MAX_SIZE / width; width = MAX_SIZE; } }
-					else { if (height > MAX_SIZE) { width *= MAX_SIZE / height; height = MAX_SIZE; } }
-	
-					canvas.width = width; canvas.height = height;
-					ctx.drawImage(img, 0, 0, width, height);
-					setEditedData((prev) => ({ ...prev, [event.target.name]: canvas.toDataURL(file.type, 0.7) }));
-				};
+				setEditedData((prev) => ({ ...prev, [event.target.name]: reader.result }));
 			};
 			reader.readAsDataURL(file);
 		}
 	};
+	//compress image if needed.
+	// const handleImageChange = (event) => {
+	// 	const file = event.target.files[0];
+	// 	if (file) {
+	// 		const reader = new FileReader();
+	// 		reader.onloadend = () => {
+	// 			const img = new Image();
+	// 			img.src = reader.result;
+	// 			img.onload = () => {
+	// 				const canvas = document.createElement("canvas");
+	// 				const ctx = canvas.getContext("2d");
+	// 				const MAX_SIZE = 800; // Resize max dimension
+	// 				let { width, height } = img;
+	
+	// 				// Resize while maintaining aspect ratio
+	// 				if (width > height) { if (width > MAX_SIZE) { height *= MAX_SIZE / width; width = MAX_SIZE; } }
+	// 				else { if (height > MAX_SIZE) { width *= MAX_SIZE / height; height = MAX_SIZE; } }
+	
+	// 				canvas.width = width; canvas.height = height;
+	// 				ctx.drawImage(img, 0, 0, width, height);
+	// 				setEditedData((prev) => ({ ...prev, [event.target.name]: canvas.toDataURL(file.type, 0.7) }));
+	// 			};
+	// 		};
+	// 		reader.readAsDataURL(file);
+	// 	}
+	// };
 	
 
 	const handleSave = () => {

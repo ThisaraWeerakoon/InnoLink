@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 import { Link, useParams } from "react-router-dom";
@@ -18,7 +18,7 @@ const Post = ({ post }) => {
 	const { data: authUser } = useQuery({ queryKey: ["authUser"] });
 	const [showComments, setShowComments] = useState(false);
 	const [newComment, setNewComment] = useState("");
-	//const [comments, setComments] = useState(post.comments || []);
+	const [comments, setComments] = useState(post.comments || []);
 	const isOwner = authUser.id === post.userId;
 	//const isLiked = post.likes.includes(authUser.id);
 
@@ -27,10 +27,10 @@ const Post = ({ post }) => {
 
 	const token= localStorage.getItem('jwt');
 
-	const fetchComments = async (postId, token) => {
-		const response = await axiosInstance.get(`/comments/getallbypost?postId=${post.id}&jwt=${token}`);
-		return response.data;
-	};
+	// const fetchComments = async (postId, token) => {
+	// 	const response = await axiosInstance.get(`/comments/getallbypost?postId=${post.id}&jwt=${token}`);
+	// 	return response.data;
+	// };
 
 	
 	const { data: isLiked = false } = useQuery({
@@ -41,14 +41,30 @@ const Post = ({ post }) => {
 	
 
 
-	const { data: comments = [], isLoading, error } = useQuery({
-		queryKey: ["comments", post.id], // Query key
-		queryFn: () => fetchComments(post.id, token), // Fetch function
-		enabled: !!postId // Only run the query if postId is available
+	// const { isLoading, error } = useQuery({
+    //     queryKey: ["comments", post.id], // Query key
+    //     queryFn: async () => {
+    //         const response = await axiosInstance.get(`/comments/getallbypost?postId=${post.id}&jwt=${token}`);
+    //         return response.data; // Return the comments data
+    //     },
+    //     enabled: !!post.id, // Only run the query if post.id is available
+    //     onSuccess: (data) => {
+    //         setComments(data); // Set the comments state to the data
+    //     },
+    // });
+	const { data: NewComments } = useQuery({
+		queryKey: ["comments"],
+		queryFn: async () => {
+			const res = await axiosInstance.get(`/comments/getallbypost?postId=${post.id}&jwt=${token}`);
+			return res.data;
+		},
+		enabled: !!token,
 	});
-
-
-
+	useEffect(() => {
+        console.log("Fetched comments:", NewComments); // Log the fetched comments
+        setComments(NewComments); // Set the comments state
+    })
+    
 	const { mutate: deletePost, isPending: isDeletingPost } = useMutation({
 		mutationFn: async () => {
 			await axiosInstance.delete(`/posts/delete?postId=${post.id}&jwt=${token}`);
@@ -156,7 +172,7 @@ const Post = ({ post }) => {
 
 					<PostAction
 						icon={<MessageCircle size={18} />}
-						text={`Comment (${comments.length})`}
+						text={`Comment (${comments?.length})`}
 						onClick={() => setShowComments(!showComments)}
 					/>
 					<PostAction icon={<Share2 size={18} />} text='Share' />
@@ -166,21 +182,21 @@ const Post = ({ post }) => {
 			{showComments && (
 				<div className='px-4 pb-4'>
 					<div className='mb-4 max-h-60 overflow-y-auto'>
-						{comments.map((comment) => (
+						{comments?.map((comment) => (
 							<div key={comment.id} className='mb-2 bg-base-100 p-2 rounded flex items-start'>
 								<img
-									src={comment.authUser.id || "/avatar.png"}
-									alt={comment.user.name}
+									src={comment.userId || "/avatar.png"}
+									alt={comment.userId}
 									className='w-8 h-8 rounded-full mr-2 flex-shrink-0'
 								/>
 								<div className='flex-grow'>
 									<div className='flex items-center mb-1'>
-										<span className='font-semibold mr-2'>{comment.user.name}</span>
-										{/*<span className='text-xs text-info'>
-											{formatDistanceToNow(new Date(comment.createdAt))}
-										</span>*/}
+										<span className='font-semibold mr-2'>{comment.userId}</span>
+										<span className='text-xs text-info'>
+										{formatDistanceToNow(new Date(comment.created_at[0] * 1000))}
+										</span>
 									</div>
-									<p>{response.data.content}</p>
+									<p>{comment.content}</p>
 								</div>
 							</div>
 						))}
