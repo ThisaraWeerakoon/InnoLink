@@ -1,5 +1,3 @@
-
-```markdown
 # Innolink
 
 Innolink is a platform that connects individuals with innovative ideas to potential investors, fostering a global startup community. It provides a space for idea sharing, brainstorming, and collaboration to help ideas reach their full potential. Innolink enables innovators and investors to come together seamlessly, creating opportunities for investment and partnerships. Our mission is to create a world where every idea holds value and can be transformed into impactful startups.
