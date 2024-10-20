@@ -41,17 +41,6 @@ const Post = ({ post }) => {
 	
 
 
-	// const { isLoading, error } = useQuery({
-    //     queryKey: ["comments", post.id], // Query key
-    //     queryFn: async () => {
-    //         const response = await axiosInstance.get(`/comments/getallbypost?postId=${post.id}&jwt=${token}`);
-    //         return response.data; // Return the comments data
-    //     },
-    //     enabled: !!post.id, // Only run the query if post.id is available
-    //     onSuccess: (data) => {
-    //         setComments(data); // Set the comments state to the data
-    //     },
-    // });
 	const { data: NewComments } = useQuery({
 		queryKey: ["comments"],
 		queryFn: async () => {
@@ -60,10 +49,11 @@ const Post = ({ post }) => {
 		},
 		enabled: !!token,
 	});
+
 	useEffect(() => {
         console.log("Fetched comments:", NewComments); // Log the fetched comments
         setComments(NewComments); // Set the comments state
-    })
+    },[NewComments])
     
 	const { mutate: deletePost, isPending: isDeletingPost } = useMutation({
 		mutationFn: async () => {
@@ -120,7 +110,7 @@ const Post = ({ post }) => {
 			setComments([
 				...comments,
 				{
-					id: generateUniqueId(), // Or any method to generate the `id`
+					id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`, // Or any method to generate the `id`
 					content: newComment,
 					media: null, // As `media` is `null` in the given structure
 					created_at: [
@@ -128,7 +118,7 @@ const Post = ({ post }) => {
 					  0  // Nanoseconds are 0 by default (adjust if needed)
 					],
 					userId: authUser.id, // Assuming `authUser` is available
-					postId: currentPostId // Use the post ID you're working with
+					postId: post.id // Use the post ID you're working with
 				  }
 			]);
 		}
