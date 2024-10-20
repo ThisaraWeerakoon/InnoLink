@@ -18,7 +18,7 @@ const HomePage = ({authUser}) => {
 		enabled: !!token,
 	});
 
-	console.log("posts", posts);
+	console.log("posts_all", posts);
 
 	return (
 		<div className='grid grid-cols-1 lg:grid-cols-4 gap-6'>
