@@ -120,14 +120,16 @@ const Post = ({ post }) => {
 			setComments([
 				...comments,
 				{
+					id: generateUniqueId(), // Or any method to generate the `id`
 					content: newComment,
-					user: {
-						_id: authUser._id,
-						name: authUser.name,
-						profilePicture: authUser.profilePicture,
-					},
-					createdAt: new Date(),
-				},
+					media: null, // As `media` is `null` in the given structure
+					created_at: [
+					  Math.floor(Date.now() / 1000), // Convert current time to seconds
+					  0  // Nanoseconds are 0 by default (adjust if needed)
+					],
+					userId: authUser.id, // Assuming `authUser` is available
+					postId: currentPostId // Use the post ID you're working with
+				  }
 			]);
 		}
 	};
