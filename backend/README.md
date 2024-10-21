@@ -766,3 +766,164 @@ All endpoints may return `http:BadRequest` in case of input errors or validation
 JWT token validation is applied to all operations, ensuring that only authenticated users can perform actions.
 --
 
+# API Endpoints for `/api/stories`
+
+#### 1. **GET `/api/stories/getbyid/{id}`**
+   - **Description**: Retrieves a specific story by its ID.
+   - **Path Parameter**:
+     - `id`: The ID of the story.
+   - **Header Parameter**:
+     - `jwt`: The JWT token for authentication.
+   - **Response**:
+     - `200 OK`: Returns the story details as a JSON object.
+     - `404 Not Found`: If the story is not found.
+     - `401 Unauthorized`: If the JWT validation fails.
+
+   **Sample Response**:
+   ```json
+   {
+     "stories_object_by_id": {
+       "id": "story-id",
+       "name": "Story Name",
+       "description": "Description",
+       // other story fields...
+     }
+   }
+   ```
+
+#### 2. **POST `/api/stories/add`**
+   - **Description**: Adds a new story.
+   - **Body Parameters**:
+     - `newstory`: A JSON object representing the new story.
+       - Fields:
+         - `name`: The name of the story.
+         - `logo_url`: The logo URL.
+         - `start_date`: Start date of the story.
+         - `end_date`: End date of the story.
+         - `description`: Description of the story.
+         - `domain`: Domain of the story.
+         - `learning`: Learning points from the story.
+         - `success`: Success criteria.
+   - **Header Parameter**:
+     - `jwt`: The JWT token for authentication.
+   - **Response**:
+     - `200 OK`: Returns the newly added story's ID as JSON.
+     - `400 Bad Request`: If the input is invalid.
+     - `500 Internal Server Error`: If there's an error adding the story.
+  
+   **Sample Response**:
+   ```json
+   {
+     "stories_id": "new-story-id"
+   }
+   ```
+
+#### 3. **GET `/api/stories/getstoriesbyuserid`**
+   - **Description**: Retrieves all stories for a given user.
+   - **Query Parameter**:
+     - `userId`: The ID of the user.
+   - **Header Parameter**:
+     - `jwt`: The JWT token for authentication.
+   - **Response**:
+     - `200 OK`: Returns a JSON object containing the number of stories and story information.
+     - `400 Bad Request`: If no stories are found or the request is invalid.
+     - `401 Unauthorized`: If the JWT validation fails.
+  
+   **Sample Response**:
+   ```json
+   {
+     "stories_count": 2,
+     "stories_records": [
+       {
+         "id": "story-id-1",
+         "name": "Story 1",
+         "description": "Description of Story 1"
+       },
+       {
+         "id": "story-id-2",
+         "name": "Story 2",
+         "description": "Description of Story 2"
+       }
+     ]
+   }
+   ```
+
+### Error Codes
+- `400 Bad Request`: Invalid input, constraints violation, or no data found.
+- `401 Unauthorized`: JWT validation failure.
+- `404 Not Found`: Resource not found.
+- `500 Internal Server Error`: Server-side errors, such as database failure.
+
+### JWT Validation
+For all API requests, the JWT token provided in the header is validated. If the token is invalid or expired, a validation error response is returned. 
+
+--
+
+# Base URL
+`http://localhost:9090/api`
+
+### Authentication
+- All API endpoints are protected using JWT authentication.
+- To access resources, a valid JWT token must be passed as a string parameter in each request.
+
+### Endpoints
+
+#### 1. **Get All Users**
+   - **Endpoint:** `/api/users/getall`
+   - **Method:** `GET`
+   - **Description:** Fetch all users from the database.
+   - **Parameters:**
+     - `jwt`: (string) JWT token for authentication.
+   - **Returns:** 
+     - On success: `users[]` (Array of users).
+     - On failure: `error`.
+
+#### 2. **Get User by ID**
+   - **Endpoint:** `/api/users/getbyid/{id}`
+   - **Method:** `GET`
+   - **Description:** Fetch user details by user ID.
+   - **Parameters:**
+     - `id`: (path string) The unique identifier of the user.
+     - `jwt`: (string) JWT token for authentication.
+   - **Returns:** 
+     - On success: `users` (User details).
+     - On failure: `http:NotFound` or `error`.
+
+#### 3. **Add New User**
+   - **Endpoint:** `/api/users/add`
+   - **Method:** `POST`
+   - **Description:** Add a new user to the system.
+   - **Parameters:**
+     - `newuser`: (body) Object containing new user details.
+     - `jwt`: (string) JWT token for authentication.
+   - **Returns:** 
+     - On success: `http:Ok`.
+     - On failure: `http:InternalServerError`, `http:BadRequest`, or `error`.
+
+#### 4. **Update User by ID**
+   - **Endpoint:** `/api/users/update/{id}`
+   - **Method:** `PUT`
+   - **Description:** Update user details by user ID.
+   - **Parameters:**
+     - `id`: (path string) The unique identifier of the user.
+     - `update`: (body) Object containing updated user details.
+     - `jwt`: (string) JWT token for authentication.
+   - **Returns:** 
+     - On success: `users` (Updated user details).
+     - On failure: `http:InternalServerError`, `http:BadRequest`, or `error`.
+
+#### 5. **Delete User by ID**
+   - **Endpoint:** `/api/users/delete/{id}`
+   - **Method:** `DELETE`
+   - **Description:** Delete a user by their ID.
+   - **Parameters:**
+     - `id`: (path string) The unique identifier of the user.
+     - `jwt`: (string) JWT token for authentication.
+   - **Returns:** 
+     - On success: `users` (Deleted user details).
+     - On failure: `http:NotFound` or `error`.
+
+### Common Error Responses
+- **JWT Validation Failure:**
+  - When JWT validation fails, an error message is returned indicating the failure reason.
+
