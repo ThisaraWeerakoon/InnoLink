@@ -38,6 +38,49 @@ frontend/
    ├── React-based frontend
 ```
 
+### 2. Run script.sql 
+
+Setup mysql by executing script.sql script.
+
+### 3. Configure the MySQL Database
+
+Access `/backend/social_media_service/Config.toml`, configure the following details MySQL server credentials:
+
+```
+[social_media_service]
+   host = "localhost"
+   port = 3306
+   user = "root"
+   password = ""
+   database = "innolink_db"
+```
+
+### 4. Start the Backend Server
+
+```
+cd backend
+cd social_media_service
+bal run
+```
+### Frontend Setup
+1. **Install Frontend Dependencies**:
+
+   Navigate to the frontend folder and install the required dependencies:
+
+   ```bash
+   cd frontend
+   npm install
+   ```
+2. **Start the Frontend Server**
+
+   ```bash
+   npm run dev
+   ```
+
+
+
+
+
 ### Backend Setup
 
 
