@@ -394,7 +394,7 @@ Deletes a comment by its `id`.
 All endpoints require JWT token validation. The JWT is validated using the following payload:
 - **Payload**: Verified against the provided JWT token.
 
-### API Documentation for Education Service
+# API Documentation for Education Service
 
 This service handles the operations related to the **education** section of a user's profile in a social media-like application. All endpoints require a valid **JWT token** for authentication.
 
@@ -511,4 +511,3 @@ For every endpoint, the JWT token is validated using `jwt:validate(jwt, validato
 
 ---
 
-This API structure is designed to be easily extendable, and can integrate with other sections (such as users, handshakes, etc.) in a social media-like platform.
