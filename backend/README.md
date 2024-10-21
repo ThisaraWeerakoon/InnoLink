@@ -166,3 +166,231 @@ This service allows cross-origin requests with the following settings:
 
 - **Allowed Origins**: `*`
 - **Allow Credentials**: `true`
+
+
+# API Documentation for Comments Service
+
+## Base URL
+
+**Base Path**: `/api/comments`
+
+This service provides various endpoints for managing comments in the social media app, including fetching, adding, and deleting comments. JWT token validation is required for all operations.
+
+---
+
+## 1. **Get All Comments for a Post**
+
+### **Endpoint**
+
+```
+GET /api/comments/getallbypost
+```
+
+### **Description**
+Retrieves all comments for a specific post, given the `postId`.
+
+### **Request Parameters**
+
+| Name     | Type   | Description               | Required |
+|----------|--------|---------------------------|----------|
+| `postId` | String | The ID of the post         | Yes      |
+| `jwt`    | String | JWT token for authentication | Yes    |
+
+### **Response**
+
+| Status Code        | Description                                                     |
+|--------------------|-----------------------------------------------------------------|
+| **200 OK**         | Returns a list of comments associated with the post             |
+| **400 BadRequest** | If the JWT validation fails or there is an error fetching comments |
+| **500 InternalServerError** | If there is an issue with database interaction          |
+
+### **Response Example**
+
+```json
+[
+    {
+        "id": "comment-id-1",
+        "userId": "user-id-1",
+        "postId": "post-id-1",
+        "content": "Great post!",
+        "created_at": "2024-01-01T00:00:00Z",
+        "media": null
+    }
+]
+```
+
+---
+
+## 2. **Get Comment by ID**
+
+### **Endpoint**
+
+```
+GET /api/comments/getbyid/{id}
+```
+
+### **Description**
+Fetches a single comment by its `id`.
+
+### **Request Parameters**
+
+| Name  | Type   | Description               | Required |
+|-------|--------|---------------------------|----------|
+| `id`  | String | The ID of the comment      | Yes      |
+| `jwt` | String | JWT token for authentication | Yes    |
+
+### **Response**
+
+| Status Code        | Description                                      |
+|--------------------|--------------------------------------------------|
+| **200 OK**         | Returns the comment details                      |
+| **404 NotFound**   | If the comment is not found                      |
+| **400 BadRequest** | If the JWT validation fails or there is an error |
+
+### **Response Example**
+
+```json
+{
+    "id": "comment-id-1",
+    "userId": "user-id-1",
+    "postId": "post-id-1",
+    "content": "Nice post!",
+    "created_at": "2024-01-01T00:00:00Z",
+    "media": null
+}
+```
+
+---
+
+## 3. **Get All Comments by User**
+
+### **Endpoint**
+
+```
+GET /api/comments/getallbyuser
+```
+
+### **Description**
+Fetches all comments made by a specific user.
+
+### **Request Parameters**
+
+| Name    | Type   | Description               | Required |
+|---------|--------|---------------------------|----------|
+| `userId` | String | The ID of the user         | Yes      |
+| `jwt`    | String | JWT token for authentication | Yes    |
+
+### **Response**
+
+| Status Code        | Description                                     |
+|--------------------|-------------------------------------------------|
+| **200 OK**         | Returns a list of comments made by the user     |
+| **400 BadRequest** | If the JWT validation fails or there is an error |
+
+### **Response Example**
+
+```json
+[
+    {
+        "id": "comment-id-1",
+        "userId": "user-id-1",
+        "postId": "post-id-1",
+        "content": "Interesting!",
+        "created_at": "2024-01-01T00:00:00Z",
+        "media": null
+    },
+    {
+        "id": "comment-id-2",
+        "userId": "user-id-1",
+        "postId": "post-id-2",
+        "content": "I agree!",
+        "created_at": "2024-01-02T00:00:00Z",
+        "media": null
+    }
+]
+```
+
+---
+
+## 4. **Add a Comment**
+
+### **Endpoint**
+
+```
+POST /api/comments/add
+```
+
+### **Description**
+Adds a new comment to a post.
+
+### **Request Parameters**
+
+| Name       | Type   | Description                         | Required |
+|------------|--------|-------------------------------------|----------|
+| `userId`   | String | The ID of the user making the comment | Yes      |
+| `postId`   | String | The ID of the post                   | Yes      |
+| `content`  | String | The content of the comment           | Yes      |
+| `jwt`      | String | JWT token for authentication         | Yes      |
+
+### **Response**
+
+| Status Code            | Description                                         |
+|------------------------|-----------------------------------------------------|
+| **200 OK**             | Returns the ID of the newly created comment         |
+| **400 BadRequest**     | If the JWT validation fails or invalid comment data |
+| **500 InternalServerError** | If there is an error while saving the comment  |
+
+### **Response Example**
+
+```json
+"comment-id-1"
+```
+
+---
+
+## 5. **Delete a Comment by ID**
+
+### **Endpoint**
+
+```
+DELETE /api/comments/delete/{id}
+```
+
+### **Description**
+Deletes a comment by its `id`.
+
+### **Request Parameters**
+
+| Name  | Type   | Description               | Required |
+|-------|--------|---------------------------|----------|
+| `id`  | String | The ID of the comment      | Yes      |
+| `jwt` | String | JWT token for authentication | Yes    |
+
+### **Response**
+
+| Status Code        | Description                                      |
+|--------------------|--------------------------------------------------|
+| **200 OK**         | Returns the deleted comment details              |
+| **404 NotFound**   | If the comment is not found                      |
+| **400 BadRequest** | If the JWT validation fails or there is an error |
+
+### **Response Example**
+
+```json
+{
+    "id": "comment-id-1",
+    "userId": "user-id-1",
+    "postId": "post-id-1",
+    "content": "This comment was deleted.",
+    "created_at": "2024-01-01T00:00:00Z",
+    "media": null
+}
+```
+
+---
+
+## **JWT Validation**
+
+All endpoints require JWT token validation. The JWT is validated using the following payload:
+- **Payload**: Verified against the provided JWT token.
+
