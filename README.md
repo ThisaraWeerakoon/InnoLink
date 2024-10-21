@@ -81,57 +81,7 @@ bal run
 
 
 
-### Backend Setup
 
-
-1. **Configure the MySQL Database**:
-
-   In the `Config.toml` file located in the backend at `backend/social_media_service/`, configure the following details with your MySQL credentials:
-
-   ```toml
-   [social_media_service]
-   host = "localhost"
-   port = 3306
-   user = "root"
-   password = ""
-   database = "innolink_db"
-   ```
-
-2. **Run the Database Script**:
-
-   Navigate to the backend folder and run the SQL script to set up the required database tables:
-
-   ```bash
-   cd backend/social_media_service
-   mysql -u root -p innolink_db < script.sql
-   ```
-
-3. **Start the Backend Service**:
-
-   Run the Ballerina service to start the backend server:
-
-   ```bash
-   bal run
-   ```
-
-### Frontend Setup
-
-1. **Install Frontend Dependencies**:
-
-   Navigate to the frontend folder and install the required dependencies:
-
-   ```bash
-   cd frontend
-   npm install
-   ```
-
-2. **Start the Frontend Server**:
-
-   Start the frontend using the Vite development server:
-
-   ```bash
-   npm run vite
-   ```
 
 
 
@@ -139,7 +89,7 @@ bal run
 
 After setting up both the backend and frontend, the application should be running at:
 
-- **Backend**: `http://localhost:8080` (default Ballerina service port)
+- **Backend**: `http://localhost:9090` (default Ballerina service port)
 - **Frontend**: `http://localhost:5173` (default Vite port)
 
 You can access the frontend to interact with the platform.
@@ -147,10 +97,10 @@ You can access the frontend to interact with the platform.
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 ```
-
 This `README.md` covers the basic idea of the project, setup instructions, and provides a project overview. Let me know if you need any changes!
-
+```
 
 
 
