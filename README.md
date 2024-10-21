@@ -77,7 +77,9 @@ bal run
    npm run dev
    ```
 
-
+--
+Postman collection (backend) :- [social_nedia_service](https://innolink-4826.postman.co/workspace/Innolink-Workspace~05a924c4-290f-4dbb-ad66-f5ef6b5a3144/collection/30813440-04105c9b-5662-400c-975c-12db9abf1ea2?action=share&creator=30813440)
+--
 
 
 
