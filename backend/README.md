@@ -510,4 +510,78 @@ For every endpoint, the JWT token is validated using `jwt:validate(jwt, validato
 - **500 Internal Server Error**: Returned for unexpected server-side errors.
 
 ---
+# API Documentation for Handshake Service
+
+This API documentation defines several endpoints for managing handshake connections in a social media application using the Ballerina framework. The JWT token is used for authentication, and the handshake functionality allows users to send and receive connection requests, track the status, and manage existing connections.
+
+### Endpoints Overview
+
+#### 1. `GET /api/handshakes/getbyid/{id}`
+- **Description**: Retrieves a handshake object by `handshake_id`.
+- **Input**: 
+  - `id` (Path parameter): Handshake ID.
+  - `jwt` (Query parameter): JWT token for authentication.
+- **Response**:
+  - `200 OK`: Returns the handshake object.
+  - `404 Not Found`: If no handshake exists for the given ID.
+  - `401 Unauthorized`: If the JWT validation fails.
+
+#### 2. `GET /api/handshakes/getAcceptedHandshakeUsersById`
+- **Description**: Retrieves the users that have accepted handshakes from a specific user.
+- **Input**: 
+  - `userId` (Query parameter): The ID of the user to check.
+  - `jwt` (Query parameter): JWT token for authentication.
+- **Response**:
+  - `200 OK`: Returns a JSON object containing the handshake count and user objects.
+  - `400 Bad Request`: If there is an issue retrieving handshakes.
+  - `401 Unauthorized`: If the JWT validation fails.
+
+#### 3. `POST /api/handshakes/add`
+- **Description**: Adds a new handshake connection between two users.
+- **Input**:
+  - `handshakerId` (Query parameter): The user sending the handshake request.
+  - `handshakeeId` (Query parameter): The user receiving the handshake request.
+  - `jwt` (Query parameter): JWT token for authentication.
+- **Response**:
+  - `200 OK`: Returns the newly created handshake object.
+  - `400 Bad Request`: If a handshake already exists between the two users.
+  - `401 Unauthorized`: If the JWT validation fails.
+  - `500 Internal Server Error`: If an unexpected error occurs.
+
+#### 4. `PUT /api/handshakes/updateStatus/{handshakeId}`
+- **Description**: Updates the status of a handshake (`ACCEPTED` or `REJECTED`).
+- **Input**:
+  - `handshakeId` (Path parameter): The ID of the handshake.
+  - `newStatus` (Query parameter): The new status (`ACCEPTED` or `REJECTED`).
+  - `jwt` (Query parameter): JWT token for authentication.
+- **Response**:
+  - `200 OK`: Returns the updated handshake object.
+  - `400 Bad Request`: If the status is invalid.
+  - `500 Internal Server Error`: If an error occurs while updating the handshake.
+
+#### 5. `DELETE /api/handshakes/delete/{handshakeId}`
+- **Description**: Deletes a handshake.
+- **Input**:
+  - `handshakeId` (Path parameter): The ID of the handshake to delete.
+  - `jwt` (Query parameter): JWT token for authentication.
+- **Response**:
+  - `200 OK`: Returns the deleted handshake object.
+  - `404 Not Found`: If no handshake exists for the given ID.
+  - `401 Unauthorized`: If the JWT validation fails.
+
+#### 6. `GET /api/handshakes/isHandShaked`
+- **Description**: Checks if two users have an existing handshake.
+- **Input**:
+  - `user1Id` (Query parameter): ID of the first user.
+  - `user2Id` (Query parameter): ID of the second user.
+  - `jwt` (Query parameter): JWT token for authentication.
+- **Response**:
+  - `200 OK`: If a handshake exists, returns the handshake status and object.
+  - `200 OK`: If no handshake exists, returns a message indicating this.
+  - `400 Bad Request`: If an error occurs while checking.
+  - `401 Unauthorized`: If the JWT validation fails.
+
+### Notes:
+- **JWT Authentication**: Each endpoint requires a valid JWT token, which is verified using `jwt:validate`.
+- **Database Interaction**: The Ballerina `persist` module is used for database interaction, with some raw SQL queries being executed to fetch handshake data.
 
