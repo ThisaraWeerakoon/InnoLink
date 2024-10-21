@@ -683,5 +683,85 @@ Here's the API documentation for the Likes Service:
   - `500 Internal Server Error`: Returns an error if the operation fails.
 
 ---
+Here's the API documentation for the Post service of the social media app developed with Ballerina, outlining the resources exposed:
 
+## API: `/api/posts`
+This service exposes multiple endpoints to manage posts within the social media application. It is JWT-protected, requiring token validation for each operation. 
+
+### Common Error Response
+All endpoints may return `http:BadRequest` in case of input errors or validation failures. In case of invalid JWT tokens, endpoints will return the JWT validation error.
+
+---
+
+### 1. `GET /api/posts/getall`
+- **Description**: Retrieve all posts.
+- **Request Parameters**: 
+  - `jwt` (string): A valid JWT token for authentication.
+- **Responses**:
+  - `200 OK`: Returns a JSON response containing a list of all posts and the total count.
+  - `400 Bad Request`: If posts cannot be retrieved or token validation fails.
+
+---
+
+### 2. `GET /api/posts/getbyid/{id}`
+- **Description**: Retrieve a post by its ID.
+- **Request Parameters**:
+  - `{id}` (string): The ID of the post to retrieve.
+  - `jwt` (string): A valid JWT token for authentication.
+- **Responses**:
+  - `200 OK`: Returns the post corresponding to the given ID.
+  - `404 Not Found`: If the post with the provided ID is not found.
+  - `400 Bad Request`: If token validation fails.
+
+---
+
+### 3. `GET /api/posts/getallbyuser`
+- **Description**: Retrieve all posts made by a specific user.
+- **Request Parameters**:
+  - `userId` (string): The ID of the user whose posts to retrieve.
+  - `jwt` (string): A valid JWT token for authentication.
+- **Responses**:
+  - `200 OK`: Returns a list of posts by the specified user.
+  - `400 Bad Request`: If posts cannot be retrieved or token validation fails.
+
+---
+
+### 4. `GET /api/posts/getPostsByHandshakedUsers`
+- **Description**: Retrieve all posts from users who have "handshaked" (connected) with the specified user.
+- **Request Parameters**:
+  - `userId` (string): The ID of the user whose handshaked users’ posts to retrieve.
+  - `jwt` (string): A valid JWT token for authentication.
+- **Responses**:
+  - `200 OK`: Returns a list of posts from handshaked users.
+  - `400 Bad Request`: If no posts are found or token validation fails.
+
+---
+
+### 5. `POST /api/posts/add`
+- **Description**: Add a new post.
+- **Request Body**:
+  - `newposts` (JSON): A JSON object containing the post data (e.g., `img_url`, `video_url`, `caption`).
+  - `userId` (string): The ID of the user creating the post.
+  - `jwt` (string): A valid JWT token for authentication.
+- **Responses**:
+  - `200 OK`: Returns the `id` of the newly created post.
+  - `400 Bad Request`: If invalid post details are provided or token validation fails.
+  - `500 Internal Server Error`: If there is a failure to create the post.
+
+---
+
+### 6. `DELETE /api/posts/delete/{id}`
+- **Description**: Delete a post by its ID.
+- **Request Parameters**:
+  - `{id}` (string): The ID of the post to delete.
+  - `jwt` (string): A valid JWT token for authentication.
+- **Responses**:
+  - `200 OK`: Returns the deleted post details.
+  - `404 Not Found`: If the post with the provided ID is not found.
+  - `400 Bad Request`: If token validation fails.
+
+---
+
+### Security
+JWT token validation is applied to all operations, ensuring that only authenticated users can perform actions.
 
