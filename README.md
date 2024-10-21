@@ -27,6 +27,18 @@ First, clone the project repository to your local machine:
 git clone https://github.com/ThisaraWeerakoon/iwb127-compiler_titans.git
 cd iwb127-compiler_titans
 ```
+#### Project Structure
+
+```
+backend/
+   └── social_media_service/
+       ├── Config.toml
+       ├── Ballerina services
+       ├── script.sql (Database schema)
+frontend/
+   ├── React-based frontend
+   └── vite.config.js (Vite configuration)
+```
 
 ### Backend Setup
 
@@ -80,18 +92,7 @@ cd iwb127-compiler_titans
    npm run vite
    ```
 
-## Project Structure
 
-```
-backend/
-   └── social_media_service/
-       ├── Config.toml
-       ├── Ballerina services
-       ├── script.sql (Database schema)
-frontend/
-   ├── React-based frontend
-   └── vite.config.js (Vite configuration)
-```
 
 ## Running the Application
 
