@@ -36,7 +36,6 @@ backend/
        ├── script.sql (Database schema)
 frontend/
    ├── React-based frontend
-   └── vite.config.js (Vite configuration)
 ```
 
 ### Backend Setup
