@@ -585,3 +585,103 @@ This API documentation defines several endpoints for managing handshake connecti
 - **JWT Authentication**: Each endpoint requires a valid JWT token, which is verified using `jwt:validate`.
 - **Database Interaction**: The Ballerina `persist` module is used for database interaction, with some raw SQL queries being executed to fetch handshake data.
 
+--
+Here's the API documentation for the Likes Service:
+
+## API Documentation for Likes Service
+
+### Base URL
+```
+/api/likes
+```
+
+### **1. GET /api/likes/getallbypost**
+- **Description**: Retrieve all active likes for a specific post.
+- **Query Parameters**:
+  - `postId`: The ID of the post.
+  - `jwt`: The JWT token for authentication.
+- **Response**:
+  - `200 OK`: Returns an array of `likes[]` for the post.
+  - `400 Bad Request`: Returns an error message if the request fails.
+  - `error`: Returns an error if the request fails.
+
+---
+
+### **2. GET /api/likes/getbyid/{id}**
+- **Description**: Retrieve a like by its ID.
+- **Path Parameters**:
+  - `id`: The ID of the like.
+- **Query Parameters**:
+  - `jwt`: The JWT token for authentication.
+- **Response**:
+  - `200 OK`: Returns the `likes` object for the specified like ID.
+  - `404 Not Found`: Returns an error message if the like is not found.
+  - `error`: Returns an error if the request fails.
+
+---
+
+### **3. GET /api/likes/getallbyuser**
+- **Description**: Retrieve all active likes made by a specific user.
+- **Query Parameters**:
+  - `userId`: The ID of the user.
+  - `jwt`: The JWT token for authentication.
+- **Response**:
+  - `200 OK`: Returns an array of `likes[]` for the user.
+  - `400 Bad Request`: Returns an error message if the request fails.
+  - `error`: Returns an error if the request fails.
+
+---
+
+### **4. GET /api/likes/isliked**
+- **Description**: Check if a user has liked a specific post.
+- **Query Parameters**:
+  - `userId`: The ID of the user.
+  - `postId`: The ID of the post.
+  - `jwt`: The JWT token for authentication.
+- **Response**:
+  - `200 OK`: Returns `1` if the user liked the post, `0` if not.
+  - `400 Bad Request`: Returns an error message if the request fails.
+  - `error`: Returns an error if the request fails.
+
+---
+
+### **5. POST /api/likes/add**
+- **Description**: Add a like to a specific post by a user.
+- **Query Parameters**:
+  - `userId`: The ID of the user.
+  - `postId`: The ID of the post.
+  - `jwt`: The JWT token for authentication.
+- **Response**:
+  - `200 OK`: Returns the `likeId` if the like is successfully added.
+  - `400 Bad Request`: Returns an error message for invalid input.
+  - `500 Internal Server Error`: Returns an error if the operation fails.
+
+---
+
+### **6. DELETE /api/likes/delete/{id}**
+- **Description**: Delete a like by its ID.
+- **Path Parameters**:
+  - `id`: The ID of the like to delete.
+- **Query Parameters**:
+  - `jwt`: The JWT token for authentication.
+- **Response**:
+  - `200 OK`: Returns the deleted `likes` object.
+  - `404 Not Found`: Returns an error message if the like is not found.
+  - `error`: Returns an error if the request fails.
+
+---
+
+### **7. PUT /api/likes/inactive/{id}**
+- **Description**: Mark a like as inactive by its ID.
+- **Path Parameters**:
+  - `id`: The ID of the like to mark inactive.
+- **Query Parameters**:
+  - `jwt`: The JWT token for authentication.
+- **Response**:
+  - `200 OK`: Returns the updated `likes` object with `active` set to false.
+  - `400 Bad Request`: Returns an error message if a constraint violation occurs.
+  - `500 Internal Server Error`: Returns an error if the operation fails.
+
+---
+
+
