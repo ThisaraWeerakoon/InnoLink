@@ -764,4 +764,5 @@ All endpoints may return `http:BadRequest` in case of input errors or validation
 
 ### Security
 JWT token validation is applied to all operations, ensuring that only authenticated users can perform actions.
+--
 
