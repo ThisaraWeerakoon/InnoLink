@@ -394,3 +394,121 @@ Deletes a comment by its `id`.
 All endpoints require JWT token validation. The JWT is validated using the following payload:
 - **Payload**: Verified against the provided JWT token.
 
+### API Documentation for Education Service
+
+This service handles the operations related to the **education** section of a user's profile in a social media-like application. All endpoints require a valid **JWT token** for authentication.
+
+---
+
+#### **1. Get Education by ID**
+- **Endpoint**: `/api/education/getbyid/{id}`
+- **Method**: `GET`
+- **Description**: Retrieve a specific education entry by its ID.
+- **Parameters**:
+  - `id` (Path): The ID of the education record to retrieve.
+  - `jwt` (Query): JWT token for authentication.
+- **Responses**:
+  - **200 OK**: Returns a JSON object containing the education entry.
+  - **404 Not Found**: If the education record is not found.
+  - **Error**: If JWT validation fails or there is any other error.
+- **Sample Response**:
+  ```json
+  {
+    "education_object_by_id": {
+      "id": "UUID",
+      "institution": "Example University",
+      "degree": "Bachelor's",
+      "start_year": "2020",
+      "end_year": "2024",
+      "field_of_study": "Computer Science",
+      "userId": "user123"
+    }
+  }
+  ```
+
+---
+
+#### **2. Add Education**
+- **Endpoint**: `/api/education/addEducation`
+- **Method**: `POST`
+- **Description**: Add a new education entry for a user.
+- **Parameters**:
+  - `userId` (Query): The ID of the user for whom the education record is being added.
+  - `neweducation` (Body): JSON object containing the details of the new education entry.
+  - `jwt` (Query): JWT token for authentication.
+- **Request Body Example**:
+  ```json
+  {
+    "institution": "Example University",
+    "start_year": "2020",
+    "end_year": "2024",
+    "degree": "Bachelor's",
+    "field_of_study": "Computer Science"
+  }
+  ```
+- **Responses**:
+  - **200 OK**: Returns the `id` of the newly added education record.
+  - **400 Bad Request**: If there is a validation issue or constraint violation.
+  - **500 Internal Server Error**: For any server errors during the operation.
+- **Sample Response**:
+  ```json
+  {
+    "education_id": "generated-uuid"
+  }
+  ```
+
+---
+
+#### **3. Get Education by User ID**
+- **Endpoint**: `/api/education/geteducationbyuserid`
+- **Method**: `GET`
+- **Description**: Retrieve all education entries associated with a specific user.
+- **Parameters**:
+  - `userId` (Query): The ID of the user.
+  - `jwt` (Query): JWT token for authentication.
+- **Responses**:
+  - **200 OK**: Returns a JSON object containing the number of education records and the list of education entries.
+  - **400 Bad Request**: If there are no records found for the user or other errors.
+  - **Error**: If JWT validation fails or there is any other error.
+- **Sample Response**:
+  ```json
+  {
+    "education_count": 2,
+    "education_records": [
+      {
+        "id": "uuid-1",
+        "institution": "Example University",
+        "start_year": "2020",
+        "end_year": "2024",
+        "degree": "Bachelor's",
+        "field_of_study": "Computer Science",
+        "userId": "user123"
+      },
+      {
+        "id": "uuid-2",
+        "institution": "Another University",
+        "start_year": "2016",
+        "end_year": "2020",
+        "degree": "Master's",
+        "field_of_study": "Data Science",
+        "userId": "user123"
+      }
+    ]
+  }
+  ```
+
+---
+
+### **JWT Token Validation**
+For every endpoint, the JWT token is validated using `jwt:validate(jwt, validatorConfig)`:
+- If the token is valid, the operation proceeds.
+- If the token is invalid or expired, an error message is returned with the appropriate HTTP status.
+
+### Error Handling
+- **404 Not Found**: Returned when a resource (such as an education entry) cannot be found.
+- **400 Bad Request**: Returned for constraint violations, bad input, or missing data.
+- **500 Internal Server Error**: Returned for unexpected server-side errors.
+
+---
+
+This API structure is designed to be easily extendable, and can integrate with other sections (such as users, handshakes, etc.) in a social media-like platform.
