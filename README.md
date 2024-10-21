@@ -19,7 +19,16 @@ To run this project, you will need the following installed on your system:
 
 ## Setup Instructions
 
+### 1. Clone the Repository
+
+First, clone the project repository to your local machine:
+
+```bash
+git clone https://github.com/ThisaraWeerakoon/iwb127-compiler_titans.git
+cd iwb127-compiler_titans
+
 ### Backend Setup
+
 
 1. **Configure the MySQL Database**:
 
