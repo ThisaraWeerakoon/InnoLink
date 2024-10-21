@@ -32,8 +32,7 @@ cd iwb127-compiler_titans
 ```
 backend/
    └── social_media_service/
-       ├── Config.toml
-       ├── Ballerina services
+       ├── social_media_service/
        ├── script.sql (Database schema)
 frontend/
    ├── React-based frontend
