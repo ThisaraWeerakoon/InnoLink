@@ -1,0 +1,1230 @@
+{
+	"info": {
+		"_postman_id": "04105c9b-5662-400c-975c-12db9abf1ea2",
+		"name": "social_media_service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30813440",
+		"_collection_link": "https://innolink-4826.postman.co/workspace/Innolink-Workspace~05a924c4-290f-4dbb-ad66-f5ef6b5a3144/collection/30813440-04105c9b-5662-400c-975c-12db9abf1ea2?action=share&source=collection_link&creator=30813440"
+	},
+	"item": [
+		{
+			"name": "api/users",
+			"item": [
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Chavindu Tharuksha\",\n    \"first_name\":\"Chavindu\",\n    \"last_name\":\"Tharuksha\",\n    \"email\":\"chavindu.tharuksha2001@gmail.com\",\n    \"dob\": {\"year\": 2001, \"month\": 10, \"day\": 7},\n    \"profile_pic_url\":\"http://chavindu.jpeg\",\n    \"password\":\"chavindu\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/users/add?jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwMTkwNDksICJuYmYiOjE3MjkwMTU0NDksICJpYXQiOjE3MjkwMTU0NDl9.CdU7diIugvpcMPxZB01CezHDoknET3vczHV7ewxUtGDum7uVrx2pUKHxyzMjQVLbwU3fj_74LT_u1uQE2ViKlIO3FICpbYcmgQY-f0zApHeThbPCLMHiYDQlehLYBQgSZ_Vy2hkhn-WG7M5zjSOm_i-hzwJijK8uI3DIArYRgEA9iVurFvTVIyooglvii37CtKg1bo-rZU3E-liR-rl4sO041zCVW_lU8McxPLU2G5KV66XGHI9tsv4IN-Jm9KtOEktckYs3fdzrefSRveKnylyET-QFXvp5h34ZtLvHx-Uc0NNdAJ8qpcyp5sHTTdew_6wpf8IrhhTa0eixAWIDNg",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"users",
+								"add"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwMTkwNDksICJuYmYiOjE3MjkwMTU0NDksICJpYXQiOjE3MjkwMTU0NDl9.CdU7diIugvpcMPxZB01CezHDoknET3vczHV7ewxUtGDum7uVrx2pUKHxyzMjQVLbwU3fj_74LT_u1uQE2ViKlIO3FICpbYcmgQY-f0zApHeThbPCLMHiYDQlehLYBQgSZ_Vy2hkhn-WG7M5zjSOm_i-hzwJijK8uI3DIArYRgEA9iVurFvTVIyooglvii37CtKg1bo-rZU3E-liR-rl4sO041zCVW_lU8McxPLU2G5KV66XGHI9tsv4IN-Jm9KtOEktckYs3fdzrefSRveKnylyET-QFXvp5h34ZtLvHx-Uc0NNdAJ8qpcyp5sHTTdew_6wpf8IrhhTa0eixAWIDNg"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getall",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/users/getall?jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwMTUwNTUsICJuYmYiOjE3MjkwMTE0NTUsICJpYXQiOjE3MjkwMTE0NTV9.n3GXcmHNDASSOEPZHzPV0PFnrC3N2R46y13aiDo9eP8V0DOUad-iVNxhrdAVbj4XdsBcOLZp4yoSeiFc4US_CCUBEHjyDcNimgZNoFmFpoXHjADy8TzeUbfxFJSaHXLyJ-hm00EHSkD7ZhWZAhy_qMiYCqDUGwWpaDQzywCOCe2w-xiDSwQ_RZh_n7uo5PbrGkK21SJH2gJSP73DxGStC0cciQY6e10xF0K_EYgP31DDTxU0epn22cy9oKPZfroA895r3YQoHJ7OQr0G72pBr62wNElaCkDkimnhtM30ptkunsFO_wt5jAuUCkCBS3r7ZNz50zY2YfVbttXw22bIdQ",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"users",
+								"getall"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwMTUwNTUsICJuYmYiOjE3MjkwMTE0NTUsICJpYXQiOjE3MjkwMTE0NTV9.n3GXcmHNDASSOEPZHzPV0PFnrC3N2R46y13aiDo9eP8V0DOUad-iVNxhrdAVbj4XdsBcOLZp4yoSeiFc4US_CCUBEHjyDcNimgZNoFmFpoXHjADy8TzeUbfxFJSaHXLyJ-hm00EHSkD7ZhWZAhy_qMiYCqDUGwWpaDQzywCOCe2w-xiDSwQ_RZh_n7uo5PbrGkK21SJH2gJSP73DxGStC0cciQY6e10xF0K_EYgP31DDTxU0epn22cy9oKPZfroA895r3YQoHJ7OQr0G72pBr62wNElaCkDkimnhtM30ptkunsFO_wt5jAuUCkCBS3r7ZNz50zY2YfVbttXw22bIdQ"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getbyid",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/users/getbyid/u1?jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkzOTQyNjAsICJuYmYiOjE3MjkzOTA2NjAsICJpYXQiOjE3MjkzOTA2NjB9.P22UchR1PnF44f86MZCCqqIplPfOzpu1GuxdTyGsmtL-4Y0Ipg8J8bz2cAjuv2t9s3AgIW1wGp3CJoinrjuW-6YFA9i2Q7O10spkLYcNUbReXWhway2rwK9GtYyefiRRvysdUkXhFom_AkaSpDsfKaJ8W0h8clg7-NmAqDK-RHi2tXaPrcgfr9fjk7jnsbepjz5b6hA02C0dY6CJpIu3zDKQu40rmeO6ohjKopZ-EzyffwUGMDHo8rBh8-wS1QHewsHeieAzEw4BiZ5bfvuoVi9NFYBQJLniy0YcxKEoYai0JZ9UFuZdK-4GBlWvS31J0PKEJ7kICucMFrtb-0dImg",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"users",
+								"getbyid",
+								"u1"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkzOTQyNjAsICJuYmYiOjE3MjkzOTA2NjAsICJpYXQiOjE3MjkzOTA2NjB9.P22UchR1PnF44f86MZCCqqIplPfOzpu1GuxdTyGsmtL-4Y0Ipg8J8bz2cAjuv2t9s3AgIW1wGp3CJoinrjuW-6YFA9i2Q7O10spkLYcNUbReXWhway2rwK9GtYyefiRRvysdUkXhFom_AkaSpDsfKaJ8W0h8clg7-NmAqDK-RHi2tXaPrcgfr9fjk7jnsbepjz5b6hA02C0dY6CJpIu3zDKQu40rmeO6ohjKopZ-EzyffwUGMDHo8rBh8-wS1QHewsHeieAzEw4BiZ5bfvuoVi9NFYBQJLniy0YcxKEoYai0JZ9UFuZdK-4GBlWvS31J0PKEJ7kICucMFrtb-0dImg"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"about_me\":\"Loves tech\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/users/update/u1?jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkzOTg2MjgsICJuYmYiOjE3MjkzOTUwMjgsICJpYXQiOjE3MjkzOTUwMjh9.KAmQhUTKVwKogDbI41DBKFNNa0-6ANnk0SqJ_ZOL1cftY3g_oQ0B_DG9adyIETWvfbInZX2Zb5bIrI7DKb0sa1GgPvdjg-ied-O8dNXiNmk7kSco33oMt1AnsCxJMeRgWWruwJCJDMR5d1Ii2o0huvwVBnezgnW1FmngLC7f9g3e3_GgsRycBqtbDvKSm2kwhvE0gFV-W3ui1ggHXXsc4y2Mo_Hz3mSyVzJavduGPmGGM6EZRwtbC2eXBZAZa7v3Sl3I1JfpCr4Kaz2J-e3Ur6bQfzR6EDxMqyPwgeQF__jNZ9RaF56VAHCncQXKFzy9aZoAom3yQ7hU2alubHfOXg",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"users",
+								"update",
+								"u1"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkzOTg2MjgsICJuYmYiOjE3MjkzOTUwMjgsICJpYXQiOjE3MjkzOTUwMjh9.KAmQhUTKVwKogDbI41DBKFNNa0-6ANnk0SqJ_ZOL1cftY3g_oQ0B_DG9adyIETWvfbInZX2Zb5bIrI7DKb0sa1GgPvdjg-ied-O8dNXiNmk7kSco33oMt1AnsCxJMeRgWWruwJCJDMR5d1Ii2o0huvwVBnezgnW1FmngLC7f9g3e3_GgsRycBqtbDvKSm2kwhvE0gFV-W3ui1ggHXXsc4y2Mo_Hz3mSyVzJavduGPmGGM6EZRwtbC2eXBZAZa7v3Sl3I1JfpCr4Kaz2J-e3Ur6bQfzR6EDxMqyPwgeQF__jNZ9RaF56VAHCncQXKFzy9aZoAom3yQ7hU2alubHfOXg"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/users/delete/b61feb0e-cafb-42c3-917a-3de395322a07",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"users",
+								"delete",
+								"b61feb0e-cafb-42c3-917a-3de395322a07"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "api/auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"anudha.kaushika@gmail.com\",\n    \"first_name\":\"Anudha\",\n    \"last_name\":\"Kaushika\",\n    \"dob\": {\"year\": 1990, \"month\": 10, \"day\": 7},\n    \"password\":\"anudha\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/auth/login?email=john@example.com&password=u1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "john@example.com"
+								},
+								{
+									"key": "password",
+									"value": "u1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "api/posts",
+			"item": [
+				{
+					"name": "getall",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/posts/getall?jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3Mjk0MjU1MDgsICJuYmYiOjE3Mjk0MjE5MDgsICJpYXQiOjE3Mjk0MjE5MDh9.pv8oPoxKWlHefBJ2nAiBvYqRQoCZWLDHg8iohH2mngT_S8Q5kiMfcaAlKNC5eUCwqIkhMcGe3RqzRsP0oYI69R8QBXEzll55Rf-pwyifvvpMjkvjZ3N59jcOtNTnrMJPuFS8FDirJPdYeeCdfvnqQNrMCuL1ooLOFyOWaIR9GkHtrXZgSUvzuWCuGrsg5lHyJhRyA-LezpiIf9zcgtUumg-bpRTq75eEil5svtkxIRk1eHNfGH1gCa-cj0C7jkCmg3jBMDhptNdf86G6LRcz9i490J-T54aigeyrR5VioceZDSDtz6mMRPParJLlU2b9_L7_pqZmlxYE-oH-GhpOAQ",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"posts",
+								"getall"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3Mjk0MjU1MDgsICJuYmYiOjE3Mjk0MjE5MDgsICJpYXQiOjE3Mjk0MjE5MDh9.pv8oPoxKWlHefBJ2nAiBvYqRQoCZWLDHg8iohH2mngT_S8Q5kiMfcaAlKNC5eUCwqIkhMcGe3RqzRsP0oYI69R8QBXEzll55Rf-pwyifvvpMjkvjZ3N59jcOtNTnrMJPuFS8FDirJPdYeeCdfvnqQNrMCuL1ooLOFyOWaIR9GkHtrXZgSUvzuWCuGrsg5lHyJhRyA-LezpiIf9zcgtUumg-bpRTq75eEil5svtkxIRk1eHNfGH1gCa-cj0C7jkCmg3jBMDhptNdf86G6LRcz9i490J-T54aigeyrR5VioceZDSDtz6mMRPParJLlU2b9_L7_pqZmlxYE-oH-GhpOAQ"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getbyid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/posts/getbyid/0faabdd3-f5f8-4948-a08f-189754dda47e?jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkzNjY0MDcsICJuYmYiOjE3MjkzNjI4MDcsICJpYXQiOjE3MjkzNjI4MDd9.Yxbs-ukbs_94qKYwf4eoIXNGWsIBsQdDxdAESJxujJ-dRGqg_t2xdMpvNgSmIuocFfXr7wHU5GUEoDm5xYe42W-ZpP2IsaxQqAC2s1W3_scYshVGZLl5_yZqQJTfVaSmdf9FjnpN5X2ttwaGxOb1EYeTRKIZ-p1vszKURicPtSzMFOybAvo3xr4hINvh0xzD4qQp-cviYLclJ2XrR9sFeyrkHAH2RG6qiKHYqyI2Gu15JW13-vSlhz5loDwE7YqWus2ZuPBYjzGINt_sOqlfOUOLWd-louWm4SZn-QwK0C6_-C6x2q6ukAHzn9xTTbdJo9agc4QqO3rRqYooODgyIg",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"posts",
+								"getbyid",
+								"0faabdd3-f5f8-4948-a08f-189754dda47e"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkzNjY0MDcsICJuYmYiOjE3MjkzNjI4MDcsICJpYXQiOjE3MjkzNjI4MDd9.Yxbs-ukbs_94qKYwf4eoIXNGWsIBsQdDxdAESJxujJ-dRGqg_t2xdMpvNgSmIuocFfXr7wHU5GUEoDm5xYe42W-ZpP2IsaxQqAC2s1W3_scYshVGZLl5_yZqQJTfVaSmdf9FjnpN5X2ttwaGxOb1EYeTRKIZ-p1vszKURicPtSzMFOybAvo3xr4hINvh0xzD4qQp-cviYLclJ2XrR9sFeyrkHAH2RG6qiKHYqyI2Gu15JW13-vSlhz5loDwE7YqWus2ZuPBYjzGINt_sOqlfOUOLWd-louWm4SZn-QwK0C6_-C6x2q6ukAHzn9xTTbdJo9agc4QqO3rRqYooODgyIg"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getallbyuser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/posts/getallbyuser?userId=user10&jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwNTY5MTksICJuYmYiOjE3MjkwNTMzMTksICJpYXQiOjE3MjkwNTMzMTl9.dqMLejJ64-5E4lM7LVMClFvu2RpUhfnmdu3xlPVfeiQD8HaJpy0KDvoBeqSsa1XvRQQM9nI4gsHUYrbbhbmOojkW-oPIVrzisMHHbQsEC7iqNUaKWh7I-nfL1hQgeTjd9ZpWkoLJs67niblsHNGpC5XZUhIjdHfaHLmS-W1WaM5EnYeMZCz6H-02IWNzMWbhPTkc4WjB2TZ5HsEcYGlH3IZvMCiizuBzzmg4bDAAmiBqhy8UpuDzI-e3GUGAKOyqRomTvOc5noCSpYQ3P_b9JLgk6KRA92EJgejnjr7_vogKX1zqiATEZpJAewvgS1WlySfZxVs_YQYs_gkTC4laVw",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"posts",
+								"getallbyuser"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "user10"
+								},
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwNTY5MTksICJuYmYiOjE3MjkwNTMzMTksICJpYXQiOjE3MjkwNTMzMTl9.dqMLejJ64-5E4lM7LVMClFvu2RpUhfnmdu3xlPVfeiQD8HaJpy0KDvoBeqSsa1XvRQQM9nI4gsHUYrbbhbmOojkW-oPIVrzisMHHbQsEC7iqNUaKWh7I-nfL1hQgeTjd9ZpWkoLJs67niblsHNGpC5XZUhIjdHfaHLmS-W1WaM5EnYeMZCz6H-02IWNzMWbhPTkc4WjB2TZ5HsEcYGlH3IZvMCiizuBzzmg4bDAAmiBqhy8UpuDzI-e3GUGAKOyqRomTvOc5noCSpYQ3P_b9JLgk6KRA92EJgejnjr7_vogKX1zqiATEZpJAewvgS1WlySfZxVs_YQYs_gkTC4laVw"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPostsByHandshakedUsers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/posts/getPostsByHandshakedUsers?jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkzNjk4MDMsICJuYmYiOjE3MjkzNjYyMDMsICJpYXQiOjE3MjkzNjYyMDN9.KiTXj7F-k6Nm-WBRjC2n6BVLl6_1_pwctTjnd_7aWyRfDph9TAqYtGBh9_qe75SSeNEID5miP3Ndd28CKXlcxmswdAt32Wsq5fqqKQt5hquENPbMouwN4s-8YEOzDtLJt0912asHXOzC-eLekIUjazNZFc1gMyPJn4XRNa2mugkbeVNzq2rrbuzGUHyHnCWOZyg1Riri13My04G8Po_MD0j48IPExz5cvynmRqSzKxQIKm50FDVxQs0U_IEJX-d-dB-ev3qCr8E8oN2nRFHOHmkZSn2O5CHE72-MVsXfooWh_ouN1ea2WQRDtd1SsgtcTGcIk4z8FxBeaQhCwwaxmg&userId=u5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"posts",
+								"getPostsByHandshakedUsers"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkzNjk4MDMsICJuYmYiOjE3MjkzNjYyMDMsICJpYXQiOjE3MjkzNjYyMDN9.KiTXj7F-k6Nm-WBRjC2n6BVLl6_1_pwctTjnd_7aWyRfDph9TAqYtGBh9_qe75SSeNEID5miP3Ndd28CKXlcxmswdAt32Wsq5fqqKQt5hquENPbMouwN4s-8YEOzDtLJt0912asHXOzC-eLekIUjazNZFc1gMyPJn4XRNa2mugkbeVNzq2rrbuzGUHyHnCWOZyg1Riri13My04G8Po_MD0j48IPExz5cvynmRqSzKxQIKm50FDVxQs0U_IEJX-d-dB-ev3qCr8E8oN2nRFHOHmkZSn2O5CHE72-MVsXfooWh_ouN1ea2WQRDtd1SsgtcTGcIk4z8FxBeaQhCwwaxmg"
+								},
+								{
+									"key": "userId",
+									"value": "u5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"img_url\":\"http://post1.jpg\",\n    \"video_url\":\"http://video1.jpg\",\n    \"caption\":\"Hi, I am Thisara\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/posts/add?jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkzNjE3NjAsICJuYmYiOjE3MjkzNTgxNjAsICJpYXQiOjE3MjkzNTgxNjB9.meb_fzRvPUoxEHuid2pgDVxMJgxJMJQ9GnWSoJ4q301nrk-taLHa8kKagaXaL51vD1u9jIt16K3JXhAsrPAjF7Hm2QGXmD2IHeVL09wmn4917A2pE0w698sbrp3_lzbPYSMB68RcxBjZ35s_gbsyG2hB5VK4AB90YmFRKonYRsd4HE0uWvSr1NiOQ0pacWS6zi5ExcifYdso0tLbx2zuR4VWP5MS0hoiyzKalEueGyGOXKXtAJ3lwMLnqe__L_6Ouh0Ra3NYo6Mv72FK-6_mBWzXWM_-SACsdwRFOi28XQKu2PYnMrP97FAT85Wtu3c5PfIvEviuaLngPzpd64SLFQ&userId=u1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"posts",
+								"add"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkzNjE3NjAsICJuYmYiOjE3MjkzNTgxNjAsICJpYXQiOjE3MjkzNTgxNjB9.meb_fzRvPUoxEHuid2pgDVxMJgxJMJQ9GnWSoJ4q301nrk-taLHa8kKagaXaL51vD1u9jIt16K3JXhAsrPAjF7Hm2QGXmD2IHeVL09wmn4917A2pE0w698sbrp3_lzbPYSMB68RcxBjZ35s_gbsyG2hB5VK4AB90YmFRKonYRsd4HE0uWvSr1NiOQ0pacWS6zi5ExcifYdso0tLbx2zuR4VWP5MS0hoiyzKalEueGyGOXKXtAJ3lwMLnqe__L_6Ouh0Ra3NYo6Mv72FK-6_mBWzXWM_-SACsdwRFOi28XQKu2PYnMrP97FAT85Wtu3c5PfIvEviuaLngPzpd64SLFQ"
+								},
+								{
+									"key": "userId",
+									"value": "u1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/posts/delete/post10?jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwNTY5MTksICJuYmYiOjE3MjkwNTMzMTksICJpYXQiOjE3MjkwNTMzMTl9.dqMLejJ64-5E4lM7LVMClFvu2RpUhfnmdu3xlPVfeiQD8HaJpy0KDvoBeqSsa1XvRQQM9nI4gsHUYrbbhbmOojkW-oPIVrzisMHHbQsEC7iqNUaKWh7I-nfL1hQgeTjd9ZpWkoLJs67niblsHNGpC5XZUhIjdHfaHLmS-W1WaM5EnYeMZCz6H-02IWNzMWbhPTkc4WjB2TZ5HsEcYGlH3IZvMCiizuBzzmg4bDAAmiBqhy8UpuDzI-e3GUGAKOyqRomTvOc5noCSpYQ3P_b9JLgk6KRA92EJgejnjr7_vogKX1zqiATEZpJAewvgS1WlySfZxVs_YQYs_gkTC4laVw",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"posts",
+								"delete",
+								"post10"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwNTY5MTksICJuYmYiOjE3MjkwNTMzMTksICJpYXQiOjE3MjkwNTMzMTl9.dqMLejJ64-5E4lM7LVMClFvu2RpUhfnmdu3xlPVfeiQD8HaJpy0KDvoBeqSsa1XvRQQM9nI4gsHUYrbbhbmOojkW-oPIVrzisMHHbQsEC7iqNUaKWh7I-nfL1hQgeTjd9ZpWkoLJs67niblsHNGpC5XZUhIjdHfaHLmS-W1WaM5EnYeMZCz6H-02IWNzMWbhPTkc4WjB2TZ5HsEcYGlH3IZvMCiizuBzzmg4bDAAmiBqhy8UpuDzI-e3GUGAKOyqRomTvOc5noCSpYQ3P_b9JLgk6KRA92EJgejnjr7_vogKX1zqiATEZpJAewvgS1WlySfZxVs_YQYs_gkTC4laVw"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "api/likes",
+			"item": [
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/likes/add?userId=user2&postId=post3&jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwMjExNjcsICJuYmYiOjE3MjkwMTc1NjcsICJpYXQiOjE3MjkwMTc1Njd9.iH4LR29mQkzI2J_gx-8Xix9Ms3uCjj_BdjNbxFe7BIbePkI5ctekosIC5ZoLEW4D5mYAmyCRzT1LON19jP9IQkePKUUvoYwIzWjCLwO0oO0GiooxQSa29xYxxZdFG7yPQ6Ld1SXOPc5GCwqpGbEMlD_A4CAw7_sjEtjun9iSd8qODziRAS10mP9wo0JWOltdhZ5BzOwVrmX5v9OXor13q_e06uRFgpbWt0BqzLGVfkgB0-6_umDXn_E6jQinlKaADkXzOdlexehtUOYxDafIScYyC0Wd0Zobgq5wogvk5vKS0dj--E9QGE4UQvHSCf6mvYyJWs5GGUFylb4scFRY5A",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"likes",
+								"add"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "user2"
+								},
+								{
+									"key": "postId",
+									"value": "post3"
+								},
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwMjExNjcsICJuYmYiOjE3MjkwMTc1NjcsICJpYXQiOjE3MjkwMTc1Njd9.iH4LR29mQkzI2J_gx-8Xix9Ms3uCjj_BdjNbxFe7BIbePkI5ctekosIC5ZoLEW4D5mYAmyCRzT1LON19jP9IQkePKUUvoYwIzWjCLwO0oO0GiooxQSa29xYxxZdFG7yPQ6Ld1SXOPc5GCwqpGbEMlD_A4CAw7_sjEtjun9iSd8qODziRAS10mP9wo0JWOltdhZ5BzOwVrmX5v9OXor13q_e06uRFgpbWt0BqzLGVfkgB0-6_umDXn_E6jQinlKaADkXzOdlexehtUOYxDafIScYyC0Wd0Zobgq5wogvk5vKS0dj--E9QGE4UQvHSCf6mvYyJWs5GGUFylb4scFRY5A"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getallbypost",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/likes/getallbypost?postId=p1&jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3Mjk0Mjc2MDAsICJuYmYiOjE3Mjk0MjQwMDAsICJpYXQiOjE3Mjk0MjQwMDB9.LxElXQiaV6ooT01V9kwG5nMi869L7j3T8sZW1ZZDvtGxjsZre7Dbqurbs7ayPjY32Cjjvxdovjh8wZxNxv-tX1_oLpc6mp2BomRYAuKGQYDs8o_dV1XpfVzEFjERMxgw7B1cgMZLvkRlVByPs1NRYRaWTEzMfLM9bssafCW5nXrwD5aUw-y8cILVuYfHjvQDxbrDCVYYI4k-QoMbRADuaClhiCTC-dzW8jq0Mkn66quoy_xjf7JoKBXk59SxNsCpgfYOToCtk_kRE4ZaBfEwPkQxH07AQmWi5Jx5yZ55CTOwxOFiUBJuB3CsdbCTnsLyWgpGaCM3_iN2Fj1GcO4JwQ",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"likes",
+								"getallbypost"
+							],
+							"query": [
+								{
+									"key": "postId",
+									"value": "p1"
+								},
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3Mjk0Mjc2MDAsICJuYmYiOjE3Mjk0MjQwMDAsICJpYXQiOjE3Mjk0MjQwMDB9.LxElXQiaV6ooT01V9kwG5nMi869L7j3T8sZW1ZZDvtGxjsZre7Dbqurbs7ayPjY32Cjjvxdovjh8wZxNxv-tX1_oLpc6mp2BomRYAuKGQYDs8o_dV1XpfVzEFjERMxgw7B1cgMZLvkRlVByPs1NRYRaWTEzMfLM9bssafCW5nXrwD5aUw-y8cILVuYfHjvQDxbrDCVYYI4k-QoMbRADuaClhiCTC-dzW8jq0Mkn66quoy_xjf7JoKBXk59SxNsCpgfYOToCtk_kRE4ZaBfEwPkQxH07AQmWi5Jx5yZ55CTOwxOFiUBJuB3CsdbCTnsLyWgpGaCM3_iN2Fj1GcO4JwQ"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getallbyuser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/likes/getallbyuser?userId=u1&jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3Mjk0Mjc2MDAsICJuYmYiOjE3Mjk0MjQwMDAsICJpYXQiOjE3Mjk0MjQwMDB9.LxElXQiaV6ooT01V9kwG5nMi869L7j3T8sZW1ZZDvtGxjsZre7Dbqurbs7ayPjY32Cjjvxdovjh8wZxNxv-tX1_oLpc6mp2BomRYAuKGQYDs8o_dV1XpfVzEFjERMxgw7B1cgMZLvkRlVByPs1NRYRaWTEzMfLM9bssafCW5nXrwD5aUw-y8cILVuYfHjvQDxbrDCVYYI4k-QoMbRADuaClhiCTC-dzW8jq0Mkn66quoy_xjf7JoKBXk59SxNsCpgfYOToCtk_kRE4ZaBfEwPkQxH07AQmWi5Jx5yZ55CTOwxOFiUBJuB3CsdbCTnsLyWgpGaCM3_iN2Fj1GcO4JwQ",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"likes",
+								"getallbyuser"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "u1"
+								},
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3Mjk0Mjc2MDAsICJuYmYiOjE3Mjk0MjQwMDAsICJpYXQiOjE3Mjk0MjQwMDB9.LxElXQiaV6ooT01V9kwG5nMi869L7j3T8sZW1ZZDvtGxjsZre7Dbqurbs7ayPjY32Cjjvxdovjh8wZxNxv-tX1_oLpc6mp2BomRYAuKGQYDs8o_dV1XpfVzEFjERMxgw7B1cgMZLvkRlVByPs1NRYRaWTEzMfLM9bssafCW5nXrwD5aUw-y8cILVuYfHjvQDxbrDCVYYI4k-QoMbRADuaClhiCTC-dzW8jq0Mkn66quoy_xjf7JoKBXk59SxNsCpgfYOToCtk_kRE4ZaBfEwPkQxH07AQmWi5Jx5yZ55CTOwxOFiUBJuB3CsdbCTnsLyWgpGaCM3_iN2Fj1GcO4JwQ"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "isliked",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/likes/isliked?userId=user3&postId=post10&jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwNTc3MTIsICJuYmYiOjE3MjkwNTQxMTIsICJpYXQiOjE3MjkwNTQxMTJ9.OPNfO1PVuNR9gp0-dJkrK-sGbk2f0h_E1UkOYDcsfIwqY_go0_ZJG3ExCbf23zcrxqOAYyIyjIedbdrqMfXPccZ4f1f5UoCp_d5GM8hcZtel4NipIVhUSOCpImnFsYoNOAm6Z0ybqUL2yrvTv9uXvQY1EhmxC5ujBdzC48N5a0h4WE7G6T_VxV7usHmRgrpInPX7aAs9gXGBxB4utn8wXxUEXk84PGfK41lIw61BwXMxMa3afjiNOvRe_CG5a-Guaa3g7XRTeKZzkg7gPhDXYYKP7Si4NztHG4i7YBlP31s-cFqSG5Dhu4DBl59KNXvJpuTHSn_1EnRIwUIneeTO6A",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"likes",
+								"isliked"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "user3"
+								},
+								{
+									"key": "postId",
+									"value": "post10"
+								},
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwNTc3MTIsICJuYmYiOjE3MjkwNTQxMTIsICJpYXQiOjE3MjkwNTQxMTJ9.OPNfO1PVuNR9gp0-dJkrK-sGbk2f0h_E1UkOYDcsfIwqY_go0_ZJG3ExCbf23zcrxqOAYyIyjIedbdrqMfXPccZ4f1f5UoCp_d5GM8hcZtel4NipIVhUSOCpImnFsYoNOAm6Z0ybqUL2yrvTv9uXvQY1EhmxC5ujBdzC48N5a0h4WE7G6T_VxV7usHmRgrpInPX7aAs9gXGBxB4utn8wXxUEXk84PGfK41lIw61BwXMxMa3afjiNOvRe_CG5a-Guaa3g7XRTeKZzkg7gPhDXYYKP7Si4NztHG4i7YBlP31s-cFqSG5Dhu4DBl59KNXvJpuTHSn_1EnRIwUIneeTO6A"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/likes/delete/like2?jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwNTc3MTIsICJuYmYiOjE3MjkwNTQxMTIsICJpYXQiOjE3MjkwNTQxMTJ9.OPNfO1PVuNR9gp0-dJkrK-sGbk2f0h_E1UkOYDcsfIwqY_go0_ZJG3ExCbf23zcrxqOAYyIyjIedbdrqMfXPccZ4f1f5UoCp_d5GM8hcZtel4NipIVhUSOCpImnFsYoNOAm6Z0ybqUL2yrvTv9uXvQY1EhmxC5ujBdzC48N5a0h4WE7G6T_VxV7usHmRgrpInPX7aAs9gXGBxB4utn8wXxUEXk84PGfK41lIw61BwXMxMa3afjiNOvRe_CG5a-Guaa3g7XRTeKZzkg7gPhDXYYKP7Si4NztHG4i7YBlP31s-cFqSG5Dhu4DBl59KNXvJpuTHSn_1EnRIwUIneeTO6A",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"likes",
+								"delete",
+								"like2"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwNTc3MTIsICJuYmYiOjE3MjkwNTQxMTIsICJpYXQiOjE3MjkwNTQxMTJ9.OPNfO1PVuNR9gp0-dJkrK-sGbk2f0h_E1UkOYDcsfIwqY_go0_ZJG3ExCbf23zcrxqOAYyIyjIedbdrqMfXPccZ4f1f5UoCp_d5GM8hcZtel4NipIVhUSOCpImnFsYoNOAm6Z0ybqUL2yrvTv9uXvQY1EhmxC5ujBdzC48N5a0h4WE7G6T_VxV7usHmRgrpInPX7aAs9gXGBxB4utn8wXxUEXk84PGfK41lIw61BwXMxMa3afjiNOvRe_CG5a-Guaa3g7XRTeKZzkg7gPhDXYYKP7Si4NztHG4i7YBlP31s-cFqSG5Dhu4DBl59KNXvJpuTHSn_1EnRIwUIneeTO6A"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getbyid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/likes/getbyid/like1?jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwNTc3MTIsICJuYmYiOjE3MjkwNTQxMTIsICJpYXQiOjE3MjkwNTQxMTJ9.OPNfO1PVuNR9gp0-dJkrK-sGbk2f0h_E1UkOYDcsfIwqY_go0_ZJG3ExCbf23zcrxqOAYyIyjIedbdrqMfXPccZ4f1f5UoCp_d5GM8hcZtel4NipIVhUSOCpImnFsYoNOAm6Z0ybqUL2yrvTv9uXvQY1EhmxC5ujBdzC48N5a0h4WE7G6T_VxV7usHmRgrpInPX7aAs9gXGBxB4utn8wXxUEXk84PGfK41lIw61BwXMxMa3afjiNOvRe_CG5a-Guaa3g7XRTeKZzkg7gPhDXYYKP7Si4NztHG4i7YBlP31s-cFqSG5Dhu4DBl59KNXvJpuTHSn_1EnRIwUIneeTO6A",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"likes",
+								"getbyid",
+								"like1"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwNTc3MTIsICJuYmYiOjE3MjkwNTQxMTIsICJpYXQiOjE3MjkwNTQxMTJ9.OPNfO1PVuNR9gp0-dJkrK-sGbk2f0h_E1UkOYDcsfIwqY_go0_ZJG3ExCbf23zcrxqOAYyIyjIedbdrqMfXPccZ4f1f5UoCp_d5GM8hcZtel4NipIVhUSOCpImnFsYoNOAm6Z0ybqUL2yrvTv9uXvQY1EhmxC5ujBdzC48N5a0h4WE7G6T_VxV7usHmRgrpInPX7aAs9gXGBxB4utn8wXxUEXk84PGfK41lIw61BwXMxMa3afjiNOvRe_CG5a-Guaa3g7XRTeKZzkg7gPhDXYYKP7Si4NztHG4i7YBlP31s-cFqSG5Dhu4DBl59KNXvJpuTHSn_1EnRIwUIneeTO6A"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "inactive",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/likes/inactive/like3?jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwNTc3MTIsICJuYmYiOjE3MjkwNTQxMTIsICJpYXQiOjE3MjkwNTQxMTJ9.OPNfO1PVuNR9gp0-dJkrK-sGbk2f0h_E1UkOYDcsfIwqY_go0_ZJG3ExCbf23zcrxqOAYyIyjIedbdrqMfXPccZ4f1f5UoCp_d5GM8hcZtel4NipIVhUSOCpImnFsYoNOAm6Z0ybqUL2yrvTv9uXvQY1EhmxC5ujBdzC48N5a0h4WE7G6T_VxV7usHmRgrpInPX7aAs9gXGBxB4utn8wXxUEXk84PGfK41lIw61BwXMxMa3afjiNOvRe_CG5a-Guaa3g7XRTeKZzkg7gPhDXYYKP7Si4NztHG4i7YBlP31s-cFqSG5Dhu4DBl59KNXvJpuTHSn_1EnRIwUIneeTO6A",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"likes",
+								"inactive",
+								"like3"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwNTc3MTIsICJuYmYiOjE3MjkwNTQxMTIsICJpYXQiOjE3MjkwNTQxMTJ9.OPNfO1PVuNR9gp0-dJkrK-sGbk2f0h_E1UkOYDcsfIwqY_go0_ZJG3ExCbf23zcrxqOAYyIyjIedbdrqMfXPccZ4f1f5UoCp_d5GM8hcZtel4NipIVhUSOCpImnFsYoNOAm6Z0ybqUL2yrvTv9uXvQY1EhmxC5ujBdzC48N5a0h4WE7G6T_VxV7usHmRgrpInPX7aAs9gXGBxB4utn8wXxUEXk84PGfK41lIw61BwXMxMa3afjiNOvRe_CG5a-Guaa3g7XRTeKZzkg7gPhDXYYKP7Si4NztHG4i7YBlP31s-cFqSG5Dhu4DBl59KNXvJpuTHSn_1EnRIwUIneeTO6A"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "api/handshakes",
+			"item": [
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/handshakes/add?handshakerId=u2&handshakeeId=u3&jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkzMzkzODMsICJuYmYiOjE3MjkzMzU3ODMsICJpYXQiOjE3MjkzMzU3ODN9.iPdHR8W6l6yiZNiEyufQD8JKLQqXA76USL6Glf285YdkNQ9b3ckrPs7_Iq4bvjh5Kyhud1ucGMv4FrG6gdLfKpxZ2LuFf0J605PHWTLdfugPtk9WnmkL2NlVGyhrkadIHFyEAJ_pZ6EcRjhQSpgfoydrWgqCMlOp6H8p2vY574bSlIKvszIoqK23nhBXVoSw6JfKw11GikUSJzkrMCq_FhE9n4WdbRODiGYMith-xPInwBUVFQCVZVtJLOMhetobJpgELLp8vlqwsbIQqNiDLj57tVWM2qX0AhJqZ-AUNsK1RqRFJHyg_v1MoAXH9WoRaebM0_hihANXaEgVJLfuvQ",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"handshakes",
+								"add"
+							],
+							"query": [
+								{
+									"key": "handshakerId",
+									"value": "u2"
+								},
+								{
+									"key": "handshakeeId",
+									"value": "u3"
+								},
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkzMzkzODMsICJuYmYiOjE3MjkzMzU3ODMsICJpYXQiOjE3MjkzMzU3ODN9.iPdHR8W6l6yiZNiEyufQD8JKLQqXA76USL6Glf285YdkNQ9b3ckrPs7_Iq4bvjh5Kyhud1ucGMv4FrG6gdLfKpxZ2LuFf0J605PHWTLdfugPtk9WnmkL2NlVGyhrkadIHFyEAJ_pZ6EcRjhQSpgfoydrWgqCMlOp6H8p2vY574bSlIKvszIoqK23nhBXVoSw6JfKw11GikUSJzkrMCq_FhE9n4WdbRODiGYMith-xPInwBUVFQCVZVtJLOMhetobJpgELLp8vlqwsbIQqNiDLj57tVWM2qX0AhJqZ-AUNsK1RqRFJHyg_v1MoAXH9WoRaebM0_hihANXaEgVJLfuvQ"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getbyid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/handshakes/getbyid/h1?jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkzNjY0MDcsICJuYmYiOjE3MjkzNjI4MDcsICJpYXQiOjE3MjkzNjI4MDd9.Yxbs-ukbs_94qKYwf4eoIXNGWsIBsQdDxdAESJxujJ-dRGqg_t2xdMpvNgSmIuocFfXr7wHU5GUEoDm5xYe42W-ZpP2IsaxQqAC2s1W3_scYshVGZLl5_yZqQJTfVaSmdf9FjnpN5X2ttwaGxOb1EYeTRKIZ-p1vszKURicPtSzMFOybAvo3xr4hINvh0xzD4qQp-cviYLclJ2XrR9sFeyrkHAH2RG6qiKHYqyI2Gu15JW13-vSlhz5loDwE7YqWus2ZuPBYjzGINt_sOqlfOUOLWd-louWm4SZn-QwK0C6_-C6x2q6ukAHzn9xTTbdJo9agc4QqO3rRqYooODgyIg",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"handshakes",
+								"getbyid",
+								"h1"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkzNjY0MDcsICJuYmYiOjE3MjkzNjI4MDcsICJpYXQiOjE3MjkzNjI4MDd9.Yxbs-ukbs_94qKYwf4eoIXNGWsIBsQdDxdAESJxujJ-dRGqg_t2xdMpvNgSmIuocFfXr7wHU5GUEoDm5xYe42W-ZpP2IsaxQqAC2s1W3_scYshVGZLl5_yZqQJTfVaSmdf9FjnpN5X2ttwaGxOb1EYeTRKIZ-p1vszKURicPtSzMFOybAvo3xr4hINvh0xzD4qQp-cviYLclJ2XrR9sFeyrkHAH2RG6qiKHYqyI2Gu15JW13-vSlhz5loDwE7YqWus2ZuPBYjzGINt_sOqlfOUOLWd-louWm4SZn-QwK0C6_-C6x2q6ukAHzn9xTTbdJo9agc4QqO3rRqYooODgyIg"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAcceptedHandshakeUsersById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/handshakes/getAcceptedHandshakeUsersById/?userId=u1&jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkzOTQyNjAsICJuYmYiOjE3MjkzOTA2NjAsICJpYXQiOjE3MjkzOTA2NjB9.P22UchR1PnF44f86MZCCqqIplPfOzpu1GuxdTyGsmtL-4Y0Ipg8J8bz2cAjuv2t9s3AgIW1wGp3CJoinrjuW-6YFA9i2Q7O10spkLYcNUbReXWhway2rwK9GtYyefiRRvysdUkXhFom_AkaSpDsfKaJ8W0h8clg7-NmAqDK-RHi2tXaPrcgfr9fjk7jnsbepjz5b6hA02C0dY6CJpIu3zDKQu40rmeO6ohjKopZ-EzyffwUGMDHo8rBh8-wS1QHewsHeieAzEw4BiZ5bfvuoVi9NFYBQJLniy0YcxKEoYai0JZ9UFuZdK-4GBlWvS31J0PKEJ7kICucMFrtb-0dImg",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"handshakes",
+								"getAcceptedHandshakeUsersById",
+								""
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "u1"
+								},
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkzOTQyNjAsICJuYmYiOjE3MjkzOTA2NjAsICJpYXQiOjE3MjkzOTA2NjB9.P22UchR1PnF44f86MZCCqqIplPfOzpu1GuxdTyGsmtL-4Y0Ipg8J8bz2cAjuv2t9s3AgIW1wGp3CJoinrjuW-6YFA9i2Q7O10spkLYcNUbReXWhway2rwK9GtYyefiRRvysdUkXhFom_AkaSpDsfKaJ8W0h8clg7-NmAqDK-RHi2tXaPrcgfr9fjk7jnsbepjz5b6hA02C0dY6CJpIu3zDKQu40rmeO6ohjKopZ-EzyffwUGMDHo8rBh8-wS1QHewsHeieAzEw4BiZ5bfvuoVi9NFYBQJLniy0YcxKEoYai0JZ9UFuZdK-4GBlWvS31J0PKEJ7kICucMFrtb-0dImg"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/handshakes/delete/h1?jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkzNjQ4ODQsICJuYmYiOjE3MjkzNjEyODQsICJpYXQiOjE3MjkzNjEyODR9.jE4UM0YoiMedy5prUQoS_GU2sLvB8v9y7rUnAbcUXj4mepOJ_zFhHdOgbDIvJxGq9zWcaJKWQW8y3M-FPauuGZk9pAdO6eE1okw6sw1ksads5SO4sC2ih85iE3W92Q49fYldY1JD2HaUvK7sI588OBsYtjGrl9QCcK3w-DBtVCP3Hk9ncIhDmQBclzNDg5_mBJauKaicWH4q6gYm60WMm2rgziKKVeRS8sIXg17gFEynPUx9_agY5edVmgcr6W6HG6sFG2iIP6KgSAxSnSIpaGcuH4tA411X3fn1lt811JXceB61gVoPzaiIvD91mKJykGheHO3QosTStuH6qyLNzw",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"handshakes",
+								"delete",
+								"h1"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkzNjQ4ODQsICJuYmYiOjE3MjkzNjEyODQsICJpYXQiOjE3MjkzNjEyODR9.jE4UM0YoiMedy5prUQoS_GU2sLvB8v9y7rUnAbcUXj4mepOJ_zFhHdOgbDIvJxGq9zWcaJKWQW8y3M-FPauuGZk9pAdO6eE1okw6sw1ksads5SO4sC2ih85iE3W92Q49fYldY1JD2HaUvK7sI588OBsYtjGrl9QCcK3w-DBtVCP3Hk9ncIhDmQBclzNDg5_mBJauKaicWH4q6gYm60WMm2rgziKKVeRS8sIXg17gFEynPUx9_agY5edVmgcr6W6HG6sFG2iIP6KgSAxSnSIpaGcuH4tA411X3fn1lt811JXceB61gVoPzaiIvD91mKJykGheHO3QosTStuH6qyLNzw"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateStatus",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/handshakes/updateStatus/h14?newStatus=ACCEPTED&jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkzNDY2NzYsICJuYmYiOjE3MjkzNDMwNzYsICJpYXQiOjE3MjkzNDMwNzZ9.epuo8wf6IsqC3M9MYUtmpV_9wqa-hX_w6OEgsaAnRDRnkDvhHIw3ctiUUDSVTMkbmScrAeklyDZn7rTI8XKzxqm-upEHtfop7MkmRpnz-t-G2uVUI4i3N2wwXInwnW3SH42DidSGAYnGUUpFBeXdq1mM8Bk_a-7C2Z9A2VTuCvIchBGqKqHMiah2XFiclwdP917hAdC7YUpoNu-F-VLEXGJFqOosRmjyxXlRICh-zk1Hupq1wubtQqnky4rRm8E81hEjVnD3SnFeSjeYpCy_11WbJX-NZ0w186pWmDqlwrk_-ULTenBxDzzA2BW7kqYYb92Goxyi5wNwRcNk0Tcy4g",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"handshakes",
+								"updateStatus",
+								"h14"
+							],
+							"query": [
+								{
+									"key": "newStatus",
+									"value": "ACCEPTED"
+								},
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkzNDY2NzYsICJuYmYiOjE3MjkzNDMwNzYsICJpYXQiOjE3MjkzNDMwNzZ9.epuo8wf6IsqC3M9MYUtmpV_9wqa-hX_w6OEgsaAnRDRnkDvhHIw3ctiUUDSVTMkbmScrAeklyDZn7rTI8XKzxqm-upEHtfop7MkmRpnz-t-G2uVUI4i3N2wwXInwnW3SH42DidSGAYnGUUpFBeXdq1mM8Bk_a-7C2Z9A2VTuCvIchBGqKqHMiah2XFiclwdP917hAdC7YUpoNu-F-VLEXGJFqOosRmjyxXlRICh-zk1Hupq1wubtQqnky4rRm8E81hEjVnD3SnFeSjeYpCy_11WbJX-NZ0w186pWmDqlwrk_-ULTenBxDzzA2BW7kqYYb92Goxyi5wNwRcNk0Tcy4g"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "isHandShaked",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/handshakes/isHandShaked?user1Id=u2&user2Id=u7&jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3Mjk0MzYzMzAsICJuYmYiOjE3Mjk0MzI3MzAsICJpYXQiOjE3Mjk0MzI3MzB9.o-alO2fmdvGSD_4k5iosD7sGF9FqEpZYNQ1Nlrm7LakKhCOjRwAidtnj9fIR_X-G_qlF0bUcBbem57CdDrrMaCTiT5pWdpWUK6_7FjEEWklm8JRj-E9iA2vsJyBTRLEAwDn8reMsPQF8xf-vqcf29YcNRlUuIeFe0jQBl8InplN8CyTlJQzE8Sh0V3Df_nRrKkJc8xRamhua4D2zTb2K_VtlmEMY55fB3weYORed_c1J6UEgsu3LVLa_lUtMaUk1ezoaEyRM4TxSUM1g1MGq6yxZ7lVGTopjFSGNe7uldKcDZvnwXtOO43ejV2Fga6hbpEDVX4Zd3yGFWFcAL-HHUA",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"handshakes",
+								"isHandShaked"
+							],
+							"query": [
+								{
+									"key": "user1Id",
+									"value": "u2"
+								},
+								{
+									"key": "user2Id",
+									"value": "u7"
+								},
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3Mjk0MzYzMzAsICJuYmYiOjE3Mjk0MzI3MzAsICJpYXQiOjE3Mjk0MzI3MzB9.o-alO2fmdvGSD_4k5iosD7sGF9FqEpZYNQ1Nlrm7LakKhCOjRwAidtnj9fIR_X-G_qlF0bUcBbem57CdDrrMaCTiT5pWdpWUK6_7FjEEWklm8JRj-E9iA2vsJyBTRLEAwDn8reMsPQF8xf-vqcf29YcNRlUuIeFe0jQBl8InplN8CyTlJQzE8Sh0V3Df_nRrKkJc8xRamhua4D2zTb2K_VtlmEMY55fB3weYORed_c1J6UEgsu3LVLa_lUtMaUk1ezoaEyRM4TxSUM1g1MGq6yxZ7lVGTopjFSGNe7uldKcDZvnwXtOO43ejV2Fga6hbpEDVX4Zd3yGFWFcAL-HHUA"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "comments",
+			"item": [
+				{
+					"name": "getallbypost",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/comments/getallbypost?postId=post3&jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwNzUxMzcsICJuYmYiOjE3MjkwNzE1MzcsICJpYXQiOjE3MjkwNzE1Mzd9.dZ8Ua8eDGdBGsIyf_aBLsSLBsszrBMgN2szkwPff6lTHYoYVQrzDOpMNpM7Dxm5mZPca1zZSXzy0tyaFGV2y_b3JclQms24ditBMG3-uv38eTB9a-Bp4wK3kOFIGz7CfvP9t-s37JFCBlPzFCNRcPtrZC0kuaMLnXlrVuR4OHbOq4B42GxGT3IBmbXb2DcyNUE4ez33o7PgwA_OUinEZB21HnbZjf47qeETE2YrCvc19NJXJIWFtQ2flj1uu5YZmPx_0waFAiJw0gf33XglpAGQAdysesYvvzYz_WpySXuuTPzSCPNI2Ehs-Hi1_JusFmf3qAIL79OKJvXzzWPuOIw",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"comments",
+								"getallbypost"
+							],
+							"query": [
+								{
+									"key": "postId",
+									"value": "post3"
+								},
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwNzUxMzcsICJuYmYiOjE3MjkwNzE1MzcsICJpYXQiOjE3MjkwNzE1Mzd9.dZ8Ua8eDGdBGsIyf_aBLsSLBsszrBMgN2szkwPff6lTHYoYVQrzDOpMNpM7Dxm5mZPca1zZSXzy0tyaFGV2y_b3JclQms24ditBMG3-uv38eTB9a-Bp4wK3kOFIGz7CfvP9t-s37JFCBlPzFCNRcPtrZC0kuaMLnXlrVuR4OHbOq4B42GxGT3IBmbXb2DcyNUE4ez33o7PgwA_OUinEZB21HnbZjf47qeETE2YrCvc19NJXJIWFtQ2flj1uu5YZmPx_0waFAiJw0gf33XglpAGQAdysesYvvzYz_WpySXuuTPzSCPNI2Ehs-Hi1_JusFmf3qAIL79OKJvXzzWPuOIw"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getbyid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/comments/getbyid/comment1?jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwNjU4MzYsICJuYmYiOjE3MjkwNjIyMzYsICJpYXQiOjE3MjkwNjIyMzZ9.kPXauWiJfzG6DYbvTj4mEIDinZ0TmuwLYFow2f36J7TADuIzcJViPxdX2gxXnx4CuudQTGON4R5mSxEkHFJHIvnf4Y7op4AA1W8_6hRshBJ5YIFZvlfzKLb5IYPZc4Nvyw7ffjc4evXqqOe6bxVMh86hG2rF0oSXxR1vsvawtGi8lXFiXuCTelsb6qH8xuCS1oTRV5CgRexR80epq-l6cpAALFAYmwiMOmlcXaWjAIVqCUysnwr4hGZ-74JCOkn_NAL-Mn9bl_Wc5QNMKAzzPYKsKWFUeamafhzaPZvUe2rPxjF1Htk_il7FDkDa6mIIma4xK3xcnRcAsJ_3fqo1Dw",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"comments",
+								"getbyid",
+								"comment1"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwNjU4MzYsICJuYmYiOjE3MjkwNjIyMzYsICJpYXQiOjE3MjkwNjIyMzZ9.kPXauWiJfzG6DYbvTj4mEIDinZ0TmuwLYFow2f36J7TADuIzcJViPxdX2gxXnx4CuudQTGON4R5mSxEkHFJHIvnf4Y7op4AA1W8_6hRshBJ5YIFZvlfzKLb5IYPZc4Nvyw7ffjc4evXqqOe6bxVMh86hG2rF0oSXxR1vsvawtGi8lXFiXuCTelsb6qH8xuCS1oTRV5CgRexR80epq-l6cpAALFAYmwiMOmlcXaWjAIVqCUysnwr4hGZ-74JCOkn_NAL-Mn9bl_Wc5QNMKAzzPYKsKWFUeamafhzaPZvUe2rPxjF1Htk_il7FDkDa6mIIma4xK3xcnRcAsJ_3fqo1Dw"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/comments/add?userId=user2&postId=post3&jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwNjY0MjEsICJuYmYiOjE3MjkwNjI4MjEsICJpYXQiOjE3MjkwNjI4MjF9.izuLLBmRCyswEP6Ui0NeXBqRhLC9sZlrZE-Qqra9fCshd7vW7o0KQGgpF4W8ZvI4-57O0XpHia6-GUdSZfTpwFLvSeWz48kxyt6N1sPxPEysNeP2NjQdlyXU9E8BVOaiTBdRBySj1OSTw2a8BNNbSUf8T_kb4IUBBVQMnde56Is3WEPBJg7BDlrIvJto2HPUhLTufqPSXSTv1klBrfR_RAiwsyWBVV74EeKJuAUjpZjMn7N-TjtihJxmI1lmAqRsKT0e9ZEGfW5yGOJRAerfJo6XIovZHZOfCf8zE5ZkKHmleLlg2FBW1elYxQ0ZHRbCaloCy0W3g3BAjRgSSU4EPw&content=Hi I am Thisara",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"comments",
+								"add"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "user2"
+								},
+								{
+									"key": "postId",
+									"value": "post3"
+								},
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwNjY0MjEsICJuYmYiOjE3MjkwNjI4MjEsICJpYXQiOjE3MjkwNjI4MjF9.izuLLBmRCyswEP6Ui0NeXBqRhLC9sZlrZE-Qqra9fCshd7vW7o0KQGgpF4W8ZvI4-57O0XpHia6-GUdSZfTpwFLvSeWz48kxyt6N1sPxPEysNeP2NjQdlyXU9E8BVOaiTBdRBySj1OSTw2a8BNNbSUf8T_kb4IUBBVQMnde56Is3WEPBJg7BDlrIvJto2HPUhLTufqPSXSTv1klBrfR_RAiwsyWBVV74EeKJuAUjpZjMn7N-TjtihJxmI1lmAqRsKT0e9ZEGfW5yGOJRAerfJo6XIovZHZOfCf8zE5ZkKHmleLlg2FBW1elYxQ0ZHRbCaloCy0W3g3BAjRgSSU4EPw"
+								},
+								{
+									"key": "content",
+									"value": "Hi I am Thisara"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getallbyuser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/comments/getallbyuser?userId=user2&jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwNjY0MjEsICJuYmYiOjE3MjkwNjI4MjEsICJpYXQiOjE3MjkwNjI4MjF9.izuLLBmRCyswEP6Ui0NeXBqRhLC9sZlrZE-Qqra9fCshd7vW7o0KQGgpF4W8ZvI4-57O0XpHia6-GUdSZfTpwFLvSeWz48kxyt6N1sPxPEysNeP2NjQdlyXU9E8BVOaiTBdRBySj1OSTw2a8BNNbSUf8T_kb4IUBBVQMnde56Is3WEPBJg7BDlrIvJto2HPUhLTufqPSXSTv1klBrfR_RAiwsyWBVV74EeKJuAUjpZjMn7N-TjtihJxmI1lmAqRsKT0e9ZEGfW5yGOJRAerfJo6XIovZHZOfCf8zE5ZkKHmleLlg2FBW1elYxQ0ZHRbCaloCy0W3g3BAjRgSSU4EPw",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"comments",
+								"getallbyuser"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "user2"
+								},
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwNjY0MjEsICJuYmYiOjE3MjkwNjI4MjEsICJpYXQiOjE3MjkwNjI4MjF9.izuLLBmRCyswEP6Ui0NeXBqRhLC9sZlrZE-Qqra9fCshd7vW7o0KQGgpF4W8ZvI4-57O0XpHia6-GUdSZfTpwFLvSeWz48kxyt6N1sPxPEysNeP2NjQdlyXU9E8BVOaiTBdRBySj1OSTw2a8BNNbSUf8T_kb4IUBBVQMnde56Is3WEPBJg7BDlrIvJto2HPUhLTufqPSXSTv1klBrfR_RAiwsyWBVV74EeKJuAUjpZjMn7N-TjtihJxmI1lmAqRsKT0e9ZEGfW5yGOJRAerfJo6XIovZHZOfCf8zE5ZkKHmleLlg2FBW1elYxQ0ZHRbCaloCy0W3g3BAjRgSSU4EPw"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/comments/delete/4db6a80b-44bc-4e57-afe0-7205807359e0?jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwNjY0MjEsICJuYmYiOjE3MjkwNjI4MjEsICJpYXQiOjE3MjkwNjI4MjF9.izuLLBmRCyswEP6Ui0NeXBqRhLC9sZlrZE-Qqra9fCshd7vW7o0KQGgpF4W8ZvI4-57O0XpHia6-GUdSZfTpwFLvSeWz48kxyt6N1sPxPEysNeP2NjQdlyXU9E8BVOaiTBdRBySj1OSTw2a8BNNbSUf8T_kb4IUBBVQMnde56Is3WEPBJg7BDlrIvJto2HPUhLTufqPSXSTv1klBrfR_RAiwsyWBVV74EeKJuAUjpZjMn7N-TjtihJxmI1lmAqRsKT0e9ZEGfW5yGOJRAerfJo6XIovZHZOfCf8zE5ZkKHmleLlg2FBW1elYxQ0ZHRbCaloCy0W3g3BAjRgSSU4EPw",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"comments",
+								"delete",
+								"4db6a80b-44bc-4e57-afe0-7205807359e0"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3MjkwNjY0MjEsICJuYmYiOjE3MjkwNjI4MjEsICJpYXQiOjE3MjkwNjI4MjF9.izuLLBmRCyswEP6Ui0NeXBqRhLC9sZlrZE-Qqra9fCshd7vW7o0KQGgpF4W8ZvI4-57O0XpHia6-GUdSZfTpwFLvSeWz48kxyt6N1sPxPEysNeP2NjQdlyXU9E8BVOaiTBdRBySj1OSTw2a8BNNbSUf8T_kb4IUBBVQMnde56Is3WEPBJg7BDlrIvJto2HPUhLTufqPSXSTv1klBrfR_RAiwsyWBVV74EeKJuAUjpZjMn7N-TjtihJxmI1lmAqRsKT0e9ZEGfW5yGOJRAerfJo6XIovZHZOfCf8zE5ZkKHmleLlg2FBW1elYxQ0ZHRbCaloCy0W3g3BAjRgSSU4EPw"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "education",
+			"item": [
+				{
+					"name": "getbyid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/education/getbyid/e1?jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3Mjk0MzM0NTksICJuYmYiOjE3Mjk0Mjk4NTksICJpYXQiOjE3Mjk0Mjk4NTl9.RBuXcqFIYprAtD6dFZBLBgAblQoaBSomItd3C01y4XylBThlwV21AyyL4BYvoRXN6Eb1AontHLsTaiSSLdoGbHwQnto4bs4ckurFQ-Weh-TQXngw8xDBldvBD-Rork9C968_xfEKkmVAfkprAztKb6SOHkG1EAYfCiWbMxNeJMHg5Z8CC-OUz1NhVCfXXRJL6VRtdYAZMc0W5ZG_HT42B-HCaggaErppAOI396sT9yI-qpXistWdBPMJhRj8srCK2Y-jRj_zrgMc6RMUjQkEHEsA5p4NjBMMrvwfB96srZkunfatdYlDGHSzgSFy8tbVCJAdAgfE4ZrxUwd_cWdkbg",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"education",
+								"getbyid",
+								"e1"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3Mjk0MzM0NTksICJuYmYiOjE3Mjk0Mjk4NTksICJpYXQiOjE3Mjk0Mjk4NTl9.RBuXcqFIYprAtD6dFZBLBgAblQoaBSomItd3C01y4XylBThlwV21AyyL4BYvoRXN6Eb1AontHLsTaiSSLdoGbHwQnto4bs4ckurFQ-Weh-TQXngw8xDBldvBD-Rork9C968_xfEKkmVAfkprAztKb6SOHkG1EAYfCiWbMxNeJMHg5Z8CC-OUz1NhVCfXXRJL6VRtdYAZMc0W5ZG_HT42B-HCaggaErppAOI396sT9yI-qpXistWdBPMJhRj8srCK2Y-jRj_zrgMc6RMUjQkEHEsA5p4NjBMMrvwfB96srZkunfatdYlDGHSzgSFy8tbVCJAdAgfE4ZrxUwd_cWdkbg"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"institution\":\"University of Moratuwa\",\n\"start_year\":2022,\n\"end_year\":2025,\n\"degree\":\"Bachelor\",\n\"field_of_study\":\"Astronomy\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/education/add?userId=u1&jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3Mjk0MzU1OTgsICJuYmYiOjE3Mjk0MzE5OTgsICJpYXQiOjE3Mjk0MzE5OTh9.aF5HrKHka-Ng7odE5Bm4j3UaMaM9oBfoimAiZBLXefJUEFR78L5Mjnkt7v_3i20CAUYh12fxzhjHuRaxf7bqOnwwcxSnW-Ci9yfLSjlZtLF8dThrsVbN6W0eGYO9iZ0pxo0X_MnCCX4SSqQQ-mPr37-zepQSWf4FuyciE8AGmj_YkIwUjuiedCBxJ96IWm5oM-cX3GwDXiP5k8-24vDKJIxUjUFO47GEjY1BV1vwbhCMamsVtz7iVWtHU93BLiA074bMYkXyER4kqGOMuxzLWhSMHIsQA9EFjnnyZG4HwF6qP2I9_VLx11CpolNu-ccmBLfpiV-xjgo9F2C2PnaoKw",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"education",
+								"add"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "u1"
+								},
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3Mjk0MzU1OTgsICJuYmYiOjE3Mjk0MzE5OTgsICJpYXQiOjE3Mjk0MzE5OTh9.aF5HrKHka-Ng7odE5Bm4j3UaMaM9oBfoimAiZBLXefJUEFR78L5Mjnkt7v_3i20CAUYh12fxzhjHuRaxf7bqOnwwcxSnW-Ci9yfLSjlZtLF8dThrsVbN6W0eGYO9iZ0pxo0X_MnCCX4SSqQQ-mPr37-zepQSWf4FuyciE8AGmj_YkIwUjuiedCBxJ96IWm5oM-cX3GwDXiP5k8-24vDKJIxUjUFO47GEjY1BV1vwbhCMamsVtz7iVWtHU93BLiA074bMYkXyER4kqGOMuxzLWhSMHIsQA9EFjnnyZG4HwF6qP2I9_VLx11CpolNu-ccmBLfpiV-xjgo9F2C2PnaoKw"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "geteducationbyuserid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/education/geteducationbyuserid?userId=u1&jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3Mjk0Mzc1MDgsICJuYmYiOjE3Mjk0MzM5MDgsICJpYXQiOjE3Mjk0MzM5MDh9.pyzsp0Z0tfq9LW5uvLxyrZRXHT1jlgf51VjTVyUkNWbKB0CHH8U6Or-cqwrAkw3e7pU-ixHnZXTM5fEPvt42nwBXE6BLynudMfAbcPi3oYQOU0wioXfyCTYTK2dWbpDVeZi1Xi1lDTtIQTy4s9av3Jky421KZnNx-HR9axCnAaawrj5sORM3bPuz1HfsCnjoYGWM-oNK1VqDj-woqZwO1AIrM6n1DoJ2G-DHYtYsFIHQpUDD3JRsiXsb1S-v10gT3RBJFbNPs_mm-8W5LPsSqjez4sSmOzTGt60LGs3vlFut9glcdzYPFQAHbaJLUECswN7daRbh7l9AygJlDC2pdA",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"education",
+								"geteducationbyuserid"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "u1"
+								},
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3Mjk0Mzc1MDgsICJuYmYiOjE3Mjk0MzM5MDgsICJpYXQiOjE3Mjk0MzM5MDh9.pyzsp0Z0tfq9LW5uvLxyrZRXHT1jlgf51VjTVyUkNWbKB0CHH8U6Or-cqwrAkw3e7pU-ixHnZXTM5fEPvt42nwBXE6BLynudMfAbcPi3oYQOU0wioXfyCTYTK2dWbpDVeZi1Xi1lDTtIQTy4s9av3Jky421KZnNx-HR9axCnAaawrj5sORM3bPuz1HfsCnjoYGWM-oNK1VqDj-woqZwO1AIrM6n1DoJ2G-DHYtYsFIHQpUDD3JRsiXsb1S-v10gT3RBJFbNPs_mm-8W5LPsSqjez4sSmOzTGt60LGs3vlFut9glcdzYPFQAHbaJLUECswN7daRbh7l9AygJlDC2pdA"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "stories",
+			"item": [
+				{
+					"name": "getbyid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/stories/getbyid/s1?jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3Mjk0MzkzMDIsICJuYmYiOjE3Mjk0MzU3MDIsICJpYXQiOjE3Mjk0MzU3MDJ9.U0-dkE1JlybCXlTMSUINWzRTpFXt4uI_q2kpyjOFHX7bYXHZwO9jQGRaRYdquck5UKMOwbJCAlYGn2TmyLiZtgAB9ZfA_Bl13dH1MyP1Ko49HcMRza6piy8KJgRhuaNzqmsfWk6Dpmmo7vcfCqUt6zvcXJsMn35exF4vSHzzVDVCVQ-rdpguqxSoParRFep7moc0AxjcSy-C-SZwXt-Ywk_9gDtlYS9dYTuHMMAqrqWHfg7KVK2em9mcrwu_QlNJufq4RbGjsUqv2YAIk2b1CZ6ciHgH00-kbCJYZYeBv3wYE8pPBFSbFStq9Cet6VeahQ0glnCHZFDKCb7k6ZY3dw",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"stories",
+								"getbyid",
+								"s1"
+							],
+							"query": [
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3Mjk0MzkzMDIsICJuYmYiOjE3Mjk0MzU3MDIsICJpYXQiOjE3Mjk0MzU3MDJ9.U0-dkE1JlybCXlTMSUINWzRTpFXt4uI_q2kpyjOFHX7bYXHZwO9jQGRaRYdquck5UKMOwbJCAlYGn2TmyLiZtgAB9ZfA_Bl13dH1MyP1Ko49HcMRza6piy8KJgRhuaNzqmsfWk6Dpmmo7vcfCqUt6zvcXJsMn35exF4vSHzzVDVCVQ-rdpguqxSoParRFep7moc0AxjcSy-C-SZwXt-Ywk_9gDtlYS9dYTuHMMAqrqWHfg7KVK2em9mcrwu_QlNJufq4RbGjsUqv2YAIk2b1CZ6ciHgH00-kbCJYZYeBv3wYE8pPBFSbFStq9Cet6VeahQ0glnCHZFDKCb7k6ZY3dw"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Tech Innovators Inc.\",\n  \"logo_url\": \"https://example.com/logos/tech-innovators-logo.png\",\n  \"start_date\": {\"year\": 2001, \"month\": 10, \"day\": 7},\n  \"end_date\": {\"year\": 2001, \"month\": 10, \"day\": 7},\n  \"description\": \"A startup focused on innovative AI solutions for the healthcare industry.\",\n  \"domain\": \"TECHNOLOGY\",\n  \"learning\": \"The journey taught us the importance of adapting to market needs and focusing on customer feedback.\",\n  \"success\": true\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9090/api/stories/add?userId=u1&jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3Mjk0MzkzMDIsICJuYmYiOjE3Mjk0MzU3MDIsICJpYXQiOjE3Mjk0MzU3MDJ9.U0-dkE1JlybCXlTMSUINWzRTpFXt4uI_q2kpyjOFHX7bYXHZwO9jQGRaRYdquck5UKMOwbJCAlYGn2TmyLiZtgAB9ZfA_Bl13dH1MyP1Ko49HcMRza6piy8KJgRhuaNzqmsfWk6Dpmmo7vcfCqUt6zvcXJsMn35exF4vSHzzVDVCVQ-rdpguqxSoParRFep7moc0AxjcSy-C-SZwXt-Ywk_9gDtlYS9dYTuHMMAqrqWHfg7KVK2em9mcrwu_QlNJufq4RbGjsUqv2YAIk2b1CZ6ciHgH00-kbCJYZYeBv3wYE8pPBFSbFStq9Cet6VeahQ0glnCHZFDKCb7k6ZY3dw",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"stories",
+								"add"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "u1"
+								},
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3Mjk0MzkzMDIsICJuYmYiOjE3Mjk0MzU3MDIsICJpYXQiOjE3Mjk0MzU3MDJ9.U0-dkE1JlybCXlTMSUINWzRTpFXt4uI_q2kpyjOFHX7bYXHZwO9jQGRaRYdquck5UKMOwbJCAlYGn2TmyLiZtgAB9ZfA_Bl13dH1MyP1Ko49HcMRza6piy8KJgRhuaNzqmsfWk6Dpmmo7vcfCqUt6zvcXJsMn35exF4vSHzzVDVCVQ-rdpguqxSoParRFep7moc0AxjcSy-C-SZwXt-Ywk_9gDtlYS9dYTuHMMAqrqWHfg7KVK2em9mcrwu_QlNJufq4RbGjsUqv2YAIk2b1CZ6ciHgH00-kbCJYZYeBv3wYE8pPBFSbFStq9Cet6VeahQ0glnCHZFDKCb7k6ZY3dw"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getstoriesbyuserid",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9090/api/stories/getstoriesbyuserid/?userId=u1&jwt=eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3Mjk0Mzk5MjAsICJuYmYiOjE3Mjk0MzYzMjAsICJpYXQiOjE3Mjk0MzYzMjB9.BvaTdOr5ghExg_ucKQkP29VrxzY-2P1jQifj_qVbxYMPelkPlIENIgGWbF9gKKm5T3SqCjxCR-9Xa3VBGcXo1hGAnogvB_g_hTHZKt3o9fOYOmvDo_Q60oaOkuCP9CsdVclfQlwhgwZb-CKtAT_QkKk5j6zlR1-3nm-pAVhPIEf-4ZzhcjaOjO2Lq6J_cSNyjfUsTRIuKLxibKFlKw5U6L6SrzkFV_Wfs8wvCffb80dZhVG4ukcqYfwqk5ioNBlDPeCNyMxbtYFCt5nPZdTpq3jAGUTEn3mBUMJTgTW9ydBZ4sDdIabhZsKva4oX3aqdRO5S7cLelP3-jf2jf06_6g",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"stories",
+								"getstoriesbyuserid",
+								""
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "u1"
+								},
+								{
+									"key": "jwt",
+									"value": "eyJhbGciOiJSUzI1NiIsICJ0eXAiOiJKV1QifQ.eyJpc3MiOiJzb2NpYWxNZWRpYUFwcCIsICJhdWQiOiJ1c2VycyIsICJleHAiOjE3Mjk0Mzk5MjAsICJuYmYiOjE3Mjk0MzYzMjAsICJpYXQiOjE3Mjk0MzYzMjB9.BvaTdOr5ghExg_ucKQkP29VrxzY-2P1jQifj_qVbxYMPelkPlIENIgGWbF9gKKm5T3SqCjxCR-9Xa3VBGcXo1hGAnogvB_g_hTHZKt3o9fOYOmvDo_Q60oaOkuCP9CsdVclfQlwhgwZb-CKtAT_QkKk5j6zlR1-3nm-pAVhPIEf-4ZzhcjaOjO2Lq6J_cSNyjfUsTRIuKLxibKFlKw5U6L6SrzkFV_Wfs8wvCffb80dZhVG4ukcqYfwqk5ioNBlDPeCNyMxbtYFCt5nPZdTpq3jAGUTEn3mBUMJTgTW9ydBZ4sDdIabhZsKva4oX3aqdRO5S7cLelP3-jf2jf06_6g"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
